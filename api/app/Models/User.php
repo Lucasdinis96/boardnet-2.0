@@ -6,11 +6,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'birthdate',
+        'phone',
+        'city_id'
     ];
 
     /**
@@ -38,11 +41,24 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
-    {
+    protected function casts(): array {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function city () {
+        return $this->belongsTo(City::class);
+    }
+    
+    public function collection() {
+        return $this->belongsToMany(Boardgame::class, 'collections');
+    }
+
+    public function boardgames() {
+        return $this->belongsToMany(Boardgame::class, 'collections')
+                ->withPivot('id')
+                ->withTimestamps();
     }
 }

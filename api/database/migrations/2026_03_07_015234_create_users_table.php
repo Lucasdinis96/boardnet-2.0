@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->date('birthdate')->nullable();
+            $table->string('phone', 20)->nullable();
+            $table->foreignId('city_id')->nullable()->references('id')->on('cities')->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();
         });
