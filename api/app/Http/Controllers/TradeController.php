@@ -28,27 +28,16 @@ class TradeController extends Controller {
         return response()->json($trade);
     }
 
-    public function getBoardgames() {
-        $boardgames = Boardgame::orderBy('title')->get();
-        return response()->json($boardgames);
-    }
-
     public function store(CreateTradeRequest $request) {
         $data = $this->tradeService->createTrade($request->validated());
         return response()->json($data);
     }
 
-    public function edit(Trade $trade) {
-
+    public function update(UpdateTradeRequest $request, Trade $trade) {
         if ($trade->user_id !== auth()->id()) {
             abort(403, 'Você não tem permissão para editar esta troca.');
         }
 
-        $boardgames = Boardgame::all();
-        return view('trades.edit', compact('trade', 'boardgames'));
-    }
-
-    public function update(UpdateTradeRequest $request, Trade $trade) {
         $this->tradeService->updateTrade($trade, $request->validated());
         return redirect()->route('myTrades');
     }
