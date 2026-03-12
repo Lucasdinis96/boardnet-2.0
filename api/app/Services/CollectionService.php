@@ -16,7 +16,7 @@ class CollectionService {
         return $this->repository->getUserCollection($user);
     }
 
-    public function addBoardgame(User $user, int $boardgameId) {
+    public function addBoardgame(User $user, $boardgameId) {
         $this->repository->addToCollection($user, $boardgameId);
         return ['status' => 'added'];
     }

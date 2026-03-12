@@ -32,6 +32,9 @@ class CollectionController extends Controller {
         $user = Auth::user();
         $response = $this->service->removeBoardgame($user, $boardgameId);
 
-        return $request->expectsJson() ? response()->json($response) : back();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Jogo removido com sucesso.'
+        ]);
     }
 }
