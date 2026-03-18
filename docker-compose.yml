@@ -2,6 +2,7 @@ services:
 
   api:
     container_name: api
+    user: "${UID}:${GID}"
     build:
       context: ./docker/php
       dockerfile: Dockerfile
@@ -17,6 +18,7 @@ services:
 
   web:
     container_name: web
+    user: "${UID}:${GID}"
     build:
       context: ./docker/angular
       dockerfile: Dockerfile

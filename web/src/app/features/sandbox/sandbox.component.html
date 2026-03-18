@@ -1,0 +1,45 @@
+<div class="teste" *ngIf="testes | async as testes">
+
+  <h2>Testes</h2>
+
+  <ul>
+    <li *ngFor="let teste of testes">
+      {{ teste.title }}
+    </li>
+  </ul>
+
+</div>
+
+<div class="teste" *ngIf="testes2 | async as testes2">
+
+  <h2>Testes 2</h2>
+
+  <ul>
+    <li *ngFor="let teste of testes2">
+      {{ teste.title }}
+    </li>
+  </ul>
+
+</div>
+
+<input type="text" id="login">
+<input type="text" id="senha">
+<button type="submit" id="enviar" (click)="login()">
+  Teste post
+</button>
+
+<button type="submit" id="enviar" (click)="updateUser()">
+  Teste put
+</button>
+
+<button type="submit" id="enviar" (click)="deleteTrade()">
+  Teste delete
+</button>
+
+<div *ngIf="testeShow | async as testeshow">
+  <ul>
+    <li>
+      {{testeshow.title}}
+    </li>
+  </ul>
+</div>

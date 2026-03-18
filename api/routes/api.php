@@ -12,7 +12,7 @@ Route::get('/boardgames/{id}', [BoardgameController::class, 'show']);
 Route::get('/trades', [TradeController::class, 'index']);
 Route::get('/trades/{id}', [TradeController::class, 'show']);
 
-Route::get('/cities/search', [CityController::class, 'search']);
+Route::get('/cities', [CityController::class, 'search']);
 require __DIR__.'/api/auth.php';
 require __DIR__.'/api/profile.php';
 
