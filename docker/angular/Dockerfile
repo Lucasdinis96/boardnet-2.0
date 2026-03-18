@@ -6,6 +6,8 @@ COPY package*.json ./
 
 COPY . .
 
+RUN npm install -g @angular/cli
+
 EXPOSE 4200
 
-CMD sh -c "npm install && npm run start"
+CMD ["ng", "serve", "--host", "0.0.0.0", "--poll", "2000"]

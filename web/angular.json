@@ -8,7 +8,24 @@
   "projects": {
     "web": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "ngHtml": false,
+          "type": "component",
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "type": "service",
+          "skipTests": true
+        },
+        "@schematics/angular:module": {
+          "type": "module",
+          "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -26,15 +43,7 @@
             ],
             "styles": [
               "src/styles.css"
-            ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "security": {
-              "allowedHosts": []
-            },
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            ]
           },
           "configurations": {
             "production": {
@@ -62,11 +71,6 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
-          "options": {
-            "host": "0.0.0.0",
-            "allowedHosts": ["localhost"],
-            "poll": 2000
-          }, 
           "configurations": {
             "production": {
               "buildTarget": "web:build:production"
