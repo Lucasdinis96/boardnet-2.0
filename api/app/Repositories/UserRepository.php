@@ -5,13 +5,14 @@ namespace App\Repositories;
 use App\Models\City;
 use App\Models\User;
 
-class ProfileRepository {
+class UserRepository {
     public function getAllCities() {
         return City::orderBy('name')->get();
     }
 
     public function findUser($id): ?User {
-        return User::find($id);
+        $user = User::find($id)->all();
+        return $user;
     }
 
     public function updateUser(User $user, array $data): void {
