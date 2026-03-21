@@ -21,7 +21,11 @@ export class SandboxService {
   }
 
   postTeste(credentials: any) {
-    return this.api.post('auth/login', credentials);
+    return this.api.post<{token: string}>('auth/login', credentials);
+  }
+
+  postTeste2(credentials: any) {
+    return this.api.post('auth/logout', credentials);
   }
 
   putTeste(credentials: any){
@@ -29,7 +33,7 @@ export class SandboxService {
   }
 
   deleteTeste(){
-    return this.api.delete('profile/my-trades/delete', '1');
+    return this.api.delete('profile/my-trades/delete', '2');
   }
 
 }

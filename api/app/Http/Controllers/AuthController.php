@@ -2,41 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\User\UserResource;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 
 
 class AuthController extends Controller
 {
-    public function register(Request $request) {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6|confirmed'
-        ]);
+    
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
-        ]);
-
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json([
-            'user' => $user,
-            'token' => $token
-        ], 201);
-    }
-
-    public function login(Request $request) {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+    public function login(LoginRequest $request) {
+        $credentials = $request->validated();
 
         if (!Auth::attempt($credentials)) {
             return response()->json([
@@ -49,9 +28,10 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'message' => 'Login realizado com sucesso',
-            'user' => $user,
-            'token' => $token
+            'data' => [
+                'message' => 'Login realizado com sucesso',
+                'token' => $token,
+            ]
         ]);
     }
 
@@ -59,11 +39,17 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
-            'message' => 'Logout realizado com sucesso'
+            'data' => [
+                'message' => 'Logout realizado com sucesso'
+            ]
         ]);
     }
 
     public function me(Request $request) {
-        return response()->json($request->user());
+        return response()->json([
+            'data' => new UserResource($request->user())
+        ]);
     }
+
+    
 }

@@ -14,7 +14,7 @@ Route::get('/trades/{id}', [TradeController::class, 'show']);
 
 Route::get('/cities', [CityController::class, 'search']);
 require __DIR__.'/api/auth.php';
-require __DIR__.'/api/profile.php';
+require __DIR__.'/api/user.php';
 
 
 

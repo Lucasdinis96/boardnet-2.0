@@ -3,23 +3,24 @@
 namespace App\Services;
 
 use App\Models\User;
-use App\Repositories\ProfileRepository;
+use App\Repositories\UserRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
-class ProfileService {
-    protected ProfileRepository $repository;
+class UserService {
+    protected UserRepository $repository;
 
-    public function __construct(ProfileRepository $repository) {
+    public function __construct(UserRepository $repository) {
         $this->repository = $repository;
     }
 
-    public function getEditData(): array {
-        $user = Auth::user();
-
-        return compact('user');
+    public function getUser (Request $user) {
+        Log::info($user);
+        $this->repository->findUser($user->id);
     }
 
-    public function updateProfile(User $user, array $data): void {
+    public function updateUser(User $user, array $data): void {
         if (isset($data['phone'])) {
             $digits = preg_replace('/\D/', '', $data['phone']);
 

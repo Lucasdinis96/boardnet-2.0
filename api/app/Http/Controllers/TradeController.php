@@ -19,7 +19,9 @@ class TradeController extends Controller {
 
     public function index() {
         $trades = $this->tradeService->listTrades();
-        return response()->json($trades);
+        return response()->json([
+            'data' => $trades
+        ]);
     }
 
     public function show(Request $request, int $id) {

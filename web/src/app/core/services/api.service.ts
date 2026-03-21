@@ -13,7 +13,7 @@ export class ApiService {
   private apiUrl = environment.apiUrl;
 
   get<T>(endpoint: string){
-    return this.http.get<T>(`${this.apiUrl}/${endpoint}`);
+    return this.http.get<{data: T}>(`${this.apiUrl}/${endpoint}`).pipe(map(res => res.data));
   }
 
   show<T>(endpoint: string, id: string){
