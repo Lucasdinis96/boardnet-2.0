@@ -12,21 +12,54 @@ export class AuthService {
 
   private tokenKey= 'token';
 
-  private userSubject = new BehaviorSubject<User | null>(null);
+  private userSubject = new BehaviorSubject<User| null>(null);
+  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
+  private readySubject = new BehaviorSubject(false);
+  isReady$ = this.readySubject.asObservable();
+  isLoggedIn$ = this.isLoggedInSubject.asObservable();
   user$ = this.userSubject.asObservable();
 
+  initSession() {
+    const token = this.getToken();
+
+    if (!token) {
+      this.readySubject.next(true);
+      return;
+    }
+
+    this.fetchUser();
+
+    this.readySubject.next(true);
+  }
+
   login(credentials: {email: string; password: string}) {
-    return this.api.post<any>('auth/login', credentials).pipe(tap((response) => {this.setToken(response.token)}));
+    return this.api.post<any>('auth/login', credentials).pipe(
+      tap((response) => {
+        this.setToken(response.token);
+        this.userSubject.next(response.user);
+        this.isLoggedInSubject.next(true);
+      }));
   }
 
   logout() {
-    return this.api.post<void>('auth/logout', {}).pipe(tap(() => {this.removeToken()}));
+    return this.api.post<void>('auth/logout', {}).pipe(
+      tap(() => {
+        this.removeToken();
+        this.userSubject.next(null);
+        this.isLoggedInSubject.next(false);
+      }));
   }
 
   fetchUser() { 
     this.api.get<any>('auth/me').subscribe({
-      next: (user) => this.userSubject.next(user),
-      error: () => this.userSubject.next(null)
+      next: (user) => {
+        this.userSubject.next(user);
+        this.isLoggedInSubject.next(true);
+      },
+      error: () => {
+        this.userSubject.next(null);
+        this.isLoggedInSubject.next(false);
+      }
     });
   }
 

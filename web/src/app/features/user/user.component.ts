@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-user',
   imports: [CommonModule],
   templateUrl: './user.component.html',
-  styleUrl: './user.component.css',
+  styleUrl: './user.component.scss',
 })
 export class UserComponent {
   private authService = inject(AuthService);
