@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-sandbox',
   imports: [CommonModule, RouterLink],
   templateUrl: './sandbox.component.html',
-  styleUrls: ['./sandbox.component.css'],
+  styleUrls: ['./sandbox.component.scss'],
 })
 export class SandboxComponent{
 
@@ -30,11 +30,11 @@ export class SandboxComponent{
       password: "teste01"
     }
 
-    this.authService.login(login).subscribe({next: (res) => {console.log(res.message);}, error: () => {console.error('Erro no login');}});
+    this.authService.login(login).subscribe({next: (res) => window.location.reload(), error: () => {console.error('Erro no login');}});
   }
 
   logout () {
-    this.authService.logout().subscribe({next: (res) => {console.log('Logout')}, error: () =>{this.authService.removeToken()}});
+    this.authService.logout().subscribe({next: (res) => window.location.reload(), error: () =>{this.authService.removeToken()}});
   }
 
   updateUser () {

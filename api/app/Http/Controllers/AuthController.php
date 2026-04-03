@@ -31,6 +31,7 @@ class AuthController extends Controller
             'data' => [
                 'message' => 'Login realizado com sucesso',
                 'token' => $token,
+                'user' => new UserResource($request->user()),
             ]
         ]);
     }

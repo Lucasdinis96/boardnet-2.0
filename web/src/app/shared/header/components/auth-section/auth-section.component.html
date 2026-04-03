@@ -1,0 +1,21 @@
+<div class="header__actions">
+  <ng-container *ngIf="isLogged$ | async; else loginTemplate">
+    <a id="me" routerLink="user">
+      Olá, {{ (user$ | async)?.name }}
+    </a>
+    <button class="button" (click)="logout()">
+      Sair
+    </button>
+  </ng-container>
+
+  
+  <ng-template #loginTemplate>
+    <button class="button" (click)="openLogin()">Entrar</button>
+  </ng-template>
+  
+</div>
+
+<app-login-modal
+    *ngIf="showLoginModal"
+    (close)="closeLogin()"
+></app-login-modal>
