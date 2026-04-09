@@ -1,0 +1,71 @@
+<div class="register-form">
+    <h2>Registre-se</h2>
+    <form 
+        (ngSubmit)="submit()"
+        [formGroup]="registerForm"
+        class="form">
+        <input 
+            type="text"
+            placeholder="Nome" 
+            formControlName="name">
+        <input 
+            type="date"
+            placeholder="Data de Nascimento" 
+            formControlName="birthdate">
+        <input 
+            type="text"
+            placeholder="Telefone" 
+            formControlName="phone">
+        <input 
+            type="email"
+            placeholder="Email"
+            formControlName="email">
+        <input 
+            type="password"
+            placeholder="Senha"
+            formControlName="password">
+        <input 
+            type="password"
+            placeholder="Confirmar senha"
+            formControlName="password_confirm">
+        <span>Endereço</span>
+        <input 
+            type="text"
+            placeholder="CEP" 
+            formControlName="cep">
+        <input 
+            type="text"
+            placeholder="Rua" 
+            formControlName="adress_name">
+        <input 
+            type="text"
+            placeholder="Número" 
+            formControlName="adress_number">
+        <input 
+            type="text"
+            placeholder="Bairro" 
+            formControlName="neighborhood">
+        <div class="autocomplete" (blur)="isDropdownOpen = false" tabindex="0">
+            <input 
+            type="text"
+            placeholder="Cidade" 
+            formControlName="city"
+            autocomplete="off"
+            (focus)="isDropdownOpen = true">
+            <ul *ngIf=" isDropdownOpen && (cities$ | async) as cities">
+                <li
+                    *ngFor="let city of cities"
+                    (click)="selectCity(city)">
+                    {{ city.name }}
+                </li>
+
+                <li *ngIf="cities.length === 0">
+                    Nenhuma cidade encontrada
+                </li>
+            </ul>
+        </div>
+        <button type="submit">Enviar</button>
+
+    </form>
+
+</div>

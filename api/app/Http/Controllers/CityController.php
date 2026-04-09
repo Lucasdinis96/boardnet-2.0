@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\CityService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CityController extends Controller {
     protected $service;
@@ -13,8 +14,10 @@ class CityController extends Controller {
     }
 
     public function search(Request $request) {
-        $term = $request->get('q', '');
-        $cities = $this->service->searchCities($term);
-        return response()->json($cities);
+
+        $cities = $this->service->searchCities($request);
+        return response()->json([
+            'data' => $cities
+        ]);
     }
 }

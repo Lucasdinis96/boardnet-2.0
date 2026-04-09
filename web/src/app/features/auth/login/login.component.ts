@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../core/services/auth.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-modal',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './login-modal.component.html',
-  styleUrls: ['./login-modal.component.scss']
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
-export class LoginModalComponent {
+export class LoginComponent {
 
   private authService = inject(AuthService);
   private router = inject(Router);
