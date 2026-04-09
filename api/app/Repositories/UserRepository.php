@@ -4,10 +4,15 @@ namespace App\Repositories;
 
 use App\Models\City;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class UserRepository {
     public function getAllCities() {
         return City::orderBy('name')->get();
+    }
+
+    public function createUser (array $data){
+        User::create($data);
     }
 
     public function findUser($id): ?User {
@@ -27,5 +32,9 @@ class UserRepository {
 
     public function deleteUser(User $user): void {
         $user->delete();
+    }
+
+    public function getUSerByEmail(string $email){
+        return User::where('email', $email)->value('id');
     }
 }

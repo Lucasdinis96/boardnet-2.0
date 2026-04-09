@@ -1,0 +1,98 @@
+import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { RegisterService } from './register.service';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CityService } from '../../../shared/services/city.service';
+import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
+import { RegisterFormType } from './types/register-form.type';
+import { RegisterRequest } from './models/register';
+
+@Component({
+  selector: 'app-register',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.scss',
+})
+export class RegisterComponent implements OnInit {
+  private registerService = inject(RegisterService);
+  private cityService = inject(CityService);
+  cities$!: Observable<any[]>;
+  registerForm!: FormGroup<RegisterFormType>;
+  isDropdownOpen = false;
+
+  ngOnInit(){
+    this.initializeForm();
+    this.getCities();
+  }
+  initializeForm(){
+    this.registerForm = new FormGroup<RegisterFormType>({
+      name: new FormControl(null),
+      birthdate: new FormControl(null),
+      phone: new FormControl(null),
+      cep: new FormControl(null),
+      adress_name: new FormControl(null),
+      adress_number: new FormControl(null),
+      neighborhood: new FormControl(null),
+      city: new FormControl(null),
+      city_id: new FormControl(null),
+      email: new FormControl(null),
+      password: new FormControl(null),
+      password_confirm: new FormControl(null)
+    })
+  }
+
+  submit(){
+    this.registerUser();
+  }
+
+  registerUser(){
+    const formValue = this.registerForm.value;
+    const userId = localStorage.getItem('id');
+    const payload: RegisterRequest = {
+      name: formValue.name!,
+      birthdate: formValue.birthdate!,
+      phone: formValue.phone!,
+      cep: formValue.cep!,
+      adress_name: formValue.adress_name!,
+      adress_number: formValue.adress_number!,
+      neighborhood: formValue.neighborhood!,
+      city_id: formValue.city_id!,
+      email: formValue.email!,
+      password: formValue.password!,
+      password_confirm: formValue.password_confirm!,
+      user_id: userId ? Number(userId) : null,
+    };
+    this.registerService.registerUser(payload).subscribe({
+      next: () => {console.log('Usuário registrado')},
+      error: () => {console.log('Erro ao registrar')}
+    });
+  }
+
+  getCities(){
+    this.cities$ = this.registerForm.controls.city.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((term: string | null) => {
+        console.log(term);
+        if (!term || term.length < 2) {
+          this.isDropdownOpen = false
+          return of([]);
+        }
+        this.isDropdownOpen = true;
+        return this.cityService.searchCities(term);
+      })
+    )
+  }
+
+  selectCity(city: any) {
+    this.registerForm.patchValue({
+      city: city.name,
+      city_id: city.id
+    },
+    { emitEvent: false}
+  );
+    
+    this.isDropdownOpen = false;
+  }
+}

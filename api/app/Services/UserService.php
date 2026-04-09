@@ -16,7 +16,6 @@ class UserService {
     }
 
     public function getUser (Request $user) {
-        Log::info($user);
         $this->repository->findUser($user->id);
     }
 
