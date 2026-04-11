@@ -5,16 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\User\UserResource;
-use App\Models\Adress;
 use App\Models\User;
 use App\Services\RegisterService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-
-
-
 
 class AuthController extends Controller
 {
@@ -63,34 +57,19 @@ class AuthController extends Controller
     public function register(RegisterRequest $request) {
         $request->validated();
         $this->registerService->createRegister($request);
-        // User::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password),
-        //     'birthdate' => $request->birthdate,
-        //     'city_id' => $request->city_id,
-        //     'phone' => $request->phone
-        // ]);
-
-        // $user_id = User::get()->where('email', $request->email)->value('id');
-
-        // Adress::create([
-        //     'adress' => $request->adress_name,
-        //     'number' => $request->adress_number,
-        //     'neighborhood' => $request->neighborhood,
-        //     'cep' => $request->cep,
-        //     'city_id' => $request->city_id,
-        //     'user_id' => $user_id
-        // ]);
-
         
 
         // $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'message' => 'Usuário criado com sucesso'
-            // 'token' => $token
+            'message' => 'Usuário criado com sucesso',
+            // 'token' => $token,
+            // 'user' => new UserResource($request->user()),
         ], 201);
+    }
+
+    public function verifyEmail(Request $request){
+        $respone = $this->registerService->verifyEmail($request->token);
     }
 
     

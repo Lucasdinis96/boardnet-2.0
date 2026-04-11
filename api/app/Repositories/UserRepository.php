@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\City;
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
 
 class UserRepository {
     public function getAllCities() {
@@ -13,6 +12,8 @@ class UserRepository {
 
     public function createUser (array $data){
         User::create($data);
+        $user = User::where('email', $data['email'])->first();
+        return $user->toArray();
     }
 
     public function findUser($id): ?User {
@@ -34,7 +35,11 @@ class UserRepository {
         $user->delete();
     }
 
-    public function getUSerByEmail(string $email){
+    public function getUserByEmail(string $email){
         return User::where('email', $email)->value('id');
+    }
+
+    public function verifyEmail(array $data){
+        User::where('id', $data['id'])->where('email', $data['email'])->first()->update(['email_verified_at' => now()]);
     }
 }

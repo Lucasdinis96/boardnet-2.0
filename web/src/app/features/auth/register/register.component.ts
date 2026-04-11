@@ -24,7 +24,9 @@ export class RegisterComponent implements OnInit {
   ngOnInit(){
     this.initializeForm();
     this.getCities();
+    this.fillMockData();
   }
+  
   initializeForm(){
     this.registerForm = new FormGroup<RegisterFormType>({
       name: new FormControl(null),
@@ -94,5 +96,22 @@ export class RegisterComponent implements OnInit {
   );
     
     this.isDropdownOpen = false;
+  }
+
+  fillMockData() {
+    this.registerForm.patchValue({
+      name: 'Usuário Teste',
+      birthdate: '1990-01-01',
+      phone: '49999999999',
+      cep: '00000000',
+      adress_name: 'Rua Teste',
+      adress_number: '123',
+      neighborhood: 'Centro',
+      city: 'Curitiba - PR',
+      city_id: 123,
+      email: 'teste@email.com',
+      password: '123456',
+      password_confirm: '123456'
+    });
   }
 }
