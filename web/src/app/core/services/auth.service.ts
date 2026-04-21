@@ -10,7 +10,8 @@ export class AuthService {
 
   private api = inject(ApiService);
 
-  private tokenKey= 'token';
+  private tokenKey = 'token';
+  private id = 'id';
 
   private userSubject = new BehaviorSubject<User| null>(null);
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
@@ -35,7 +36,7 @@ export class AuthService {
   login(credentials: {email: string; password: string}) {
     return this.api.post<any>('auth/login', credentials).pipe(
       tap((response) => {
-        this.setToken(response.token);
+        this.setToken(response);
         this.userSubject.next(response.user);
         this.isLoggedInSubject.next(true);
       }));
@@ -63,8 +64,9 @@ export class AuthService {
     });
   }
 
-  private setToken(token: string) {
-    localStorage.setItem(this.tokenKey, token);
+  private setToken(response: any) {
+    localStorage.setItem(this.tokenKey, response.token);
+    localStorage.setItem(this.id, response.user.id);
   }
 
   private getToken() {
@@ -73,6 +75,7 @@ export class AuthService {
 
   public removeToken() {
     localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.id);
   }
 
   isAuthenticated(): boolean {

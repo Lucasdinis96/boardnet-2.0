@@ -12,4 +12,8 @@ class CityRepository {
             ->orderBy('name')
             ->get();
     }
+
+    public function getCityNameAndUF(string $cityId) {
+        return City::where('id', $city)->first('name');
+    }
 }

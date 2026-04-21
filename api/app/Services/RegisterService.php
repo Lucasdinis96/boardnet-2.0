@@ -26,13 +26,8 @@ class RegisterService {
     public function createRegister (Request $data) {
         $userData = UserCreateResource::make($data)->resolve();
         $userReturn = $this->userRepository->createUser($userData);
-        $adressData = AdressCreateResource::make($data)->resolve();
-        if ($adressData['user_id'] == null){
-            $adressData['user_id'] = $this->userRepository->getUserByEmail($data->email);
-        }
-        $this->adressRepository->createAdress($adressData);
-        $this->mailService->verifyEmail($userReturn); 
-
+        $this->mailService->verifyEmail($userReturn);
+        return true;
     }
 
     public function verifyEmail(string $token){

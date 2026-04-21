@@ -8,8 +8,18 @@ use App\Http\Controllers\CollectionController;
 
 
 
-Route::put('/user/create/', [UserController::class, 'create']);    
-Route::put('/user/update/', [UserController::class, 'update']);
+Route::prefix('user')->group(function () {
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('me/{id}', [UserController::class, 'getUser']);
+        Route::get('adress/{id}', [UserController::class, 'getAdress']);
+        Route::put('userUpdate/{id}', [UserController::class, 'updateUser']);
+        Route::put('adressUpdate/{id}', [UserController::class, 'updateAdress']);
+        Route::put('passwordUpdate/{id}', [UserController::class, 'updatePassword']);
+        Route::put('deleteAccount/{id}', [UserController::class, 'destroy']);
+    });
+});
+Route::put('/user/update', [UserController::class, 'update']);
 Route::delete('/user/delete', [UserController::class, 'destroy']);
 
 Route::get('/profile/my-trades', [TradeController::class, 'myTrades']);

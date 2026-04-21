@@ -6,6 +6,7 @@ import { CityService } from '../../../shared/services/city.service';
 import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
 import { RegisterFormType } from './types/register-form.type';
 import { RegisterRequest } from './models/register';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -17,6 +18,7 @@ import { RegisterRequest } from './models/register';
 export class RegisterComponent implements OnInit {
   private registerService = inject(RegisterService);
   private cityService = inject(CityService);
+  private router = inject(Router);
   cities$!: Observable<any[]>;
   registerForm!: FormGroup<RegisterFormType>;
   isDropdownOpen = false;
@@ -66,7 +68,10 @@ export class RegisterComponent implements OnInit {
       user_id: userId ? Number(userId) : null,
     };
     this.registerService.registerUser(payload).subscribe({
-      next: () => {console.log('Usuário registrado')},
+      next: () => {
+        console.log('Usuário registrado')
+        this.router.navigateByUrl('/home');
+      },
       error: () => {console.log('Erro ao registrar')}
     });
   }

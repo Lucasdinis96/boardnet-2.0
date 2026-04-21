@@ -1,12 +1,12 @@
 import { Component, inject} from '@angular/core';
 import { AuthService } from '../../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LoginComponent } from '../../../../features/auth/login/login.component';
 
 @Component({
   selector: 'app-auth-section',
-  imports: [CommonModule, LoginComponent],
+  imports: [CommonModule, LoginComponent, RouterLink],
   templateUrl: './auth-section.component.html',
   styleUrl: './auth-section.component.scss',
 })

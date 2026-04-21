@@ -22,7 +22,11 @@ class UserCreateResource extends JsonResource
             'password' => Hash::make($request->password),
             'birthdate' => $request->birthdate,
             'city_id' => $request->city_id,
-            'phone' => $request->phone
+            'phone' => $request->phone,
+            'adress' => $request->adress_name,
+            'number' => $request->adress_number,
+            'neighborhood' => $request->neighborhood,
+            'cep' => $request->cep
         ];
     }
 }

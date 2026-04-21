@@ -19,7 +19,11 @@ return new class extends Migration
             $table->string('password');
             $table->date('birthdate')->nullable();
             $table->string('phone', 20)->nullable();
+            $table->string('adress')->nullable();
+            $table->string('number')->nullable();
+            $table->string('neighborhood')->nullable();
             $table->foreignId('city_id')->nullable()->references('id')->on('cities')->onDelete('set null');
+            $table->string('cep')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
