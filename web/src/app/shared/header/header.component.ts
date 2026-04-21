@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { AuthSectionComponent } from './components/auth-section/auth-section.component';
 import { SearchBarComponent } from './components/searchBar/searchbar.component';
+import { Route } from '@angular/router';
 
 @Component({
   selector: 'app-header',

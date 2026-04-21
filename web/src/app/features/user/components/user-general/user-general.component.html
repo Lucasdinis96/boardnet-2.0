@@ -1,0 +1,25 @@
+<div class="register-form">
+    <h2>Editar Dados</h2>
+    <form 
+        (ngSubmit)="submit()"
+        [formGroup]="userForm"
+        class="form">
+        <input 
+            type="text"
+            placeholder="Nome" 
+            formControlName="name">
+        <input 
+            type="date"
+            placeholder="Data de Nascimento" 
+            formControlName="birthdate">
+        <input 
+            type="text"
+            placeholder="Telefone" 
+            formControlName="phone">
+        <input 
+            type="email"
+            placeholder="Email"
+            formControlName="email">
+        <button type="submit">Enviar</button>
+    </form>
+</div>

@@ -24,7 +24,11 @@ class User extends Authenticatable {
         'password',
         'birthdate',
         'phone',
-        'city_id'
+        'city_id',
+        'adress',
+        'number',
+        'neighborhood',
+        'cep',
     ];
 
     /**

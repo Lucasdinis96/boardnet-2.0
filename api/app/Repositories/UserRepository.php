@@ -4,8 +4,17 @@ namespace App\Repositories;
 
 use App\Models\City;
 use App\Models\User;
+use App\Services\MailService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserRepository {
+    private $mailService;
+
+    public function __construct (MailService $mailService) {
+        $this->mailService = $mailService;
+    }
     public function getAllCities() {
         return City::orderBy('name')->get();
     }
@@ -16,8 +25,8 @@ class UserRepository {
         return $user->toArray();
     }
 
-    public function findUser($id): ?User {
-        $user = User::find($id)->all();
+    public function find($id): ?User {
+        $user = User::where('id', $id)->first();
         return $user;
     }
 
@@ -26,13 +35,32 @@ class UserRepository {
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
+            $this->mailService->verifyEmail($data); 
         }
 
         $user->save();
     }
 
-    public function deleteUser(User $user): void {
-        $user->delete();
+    public function updateAdress (array $data, $id){
+        User::where('id', $id)->update([
+            'adress' => $data['adress'],
+            'number' => $data['number'],
+            'neighborhood' => $data['neighborhood'],
+            'cep' => $data['cep'],
+            'city_id' => $data['city_id'],
+        ]);
+    }
+
+    public function updatePassword (string $newPassword, $id) {
+        User::where('id', $id)->update([
+            'password' => Hash::make($newPassword)
+        ]);
+        return true;
+    }
+
+    public function deleteUser($id){
+        User::where('id', $id)->delete();
+        return true;
     }
 
     public function getUserByEmail(string $email){
