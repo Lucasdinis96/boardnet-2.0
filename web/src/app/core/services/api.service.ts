@@ -17,7 +17,7 @@ export class ApiService {
   }
 
   show<T>(endpoint: string, id: string){
-    return this.http.get<T>(`${this.apiUrl}/${endpoint}/${id}`);
+    return this.http.get<{data: T}>(`${this.apiUrl}/${endpoint}/${id}`).pipe(map(res => res.data));
   }
 
   post<T>(endpoint: string, data: any){

@@ -35,4 +35,12 @@ export class UserService {
   deleteAccount(data: any, id: any, ) {
     return this.api.put<any>('user/deleteAccount', id, data).pipe(tap((response) => {} ))
   }
+
+  getCollection (id: any) {
+    return this.api.get<any>(`user/collection/${id}`);
+  }
+
+  removeFromCollection(id: any) {
+    return this.api.delete<any>('user/removeFromCollection', id);
+  }
 }

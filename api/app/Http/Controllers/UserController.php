@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Password\PasswordUpdateRequest;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\User;
+use App\Services\CollectionService;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,19 +17,23 @@ use Illuminate\View\View;
 
 class UserController extends Controller {
     protected UserService $service;
+    protected CollectionService $collectionService;
 
-    public function __construct(UserService $service) {
+    public function __construct(UserService $service, CollectionService $collectionService) {
         $this->service = $service;
+        $this->collectionService = $collectionService;
     }
 
     public function getUser($id){
         $user = $this->service->getUser($id);
-        return response()->json(($user));
+        return response()->json(['data' => $user]);
     }
 
     public function getAdress($id){
         $adress = $this->service->getAdress($id);
-        return response()->json($adress);
+        return response()->json([
+            'data' => $adress
+        ]);
     }
 
     public function updateAdress (Request $request) {
@@ -55,15 +60,7 @@ class UserController extends Controller {
     }
 
     public function updatePassword (PasswordUpdateRequest $request, $id){
-        // $user = User::find($id);
-        // if (!Hash::check($request->input('currentPassword'), $user->password)) {
-        //     return response()->json([
-        //     'data' => [
-        //         'status' => 'sucess',
-        //         'message' => 'Senha Atual está incorreta',
-        //     ]
-        //     ]);
-        // }
+        
         $checkPassword = $this->checkPassword($request->currentPassword, $id);
         if (!$checkPassword) {
             return response()->json([
@@ -104,5 +101,16 @@ class UserController extends Controller {
     public function checkPassword ($currentPassword, $id) {
         $user = User::find($id);
         return Hash::check($currentPassword, $user->password);
+    }
+
+    public function getCollection($id) {
+        $collection = $this->collectionService->getUserCollection($id);
+        return response()->json([
+            'data' => $collection
+        ]);
+    }
+
+    public function removeFromCollection($id){
+        return $this->collectionService->removeFromCollection($id);
     }
 }

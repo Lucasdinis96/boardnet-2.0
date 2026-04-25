@@ -7,7 +7,7 @@ use App\Models\Boardgame;
 class BoardgameRepository {
     
     public function getIndexPage() {
-        return Boardgame::paginate(8);
+        return Boardgame::all();
     }
 
     public function getHomePage(int $limit = 4) {

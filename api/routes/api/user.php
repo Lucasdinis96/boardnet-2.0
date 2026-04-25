@@ -17,6 +17,8 @@ Route::prefix('user')->group(function () {
         Route::put('adressUpdate/{id}', [UserController::class, 'updateAdress']);
         Route::put('passwordUpdate/{id}', [UserController::class, 'updatePassword']);
         Route::put('deleteAccount/{id}', [UserController::class, 'destroy']);
+        Route::get('collection/{id}', [UserController::class, 'getCollection']);
+        Route::delete('removeFromCollection/{id}', [UserController::class, 'removeFromCollection']);
     });
 });
 Route::put('/user/update', [UserController::class, 'update']);
