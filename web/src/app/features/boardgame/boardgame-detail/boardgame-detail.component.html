@@ -1,0 +1,28 @@
+<div *ngIf="boardgame$ | async as boardgame">
+    <div>
+        <h1>{{ boardgame.title }}</h1>
+        <a href="https://www.youtube.com/results?search_query=como+jogar+{{boardgame.title}}" target="_blank">
+            Como Jogar?
+        </a>
+        <ng-container *ngIf="exist$ !== null | async as exist">
+            <button (click)="exist == 'existe' ? removeCollection(boardgame.id) : addCollection(boardgame.id)">
+                {{ exist == 'existe' ? 'Remover da coleção' : 'Adicionar à coleção' }}
+            </button>
+        </ng-container>
+    </div>
+    <div>
+        <span>Editora: {{ boardgame.publisher }}</span><br>
+        <span>Jogadores: de {{ boardgame.min_players }} até {{ boardgame.max_players }} jogadores. </span>
+    </div>
+    <div>
+        <p>{{ boardgame.description }}</p>
+    </div>
+    <div>
+        <a routerLink="/boardgames">Voltar</a>
+    </div>
+</div>
+
+<ng-template #loadingExist>
+  <button disabled>Verificando...</button>
+</ng-template>
+

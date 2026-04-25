@@ -4,6 +4,8 @@ import { authGuard } from './core/guards/auth-guard';
 import { HomeComponent } from './features/home/home.component';
 import { RegisterComponent } from './features/auth/register/register.component';
 import { VerifyEmailComponent } from './features/auth/verify-email/verify-email.component';
+import { BoardgameComponent } from './features/boardgame/boardgame.component';
+import { BoardgameDetailComponent } from './features/boardgame/boardgame-detail/boardgame-detail.component';
 
 export const routes: Routes = [
    {
@@ -24,4 +26,12 @@ export const routes: Routes = [
         path: 'verifyEmail/:token',
         component: VerifyEmailComponent
    },
+   {
+        path: 'boardgames',
+        component: BoardgameComponent
+   },
+   {
+        path: 'boardgame/:id',
+        component: BoardgameDetailComponent
+   }
 ];

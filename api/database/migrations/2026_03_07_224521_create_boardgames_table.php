@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('publisher')->nullable();
-            $table->string('players')->nullable();
-            $table->string('playtime')->nullable();
-            $table->string('age_range')->nullable();
+            $table->integer('min_players')->nullable();
+            $table->integer('max_players')->nullable();
+            $table->integer('playtime')->nullable();
+            $table->integer('age_range')->nullable();
             $table->text('description')->nullable();
+            $table->enum('is_expansion', ['0', '1'])->nullable();
+            $table->integer('base_game')->nullable();
             $table->string('cover')->nullable();
             $table->timestamps();
         });

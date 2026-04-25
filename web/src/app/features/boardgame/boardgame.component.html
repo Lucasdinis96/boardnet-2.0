@@ -1,0 +1,8 @@
+<div *ngIf = "$boardgames | async as boardgames">
+    <div *ngFor = "let boardgame of boardgames">
+        <img src="{{boardgame.cover}}" alt="cover">
+        <a [routerLink]="['/boardgame', boardgame.id]">
+            {{ boardgame.title }}
+        </a>
+    </div>
+</div>

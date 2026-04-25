@@ -25,7 +25,7 @@ class UserRepository {
         return $user->toArray();
     }
 
-    public function find($id): ?User {
+    public function find($id){
         $user = User::where('id', $id)->first();
         return $user;
     }

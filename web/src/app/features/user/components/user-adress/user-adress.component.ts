@@ -42,6 +42,7 @@ export class UserAdressComponent {
         adress_name: adress.adress,
         adress_number: adress.number,
         neighborhood: adress.neighborhood,
+        city_id: adress.city.id,
         city: adress.city ? `${adress.city.name} - ${adress.city.state}`:null
       });
     });

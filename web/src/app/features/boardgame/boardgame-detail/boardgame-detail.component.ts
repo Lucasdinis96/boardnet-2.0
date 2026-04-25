@@ -1,0 +1,67 @@
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { BoardgameService } from '../boardgame.service';
+import { CommonModule } from '@angular/common';
+import { BehaviorSubject, catchError, combineLatest, map, Observable, of, switchMap, tap } from 'rxjs';
+
+@Component({
+  selector: 'app-boardgame-detail',
+  imports: [CommonModule, RouterLink],
+  templateUrl: './boardgame-detail.component.html',
+  styleUrl: './boardgame-detail.component.scss',
+})
+export class BoardgameDetailComponent {
+
+  private route = inject(ActivatedRoute);
+  private service = inject(BoardgameService);
+  private refresh$ = new BehaviorSubject<void>(undefined);
+  boardgame$!: Observable<any>
+  exist!: any
+
+  exist$ = combineLatest([
+    this.route.paramMap,
+    this.refresh$
+  ]).pipe(
+    map(([params]) => Number(params.get('id'))),
+    switchMap(id => this.checkCollection(id).pipe(
+      catchError(err => {
+        if (err.status === 401) {
+          return of(null);
+        }
+        return of(false)
+      })
+    )
+    )
+  );
+  ngOnInit() {
+    this.boardgame$ = this.route.paramMap.pipe(
+      map(params => Number(params.get('id'))),
+      switchMap(id => this.service.getBoardgameById(id))
+    );
+  }
+
+  addCollection(boardgameId: any) {
+    const userId = localStorage.getItem('id');
+    const payload = {
+      user_id: userId,
+      boardgame_id: boardgameId
+    }
+    this.service.addCollection(payload).subscribe(() => {this.refresh$.next();});
+    
+  }
+
+  removeCollection(boardgameId: any) {
+    const userId = localStorage.getItem('id');
+    const payload = {
+      user_id: userId,
+      boardgame_id: boardgameId
+    }
+    this.service.removeCollection(payload).subscribe(() => {this.refresh$.next();});
+    
+  }
+
+  checkCollection (boardgameId: any){
+    const userId = localStorage.getItem('id');
+    return this.service.checkCollection(userId, boardgameId);
+  }
+}

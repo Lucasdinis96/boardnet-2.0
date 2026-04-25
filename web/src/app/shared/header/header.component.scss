@@ -5,12 +5,25 @@ header {
     top: 0;
     left: 0;
     z-index: 1000;
-    height: 80px;
+    height: fit-content;
 }
 .content {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.nav {
+    padding: 20px;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar {
+    background-color: aliceblue;
+    padding: 10px;
 }
 
 
