@@ -35,7 +35,7 @@ class AuthController extends Controller
                 'token' => $token,
                 'user' => new UserResource($request->user()),
             ]
-        ]);
+        ], 200);
     }
 
     public function logout(Request $request){
@@ -45,26 +45,21 @@ class AuthController extends Controller
             'data' => [
                 'message' => 'Logout realizado com sucesso'
             ]
-        ]);
+        ], 200);
     }
 
     public function me(Request $request) {
         return response()->json([
             'data' => new UserResource($request->user())
-        ]);
+        ], 200);
     }
 
     public function register(RegisterRequest $request) {
         $request->validated();
         $this->registerService->createRegister($request);
         
-
-        // $token = $user->createToken('auth_token')->plainTextToken;
-
         return response()->json([
             'message' => 'Usuário criado com sucesso',
-            // 'token' => $token,
-            // 'user' => new UserResource($request->user()),
         ], 201);
     }
 

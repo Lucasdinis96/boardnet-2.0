@@ -7,12 +7,9 @@ use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\User;
 use App\Services\CollectionService;
 use App\Services\UserService;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redirect;
+
 use Illuminate\View\View;
 
 class UserController extends Controller {
@@ -26,14 +23,14 @@ class UserController extends Controller {
 
     public function getUser($id){
         $user = $this->service->getUser($id);
-        return response()->json(['data' => $user]);
+        return response()->json(['data' => $user], 200);
     }
 
     public function getAdress($id){
         $adress = $this->service->getAdress($id);
         return response()->json([
             'data' => $adress
-        ]);
+        ], 200);
     }
 
     public function updateAdress (Request $request) {
@@ -41,10 +38,9 @@ class UserController extends Controller {
         if ($adress){
             return response()->json([
                 'data' => [
-                    'status' => 'sucess',
-                    'message' => 'Conta atualizada com sucesso',
+                    'message' => 'Endereço atualizada com sucesso',
                 ]
-            ]);
+            ], 201);
         }
     }
 
@@ -53,10 +49,9 @@ class UserController extends Controller {
 
         return response()->json([
             'data' => [
-                'status' => 'sucess',
                 'message' => 'Conta atualizada com sucesso',
             ]
-        ]);
+        ], 201);
     }
 
     public function updatePassword (PasswordUpdateRequest $request, $id){
@@ -72,10 +67,9 @@ class UserController extends Controller {
         $this->service->updatePassword($request->newPassword, $id);
         return response()->json([
             'data' => [
-                'status' => 'sucess',
                 'message' => 'Senha atualizada com sucesso',
             ]
-        ]);
+        ], 201);
 
     }
 
@@ -92,10 +86,9 @@ class UserController extends Controller {
 
         return response()->json([
             'data' => [
-                'status' => 'sucess',
                 'message' => 'Conta Deletada com sucesso',
             ]
-        ]);
+        ], 200);
     }
 
     public function checkPassword ($currentPassword, $id) {
@@ -103,14 +96,18 @@ class UserController extends Controller {
         return Hash::check($currentPassword, $user->password);
     }
 
-    public function getCollection($id) {
+    public function getCollection(int $id) {
         $collection = $this->collectionService->getUserCollection($id);
         return response()->json([
             'data' => $collection
-        ]);
+        ], 200);
     }
 
-    public function removeFromCollection($id){
-        return $this->collectionService->removeFromCollection($id);
+    public function removeFromCollection(int $id){
+        $remove =  $this->collectionService->removeFromCollection($id);
+
+        return response()->json([
+            'message' => 'Removido da coleção'
+        ], 200);
     }
 }

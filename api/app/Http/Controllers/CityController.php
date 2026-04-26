@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Services\CityService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class CityController extends Controller {
     protected $service;
@@ -18,6 +17,6 @@ class CityController extends Controller {
         $cities = $this->service->searchCities($request);
         return response()->json([
             'data' => $cities
-        ]);
+        ], 200);
     }
 }

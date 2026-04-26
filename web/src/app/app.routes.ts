@@ -5,7 +5,7 @@ import { HomeComponent } from './features/home/home.component';
 import { RegisterComponent } from './features/auth/register/register.component';
 import { VerifyEmailComponent } from './features/auth/verify-email/verify-email.component';
 import { BoardgameComponent } from './features/boardgame/boardgame.component';
-import { BoardgameDetailComponent } from './features/boardgame/boardgame-detail/boardgame-detail.component';
+import { BoardgameDetailComponent } from './features/boardgame/pages/boardgame-detail/boardgame-detail.component';
 
 export const routes: Routes = [
    {

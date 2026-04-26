@@ -26,11 +26,11 @@ class CollectionRepository {
         return Collection::where('user_id', $user)->where('boardgame_id', $boardgame)->first()->delete();
     }
 
-    public function checkCollection($user, $boardgame) {
+    public function checkCollection(int $user, int $boardgame) {
         return Collection::where('user_id', $user)->where('boardgame_id', $boardgame)->first();
     }
 
-    public function removeFromCollection($id) {
+    public function removeFromCollection(int $id) {
         return Collection::where('id', $id)->first()->delete();
     }
 }

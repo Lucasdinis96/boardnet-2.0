@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Services\BoardgameService;
 use App\Services\CollectionService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class BoardgameController extends Controller {
     
@@ -21,10 +20,10 @@ class BoardgameController extends Controller {
         $boardgames = $this->boardgameService->listBoardgames();
         return response()->json([
             'data' => $boardgames
-        ]);
+        ], 200);
     }
 
-    public function show(Request $request, $id) {
+    public function show(int $id) {
         $boardgame = $this->boardgameService->getBoardgame($id);
 
         return response()->json([
@@ -37,10 +36,9 @@ class BoardgameController extends Controller {
 
         return response()->json([
             'data' => [
-                'status' => 'success',
                 'message' => 'Jogo adicionado com sucesso.'
             ]
-        ]);
+        ], 200);
     }
 
     public function removeCollection(Request $request) {
@@ -48,17 +46,16 @@ class BoardgameController extends Controller {
 
         return response()->json([
             'data' => [
-                'status' => 'success',
                 'message' => 'Jogo removido com sucesso.'
             ]
-        ]);
+        ], 200);
     }
 
-    public function checkCollection($userId, $boardgameId) {
+    public function checkCollection(int $userId, int $boardgameId) {
         $check = $this->collectionService->checkCollection($userId, $boardgameId);
         if ($check){
-            return response()->json(['data' => 'existe']);
+            return response()->json(['data' => '1']);
         }
-        return response()->json(['data' => 'não']);
+        return response()->json(['data' => '0']);
     }
 }

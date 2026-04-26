@@ -10,7 +10,7 @@ class BoardgameRepository {
         return Boardgame::all();
     }
 
-    public function getHomePage(int $limit = 4) {
+    public function getHomePage(int $limit = 4): Boardgame {
         return Boardgame::limit($limit)->get();
     }
 
