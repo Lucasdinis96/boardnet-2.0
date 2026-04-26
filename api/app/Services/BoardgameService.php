@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Http\Resources\boardgames\BoardgameDetailResource;
+use App\Http\Resources\boardgames\BoardgameGetResource;
 use App\Repositories\BoardgameRepository;
 
 class BoardgameService {
@@ -12,10 +14,10 @@ class BoardgameService {
     }
 
     public function listBoardgames() {
-        return $this->repository->getIndexPage();
+        return BoardgameGetResource::collection($this->repository->getIndexPage());
     }
 
     public function getBoardgame(int $id) {
-        return $this->repository->find($id);
+        return BoardgameDetailResource::make($this->repository->find($id));
     }
 }

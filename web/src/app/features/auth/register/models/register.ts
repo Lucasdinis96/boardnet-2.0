@@ -10,5 +10,4 @@ export interface RegisterRequest {
     email: string;
     password: string;
     password_confirm: string;
-    user_id?: number | null;
 }

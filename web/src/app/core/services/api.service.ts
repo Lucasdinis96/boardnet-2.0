@@ -13,11 +13,11 @@ export class ApiService {
   private apiUrl = environment.apiUrl;
 
   get<T>(endpoint: string){
-    return this.http.get<{data: T}>(`${this.apiUrl}/${endpoint}`).pipe(map(res => res.data));
+    return this.http.get<{data: T}>(`${this.apiUrl}/${endpoint}`).pipe(map(response => response.data));
   }
 
-  show<T>(endpoint: string, id: string){
-    return this.http.get<{data: T}>(`${this.apiUrl}/${endpoint}/${id}`).pipe(map(res => res.data));
+  show<T>(endpoint: string, id: number){
+    return this.http.get<{data: T}>(`${this.apiUrl}/${endpoint}/${id}`).pipe(map(response => response.data));
   }
 
   post<T>(endpoint: string, data: any){

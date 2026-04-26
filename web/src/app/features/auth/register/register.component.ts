@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
   private registerService = inject(RegisterService);
   private cityService = inject(CityService);
   private router = inject(Router);
-  cities$!: Observable<any[]>;
+  cities$!: Observable<string []>;
   registerForm!: FormGroup<RegisterFormType>;
   isDropdownOpen = false;
 
@@ -65,7 +65,6 @@ export class RegisterComponent implements OnInit {
       email: formValue.email!,
       password: formValue.password!,
       password_confirm: formValue.password_confirm!,
-      user_id: userId ? Number(userId) : null,
     };
     this.registerService.registerUser(payload).subscribe({
       next: () => {

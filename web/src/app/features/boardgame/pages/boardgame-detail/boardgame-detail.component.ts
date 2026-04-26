@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { BoardgameService } from '../boardgame.service';
+import { BoardgameService } from '../../boardgame.service';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, catchError, combineLatest, map, Observable, of, switchMap, tap } from 'rxjs';
 
@@ -16,7 +16,7 @@ export class BoardgameDetailComponent {
   private service = inject(BoardgameService);
   private refresh$ = new BehaviorSubject<void>(undefined);
   boardgame$!: Observable<any>
-  exist!: any
+  exist!: string
 
   exist$ = combineLatest([
     this.route.paramMap,
@@ -40,7 +40,7 @@ export class BoardgameDetailComponent {
     );
   }
 
-  addCollection(boardgameId: any) {
+  addCollection(boardgameId: number) {
     const userId = localStorage.getItem('id');
     const payload = {
       user_id: userId,
@@ -50,7 +50,7 @@ export class BoardgameDetailComponent {
     
   }
 
-  removeCollection(boardgameId: any) {
+  removeCollection(boardgameId: number) {
     const userId = localStorage.getItem('id');
     const payload = {
       user_id: userId,
@@ -60,8 +60,8 @@ export class BoardgameDetailComponent {
     
   }
 
-  checkCollection (boardgameId: any){
-    const userId = localStorage.getItem('id');
+  checkCollection (boardgameId: number){
+    const userId = Number(localStorage.getItem('id'));
     return this.service.checkCollection(userId, boardgameId);
   }
 }
