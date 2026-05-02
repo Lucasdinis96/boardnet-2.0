@@ -1,9 +1,9 @@
-<div class="register-form">
-    <h2>Endereço</h2>
-    <form 
+<div class="content">
+    <form
         (ngSubmit)="submit()"
         [formGroup]="adressForm"
-        class="form">
+        class="adress-form">
+        <h2>Endereço</h2>
         <input 
             type="text"
             placeholder="CEP" 
@@ -39,6 +39,6 @@
                 </li>
             </ul>
         </div>
-        <button type="submit">Enviar</button>
+        <button class="send-btn" type="submit">Enviar</button>
     </form>
 </div>

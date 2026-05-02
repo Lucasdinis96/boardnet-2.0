@@ -1,11 +1,35 @@
+.auth-content {
+    display: flex;
+    gap: 10px;
+}
 .button {
     background-color: #C9A14D;
     color: black;
     font-weight: bold;
-    border-radius: 3px;
+    border-radius: 10px;
     padding: 10px;
+    border: none;
+}
+
+.button:hover{
+    background-color: #c9a24db7;
 }
 
 #me {
-    color: white;
+    color: #C9A14D;
+    text-decoration: none;
+    padding: 10px;
+    border: solid 2px black;
+}
+
+#me:hover{
+    border: solid 2px #C9A14D;
+    border-radius: 10px;
+
+}
+
+#me:active{
+    color: black;
+    border: 2px solid #C9A14D;
+    background-color: #C9A14D;
 }

@@ -1,0 +1,42 @@
+.security-form {
+  width: auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 10px;
+  align-items: center;
+}
+
+.password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 80%;
+}
+
+.delete-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 80%;
+}
+
+.delete-btn {
+  border: none;
+  color: white;
+  background-color: red;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.send-btn {
+  border: none;
+  color: white;
+  background-color: rgb(58, 58, 255);
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.autocomplete {
+  position: relative;
+}

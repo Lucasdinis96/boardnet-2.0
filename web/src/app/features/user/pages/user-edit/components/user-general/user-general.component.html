@@ -1,9 +1,9 @@
-<div class="register-form">
-    <h2>Editar Dados</h2>
+<div class="content">
     <form 
         (ngSubmit)="submit()"
         [formGroup]="userForm"
-        class="form">
+        class="general-form">
+        <h2>Editar Dados</h2>
         <input 
             type="text"
             placeholder="Nome" 
@@ -20,6 +20,6 @@
             type="email"
             placeholder="Email"
             formControlName="email">
-        <button type="submit">Enviar</button>
+        <button class="send-btn" type="submit">Enviar</button>
     </form>
 </div>

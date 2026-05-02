@@ -1,29 +1,43 @@
 header {
     background-color: #000;
     position: sticky;
-    padding: 10px;
     top: 0;
-    left: 0;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
     z-index: 1000;
-    height: fit-content;
+    height: auto;
 }
-.content {
+.header-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
 .nav {
-    padding: 20px;
     background-color: black;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 10px
 }
 
 .navbar {
-    background-color: aliceblue;
+    color: #C9A14D;
+    text-decoration: none;
     padding: 10px;
+    border: solid 2px black;
+}
+
+.navbar:hover{
+    border: solid 2px #C9A14D;
+    border-radius: 10px;
+
+}
+
+.navbar:active{
+    color: black;
+    border: 2px solid #C9A14D;
+    background-color: #C9A14D;
 }
 
 

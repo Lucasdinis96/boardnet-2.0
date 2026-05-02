@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
   private registerService = inject(RegisterService);
   private cityService = inject(CityService);
   private router = inject(Router);
-  cities$!: Observable<string []>;
+  cities$!: Observable<any []>;
   registerForm!: FormGroup<RegisterFormType>;
   isDropdownOpen = false;
 
@@ -92,6 +92,7 @@ export class RegisterComponent implements OnInit {
   }
 
   selectCity(city: any) {
+    console.log(city);
     this.registerForm.patchValue({
       city: city.name,
       city_id: city.id

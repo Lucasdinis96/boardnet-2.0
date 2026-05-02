@@ -1,9 +1,9 @@
-<div class="register-form">
-    <h2>Alterar Senha</h2>
-    <form 
+<div class="security-form">
+    <form
         (ngSubmit)="submit()"
         [formGroup]="passwordForm"
-        class="form">
+        class="password-form">
+        <h2>Alterar Senha</h2>
         <input 
             type="text"
             placeholder="Senha Atual" 
@@ -16,17 +16,18 @@
             type="text"
             placeholder="Confirmar Senha Nova" 
             formControlName="confirmNewPassword">
-        <button type="submit">Enviar</button>
+        <button class="send-btn" type="submit">Enviar</button>
     </form>
 </div>
-<div>
+
+<div class="security-form">
         <form
             (ngSubmit)="deleteAccount()"
             [formGroup]="deleteForm"
-            class="form">
+            class="delete-form">
         <h2>Deletar Conta</h2>
         <span>Para deletar sua conta, digite sua senha:</span>
         <input type="text" placeholder="Senha" formControlName="password">
-        <button type="submit">Deletar Conta</button>
+        <button class="delete-btn" type="submit">Deletar Conta</button>
     </form>
 </div>

@@ -1,4 +1,4 @@
-<div class="header__actions">
+<div class="auth-content">
   <ng-container *ngIf="isLogged$ | async; else loginTemplate">
     <a id="me" routerLink="user">
       Olá, {{ (user$ | async)?.name }}
