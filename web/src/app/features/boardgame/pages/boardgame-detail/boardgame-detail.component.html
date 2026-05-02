@@ -1,26 +1,36 @@
-<div *ngIf="boardgame$ | async as boardgame">
-    <div>
-        <img [src]="boardgame.cover" alt="cover">
+<div class="detail-container" *ngIf="boardgame$ | async as boardgame">
+
+    <div class="info">
+        <img class="cover" [src]="boardgame.cover" alt="cover">
         <h1>{{ boardgame.title }}</h1>
-        <a href="https://www.youtube.com/results?search_query=como+jogar+{{boardgame.title}}" target="_blank">
+        <a class="learn" href="https://www.youtube.com/results?search_query=como+jogar+{{boardgame.title}}" target="_blank">
             Como Jogar?
         </a>
         <ng-container *ngIf="exist$ | async as exist">
-            <button (click)="exist == '1' ? removeCollection(boardgame.id) : addCollection(boardgame.id)">
-                {{ exist == 'existe' ? 'Remover da coleção' : 'Adicionar à coleção' }}
+            <button
+                class="collection" 
+                [ngClass]="exist == 1 ? 'remove' : 'add' " 
+                (click)="exist == 1 ? removeCollection(boardgame.id) : addCollection(boardgame.id)">
+                {{ exist == 1 ? 'Remover da coleção' : 'Adicionar à coleção' }}
             </button>
         </ng-container>
     </div>
-    <div>
-        <span>Editora: {{ boardgame.publisher }}</span><br>
-        <span>Jogadores: de {{ boardgame.min_players }} até {{ boardgame.max_players }} jogadores. </span>
+
+    <div class="detail">
+        <div class="game-detail">
+            <span>Editora: {{ boardgame.publisher }}</span><br>
+            <span>Jogadores: de {{ boardgame.min_players }} até {{ boardgame.max_players }} jogadores. </span>
+        </div>
+
+        <div class="game-description">
+            <p>{{ boardgame.description }}</p>
+        </div>
     </div>
-    <div>
-        <p>{{ boardgame.description }}</p>
-    </div>
-    <div>
-        <a routerLink="/boardgames">Voltar</a>
-    </div>
+
+</div>
+
+<div class="goBack">
+    <a class="goBack-btn" routerLink="/boardgames">Voltar</a>
 </div>
 
 <ng-template #loadingExist>

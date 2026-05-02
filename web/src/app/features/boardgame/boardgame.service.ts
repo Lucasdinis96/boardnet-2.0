@@ -12,7 +12,7 @@ export class BoardgameService {
   private api = inject(ApiService)
 
   getAll() {
-    return this.api.get<BoardgameIndex>('boardgames')
+    return this.api.get<any>('boardgames')
   }
 
   getBoardgameById (id: number) {

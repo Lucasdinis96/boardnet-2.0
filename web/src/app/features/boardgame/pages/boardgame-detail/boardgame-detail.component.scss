@@ -1,0 +1,102 @@
+.detail-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+.collection {
+    width: 50%;
+    padding: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    border: 1px solid transparent;
+}
+
+.collection:hover {
+  filter: brightness(0.85);
+}
+
+.collection.remove {
+    color: white;
+    background-color: #f44336;
+}
+
+.collection.add {
+  background-color: #4CAF50;
+}
+
+.cover {
+    width: 50%;
+    height: auto;
+}
+
+.goBack {
+    margin-top: 10px;
+    place-self: center;
+}
+
+.detail {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    gap: 10px;
+}
+
+.game-detail {
+    display:flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
+    padding: 10px;
+    gap: 2px;
+}
+
+.game-description {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
+    padding: 10px;
+}
+
+.learn {
+    text-decoration: none;
+    color: white;
+    background-color: rgb(58, 58, 255);
+    padding: 5px;
+    border: 1px solid transparent;
+    width: fit-content;
+    border-radius: 8px;
+}
+
+.learn:hover {
+    filter: brightness(0.85);
+}
+
+.goBack {
+    width: fit-content;
+    padding: 5px;
+    background-color: #C9A14D;
+    border-radius: 8px;
+}
+
+.goBack-btn {
+    padding: 5px;
+    text-decoration: none;
+    color: black;
+}
+
+.goBack-btn:hover{
+    filter: brightness(0.85);
+}

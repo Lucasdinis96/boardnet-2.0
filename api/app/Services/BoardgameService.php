@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Http\Resources\boardgames\BoardgameDetailResource;
-use App\Http\Resources\boardgames\BoardgameGetResource;
+use App\Http\Resources\Boardgames\BoardgameDetailResource;
+use App\Http\Resources\Boardgames\BoardgameGetResource;
 use App\Repositories\BoardgameRepository;
 
 class BoardgameService {

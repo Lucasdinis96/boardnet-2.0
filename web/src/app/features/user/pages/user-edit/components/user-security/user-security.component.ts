@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { UserService } from '../../user.service';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '../../../../core/services/auth.service';
 import { Router } from '@angular/router';
+import { UserService } from '../../../../user.service';
+import { AuthService } from '../../../../../../core/services/auth.service';
 
 
 @Component({

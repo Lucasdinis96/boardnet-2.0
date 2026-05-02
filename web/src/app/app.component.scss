@@ -1,4 +1,14 @@
-.content {
-  margin-top: 10px;
-  min-height: calc(100vh - 140px);
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+    flex: 1;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    box-sizing: border-box;
 }

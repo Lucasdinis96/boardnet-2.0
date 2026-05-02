@@ -1,8 +1,16 @@
-<div *ngIf = "$boardgames | async as boardgames">
-    <div *ngFor = "let boardgame of boardgames">
-        <img src="{{boardgame.cover}}" alt="cover">
-        <a [routerLink]="['/boardgame', boardgame.id]">
-            {{ boardgame.title }}
-        </a>
+<div class="boardgames-container">
+    <div class="filters">
+        <input type="text">
+        <p>Filtros serão colocados aqui</p>
+        <button type="submit">Filtrar</button>
+    </div>
+
+    <div class="games" *ngIf = "$boardgames | async as boardgames">
+        <div class="game-card" *ngFor = "let boardgame of boardgames">
+            <a class="game-card-content" [routerLink]="['/boardgame', boardgame.id]">
+                <img class="cover" src="{{boardgame.cover}}" alt="cover">
+                <span>{{ boardgame.title }}</span>
+            </a>
+        </div>
     </div>
 </div>

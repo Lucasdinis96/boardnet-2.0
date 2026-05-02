@@ -1,19 +1,16 @@
-<div class="main-container">
+<div class="user-container">
+  
   <div class="menu-container" *ngIf="user$ | async as user">
-    <p>Teste</p>
-    <p>Bem vindo, {{ user.name }}</p>
-    <aside class="sidemenu">
-      <nav>
-        <ul>
-          <li><a routerLink="collection">Coleção</a></li>
-          <li><a routerLink="edit">Editar Dados</a></li>
-        </ul>
+    <img class="user-avatar" src="assets/avatar.png" alt="avatar">
+    <span>Bem vindo, {{ user.name }}</span>
+      <nav class="menu-options">
+          <a class="option-btn" routerLink="collection">Coleção</a>
+          <a class="option-btn" routerLink="edit">Editar Dados</a>
       </nav>
-    </aside>
   </div>
+  
   <div class="page-container">
-    <main>
       <router-outlet></router-outlet>
-    </main>
   </div>
+
 </div>

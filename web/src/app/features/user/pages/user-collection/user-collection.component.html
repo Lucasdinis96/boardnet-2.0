@@ -1,9 +1,9 @@
-<div class="container" *ngIf = "$collection | async as boardgames">
-    <div *ngFor = "let boardgame of boardgames">
-        <img src="{{boardgame.boardgame.cover}}" alt="cover">
-        <a [routerLink]="['/boardgame', boardgame.boardgame.id]">
-            {{ boardgame.boardgame.title }}
+<div class="collection" *ngIf = "$collection | async as boardgames">
+    <div class="game-card" *ngFor = "let boardgame of boardgames">
+        <a class="game-card-content" [routerLink]="['/boardgame', boardgame.boardgame.id]">
+            <img class="cover" src="{{boardgame.boardgame.cover}}" alt="cover">
+            <span>{{ boardgame.boardgame.title }}</span>
         </a>
-        <button type="submit" (click)="removeFromCollection(boardgame.collection_id)">Remover da coleção</button>
+        <button class="remove-btn" type="submit" (click)="removeFromCollection(boardgame.collection_id)">Remover da coleção</button>
     </div>
 </div>
