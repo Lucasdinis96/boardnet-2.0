@@ -12,27 +12,31 @@ export class BoardgameService {
   private api = inject(ApiService)
 
   getAll() {
-    return this.api.get<any>('boardgames')
+    return this.api.get<any>('boardgames/getAll')
   }
 
   getBoardgameById (id: number) {
-    return this.api.show<BoardgameDetail>('boardgames', id)
+    return this.api.show<BoardgameDetail>('boardgames/show', id)
   }
 
   addCollection(data: any){
-    return this.api.post('addCollection', data).pipe(
+    return this.api.post('boardgames/addCollection', data).pipe(
           tap((response) => {})
     );
   }
 
   removeCollection(data: any){
-    return this.api.post('removeCollection', data).pipe(
+    return this.api.post('boardgames/removeCollection', data).pipe(
           tap((response) => {})
     );
   }
 
   checkCollection(userId: number, boardgameId: number) {
-    return this.api.get(`checkCollection/${userId}/${boardgameId}`)
+    return this.api.get(`boardgames/checkCollection/${userId}/${boardgameId}`)
+  }
+
+  searchGame (term: any) {
+    return this.api.get<any[]>(`boardgames/search?name=${term}`);
   }
 
 }

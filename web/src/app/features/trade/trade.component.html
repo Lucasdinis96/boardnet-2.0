@@ -1,0 +1,15 @@
+<div class="trades-container">
+    <div class="filters">
+        <input type="text">
+        <p>Filtros serão colocados aqui</p>
+        <button type="submit">Filtrar</button>
+    </div>
+
+    <div class="trades" *ngIf = "$trades | async as trades">
+        <div class="trade-card" *ngFor = "let trade of trades">
+            <a class="trade-card-content" [routerLink]="['/trade', trade.id]">
+                <span>{{ trade.title }}</span>
+            </a>
+        </div>
+    </div>
+</div>

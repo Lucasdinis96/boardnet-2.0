@@ -1,0 +1,28 @@
+<div class="detail-container" *ngIf="trade$ | async as trade">
+
+    <div class="info">
+        <h1>{{ trade.title }}</h1>
+    </div>
+
+    <div class="detail">
+        <div class="trade-detail">
+            <span>Vendedor - {{ trade.user.name }}</span>
+            <a class="btn-contact" href="https://wa.me/{{ trade.user.phone }}">Entre em contato</a>
+        </div>
+
+        <div class="trade-description">
+            <p>{{ trade.description }}</p>
+        </div>
+
+        <div class="trade-games" *ngFor="let boardgames of trade.boardgames">
+            {{ boardgames.title}} - {{ boardgames.value }}
+        </div>
+    </div>
+
+</div>
+
+<div class="goBack">
+    <a class="goBack-btn" routerLink="/trades">Voltar</a>
+</div>
+
+

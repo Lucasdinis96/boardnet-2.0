@@ -16,7 +16,6 @@ export class UserCollectionComponent {
   $collection = this.userService.getCollection(this.id);
 
   removeFromCollection(id: any){
-    console.log('teste chamada');
     this.userService.removeFromCollection(id).subscribe()
   }
 

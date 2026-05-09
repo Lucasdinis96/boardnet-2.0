@@ -5,3 +5,19 @@ html, body {
   background-color: rgb(224, 224, 224);
 }
 
+button {
+  font-family:'Courier New', Courier, monospace;
+}
+
+.btn-contact {
+    border: none;
+    color: white;
+    background-color: rgb(58, 58, 255);
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    text-decoration: none;
+    width: fit-content;
+}
+

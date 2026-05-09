@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Trade;
 use App\Models\TradeItens;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class TradeRepository {
     
@@ -12,7 +13,6 @@ class TradeRepository {
     {
         return Trade::with(['user', 'boardgames'])
             ->orderBy('created_at', 'desc')
-            ->limit($limit)
             ->get();
     }
 
@@ -20,63 +20,80 @@ class TradeRepository {
         return Trade::findOrFail($id);
     }
 
-    public function create(array $data, array $boardgames) {
-        $trade = Trade::create([
-            'title' => $data['title'],
-            'description' => $data['description'] ?? null,
-            'user_id' => Auth::id(),
-        ]);
 
-        foreach ($boardgames as $boardgame) {
-            TradeItens::create([
-                'trade_id' => $trade->id,
-                'boardgame_id' => $boardgame['id'],
-                'value' => $boardgame['value'] ?? null,
-            ]);
-        }
 
-        return $trade;
-    }
-
-    public function update(Trade $trade, array $data, array $boardgames) {
-        
-        if (isset($data['title']) || isset($data['description'])) {
-            $trade->update([
-                'title' => $data['title'] ?? $trade->title,
-                'description' => $data['description'] ?? $trade->description,
-            ]);
-        }
-        
-        if (!empty($boardgames)) {
-            $syncData = [];
-        }
-
-        foreach ($boardgames as $boardgame) {
-            if (!empty($boardgame['id'])) {
-                $syncData[$boardgame['id']] = ['value' => $boardgame['value'] ?? null];
-            }
-        }
-
-        $trade->boardgames()->sync($syncData);
-
-        return $trade->load('boardgames');
-    }
-
-    public function delete(Trade $trade) {
-        $trade->delete();
-    }
-
-    public function getUserTrades($userId) {
+    public function getAllUserTrades($userId) {
         return Trade::with(['boardgames', 'user.city'])
             ->where('user_id', $userId)
             ->get();
     }
 
-    public function detachBoardgame(Trade $trade, int $boardgameId) {
-        
-        if ($trade->user_id !== Auth::id()) {
-            return response()->json(['message' => 'Você não tem permissão para deletar esta troca.'], 403);
+     public function getUserTradeById($tradeId) {
+        return Trade::with(['boardgames', 'user.city'])
+            ->where('id', $tradeId)    
+            ->first();
+    }
+
+    public function create(array $data, array $boardgames) {
+        $trade = Trade::create([
+            'title' => $data['title'],
+            'description' => $data['description'] ?? null,
+            'user_id' => $data['user_id'],
+        ]);
+
+        if (!$trade) {
+            return false;
         }
-        $trade->boardgames()->detach($boardgameId);
+
+        foreach ($boardgames as $boardgame) {
+            TradeItens::create([
+                'trade_id' => $trade->id,
+                'boardgame_id' => $boardgame['boardgame_id'],
+                'value' => $boardgame['value'] ?? null,
+            ]);
+        }
+
+        return true;
+    }
+
+    public function update(array $tradeData, array $boardgamesTrade, Trade $trade) {
+        Log::info($tradeData);
+        Log::info($boardgamesTrade);
+        if (isset($tradeData['title']) || isset($tradeData['description'])) {
+            $trade->update([
+                'title' => $tradeData['title'] ?? $trade->title,
+                'description' => $tradeData['description'] ?? $trade->description,
+            ]);
+        }
+
+        Log::info($trade->id);
+
+        if (!empty($boardgamesTrade)) {
+            $syncData = [];
+
+            foreach ($boardgamesTrade as $boardgame) {
+                if (!empty($boardgame['boardgame_id'])) {
+                    $syncData[$boardgame['boardgame_id']] = [
+                        'value' => $boardgame['value'] ?? null
+                    ];
+                }
+            }
+
+            $trade->boardgames()->sync($syncData);
+        };
+               
+        return $trade->load('boardgames');
+    }
+
+    public function delete($trade) {
+        TradeItens::where('trade_id', $trade)->delete();
+        Trade::where('id', $trade)->delete();
+        return true;
+    }
+
+    
+
+    public function detachBoardgame($trade) {
+        return TradeItens::where('id', $trade['id'])->where('boardgame_id', $trade['boardgame_id'])->delete();
     }
 }

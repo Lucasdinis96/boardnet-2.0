@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\boardgames;
+namespace App\Http\Resources\Boardgames;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -17,7 +17,8 @@ class BoardgameGetResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'cover' => $this->cover
-            ];
+            'cover' => $this->cover,
+            'value' => $this->pivot?->value,
+        ];
     }
 }

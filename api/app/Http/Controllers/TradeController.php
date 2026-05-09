@@ -27,7 +27,9 @@ class TradeController extends Controller {
     public function show(Request $request, int $id) {
         
         $trade = $this->tradeService->showTrade($id);
-        return response()->json($trade);
+        return response()->json([
+            'data' => $trade
+        ]);
     }
 
     public function store(CreateTradeRequest $request) {
