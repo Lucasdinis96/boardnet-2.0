@@ -43,4 +43,25 @@ export class UserService {
   removeFromCollection(id: any) {
     return this.api.delete<any>('user/removeFromCollection', id);
   }
+
+  getTrades (id: any) {
+    return this.api.get<any>(`user/trades/${id}`);
+  }
+  
+  getTradeById (id: any) {
+    return this.api.show<any>('user/trades/show', id);
+  }
+
+  createTrade (data: any) {
+    return this.api.post<any>('user/trades/create', data,);
+  }
+
+  updateTrade (data: any, id: any) {
+    return this.api.put<any>('user/trades/update', id, data,);
+  }
+
+  removeTrade (id: any) {
+    return this.api.delete<any>('user/trades/delete', id);
+  }
+
 }

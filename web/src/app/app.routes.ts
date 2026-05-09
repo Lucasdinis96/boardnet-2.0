@@ -6,6 +6,8 @@ import { RegisterComponent } from './features/auth/register/register.component';
 import { VerifyEmailComponent } from './features/auth/verify-email/verify-email.component';
 import { BoardgameComponent } from './features/boardgame/boardgame.component';
 import { BoardgameDetailComponent } from './features/boardgame/pages/boardgame-detail/boardgame-detail.component';
+import { TradeComponent } from './features/trade/trade.component';
+import { TradeDetailComponent } from './features/trade/pages/trade-detail/trade-detail.component';
 
 export const routes: Routes = [
    {
@@ -33,5 +35,13 @@ export const routes: Routes = [
    {
         path: 'boardgame/:id',
         component: BoardgameDetailComponent
+   },
+   {
+        path: 'trades',
+        component: TradeComponent
+   },
+   {
+        path: 'trade/:id',
+        component: TradeDetailComponent
    }
 ];

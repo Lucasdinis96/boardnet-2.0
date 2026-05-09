@@ -4,7 +4,7 @@ namespace App\Http\Requests\Trade;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateTradeRequest extends FormRequest
+class TradeCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,11 @@ class CreateTradeRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'user_id' => 'required|int',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:5000',
             'boardgames' => 'required|array',
-            'boardgames.*.id' => 'required|exists:boardgames,id',
+            'boardgames.*.boardgame_id' => 'required|exists:boardgames,id',
             'boardgames.*.value' => 'nullable|numeric|min:0'
         ];
     }

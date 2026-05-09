@@ -17,4 +17,10 @@ class BoardgameRepository {
     public function find(int $id): Boardgame {
         return Boardgame::findOrFail($id);
     }
+
+    public function search(string $term) {
+        return Boardgame::where('title', 'like', "%{$term}%")
+            ->orderBy('title')
+            ->get();
+    }
 }

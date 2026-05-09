@@ -22,7 +22,7 @@
 .games {
     display: grid;
     height: fit-content;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 10px;
     width: 80%;
 }
@@ -37,8 +37,6 @@
     align-items: center;
     justify-items: center;
     border-radius: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
     gap: 10px;
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
 }

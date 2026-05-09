@@ -6,6 +6,9 @@ import { UserCollectionComponent } from "./pages/user-collection/user-collection
 import { UserGeneralComponent } from "./pages/user-edit/components/user-general/user-general.component";
 import { UserSecurityComponent } from "./pages/user-edit/components/user-security/user-security.component";
 import { UserAdressComponent } from "./pages/user-edit/components/user-adress/user-adress.component";
+import { UserTradesComponent } from "./pages/user-trades/user-trades.component";
+import { UserTradeEditComponent } from "./pages/user-trades/pages/user-trade-edit/user-trade-edit.component";
+import { UserTradeCreateComponent } from "./pages/user-trades/pages/user-trade-create/user-trade-create.component";
 
 
 export const user_routes: Routes = [
@@ -21,7 +24,15 @@ export const user_routes: Routes = [
                     {path: 'security', component: UserSecurityComponent}
                 ]
             },
-            {path: 'collection', component: UserCollectionComponent}
+            {path: 'collection', component: UserCollectionComponent},
+            {path: 'trades',
+                children: [
+                    {path: '', component: UserTradesComponent},
+                    {path: 'create', component: UserTradeCreateComponent},
+                    {path: 'edit/:id', component: UserTradeEditComponent}
+                ]
+            },
+
         ]
     }
 ]

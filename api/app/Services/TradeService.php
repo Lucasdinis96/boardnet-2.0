@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Http\Resources\Trade\TradeGetResource;
 use App\Repositories\TradeRepository;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class TradeService {
     
@@ -18,26 +20,33 @@ class TradeService {
     }
 
     public function showTrade($id) {
-        return $this->tradeRepository->findById($id);
+        return TradeGetResource::make($this->tradeRepository->getUserTradeById($id));
     }
 
     public function createTrade(array $data) {
         return $this->tradeRepository->create($data, $data['boardgames']);
     }
 
-    public function updateTrade($trade, array $data) {
-        return $this->tradeRepository->update($trade, $data, $data['boardgames']);
+    public function updateTrade($data, $trade) {
+
+        $tradeData = [
+            'id' => $data['id'],
+            'title' => $data['title'] ?? null,
+            'description' => $data['description'] ?? null,
+        ];
+
+        $boardgamesData = $data['boardgames'] ?? [];
+
+        $trades = $this->tradeRepository->update($tradeData, $boardgamesData, $trade);
+
+        return $trades;
     }
 
     public function deleteTrade($trade) {
         $this->tradeRepository->delete($trade);
     }
 
-    public function getUserTrades() {
-        return $this->tradeRepository->getUserTrades(Auth::id());
-    }
-
-    public function removeBoardgame($trade, $boardgame) {
-        $this->tradeRepository->detachBoardgame($trade, $boardgame->id);
+    public function getUserTrades(int $id) {
+        return TradeGetResource::collection($this->tradeRepository->getAllUserTrades($id));
     }
 }

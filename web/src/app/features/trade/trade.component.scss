@@ -1,12 +1,33 @@
-.collection {
-    display: grid;
-    height: fit-content;
-    grid-template-columns: repeat(3, 1fr);
+.trades-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
     gap: 10px;
-    border-radius: 10px;
+    justify-content: center;
 }
 
-.game-card {
+.filters {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 10px;
+    height: 100%;
+    width: 20%;
+    background-color: white;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
+}
+
+.trades {
+    display: grid;
+    height: fit-content;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    width: 80%;
+}
+
+.trade-card {
     background-color: white;
     border: 2px solid transparent;
     width: 260px;
@@ -16,17 +37,15 @@
     align-items: center;
     justify-items: center;
     border-radius: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
     gap: 10px;
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
 }
 
-.game-card:hover{
+.trade-card:hover{
     border: 2px solid rgb(58, 58, 255);
 }
 
-.game-card-content {
+.trade-card-content {
     display: flex;
     width: 100%;
     height: 100%;
@@ -41,14 +60,4 @@
 .cover {
     width: 50%;
     height: fit-content;
-}
-
-.remove-btn {
-    border: none;
-    color: white;
-    background-color: red;
-    padding: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: 'Courier New', Courier, monospace;
 }

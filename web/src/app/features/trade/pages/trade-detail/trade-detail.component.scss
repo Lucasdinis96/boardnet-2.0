@@ -15,28 +15,6 @@
     width: 20%;
 }
 
-.collection {
-    width: 50%;
-    padding: 5px;
-    border-radius: 8px;
-    cursor: pointer;
-    border: none;
-    border: 1px solid transparent;
-}
-
-.collection:hover {
-  filter: brightness(0.85);
-}
-
-.collection.remove {
-    color: white;
-    background-color: #f44336;
-}
-
-.collection.add {
-  background-color: #4CAF50;
-}
-
 .cover {
     width: 50%;
     height: auto;
@@ -55,35 +33,30 @@
     width: 80%;
 }
 
-.game-detail {
+.trade-detail {
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
     padding: 10px;
-    gap: 2px;
+    gap: 10px;
+    align-items: center;
 }
 
-.game-description {
+.trade-description {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
     padding: 10px;
 }
 
-.learn {
-    text-decoration: none;
-    color: white;
-    background-color: rgb(58, 58, 255);
-    padding: 5px;
-    border: 1px solid transparent;
-    width: fit-content;
-    border-radius: 8px;
-}
-
-.learn:hover {
-    filter: brightness(0.85);
+.trade-games {
+    width: 50%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
+    padding: 10px;
 }
 
 .goBack {

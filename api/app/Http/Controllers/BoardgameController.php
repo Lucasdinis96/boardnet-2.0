@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\BoardgameService;
 use App\Services\CollectionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class BoardgameController extends Controller {
     
@@ -57,5 +58,12 @@ class BoardgameController extends Controller {
             return response()->json(['data' => '1']);
         }
         return response()->json(['data' => '0']);
+    }
+
+    public function search (Request $request) {
+       $games = $this->boardgameService->searchGames($request);
+        return response()->json([
+            'data' => $games
+        ], 200);
     }
 }

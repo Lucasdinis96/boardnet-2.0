@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TradeController;
-use App\Http\Controllers\CollectionController;
 
 
 
@@ -17,19 +16,23 @@ Route::prefix('user')->group(function () {
         Route::put('adressUpdate/{id}', [UserController::class, 'updateAdress']);
         Route::put('passwordUpdate/{id}', [UserController::class, 'updatePassword']);
         Route::put('deleteAccount/{id}', [UserController::class, 'destroy']);
+
         Route::get('collection/{id}', [UserController::class, 'getCollection']);
         Route::delete('removeFromCollection/{id}', [UserController::class, 'removeFromCollection']);
-    });
-});
-Route::put('/user/update', [UserController::class, 'update']);
-Route::delete('/user/delete', [UserController::class, 'destroy']);
 
-Route::get('/profile/my-trades', [TradeController::class, 'myTrades']);
+        Route::get('trades/{id}', [UserController::class, 'getTrades']);
+        Route::get('trades/show/{id}', [UserController::class, 'showTrade']);
+        Route::post('trades/create', [UserController::class, 'createTrade']);
+        Route::put('trades/update/{trade}', [UserController::class, 'updateTrade']);
+        Route::delete('trades/delete/{id}', [UserController::Class, 'deleteTrade']);
+    });
+
+});
+
+
 Route::get('/profile/my-trades/store', [TradeController::class, 'store']);
 Route::put('/profile/my-trades/{trade}/update', [TradeController::class, 'update']);
 Route::delete('/profile/my-trades/delete/{trade}', [TradeController::class, 'destroy']);
 Route::delete('/profile/my-trades/{trade}/boardgame/{boardgame}', [TradeController::class, 'detachBoardgame']);
 
-Route::get('/profile/collection', [CollectionController::class, 'index']);
-Route::post('/collection', [CollectionController::class, 'add']);
-Route::delete('/collection/{collection}', [CollectionController::class, 'remove']);
+

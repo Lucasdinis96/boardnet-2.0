@@ -1,0 +1,40 @@
+.trade-edit
+.edit-trade-form {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.close {
+  font-weight: bold;
+  width: fit-content;
+  background-color: transparent;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  align-self: flex-end;
+  cursor: pointer;
+}
+
+input {
+  border: none;
+}
+
+.search-results {
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 4px;
+  background: white;
+  z-index: 1000px;
+}
+
+.result-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.result-item:hover {
+  background-color: #f2f2f2;
+}
