@@ -5,19 +5,75 @@ html, body {
   background-color: rgb(224, 224, 224);
 }
 
+input, textarea {
+  border: none;
+  border-bottom: 2px solid #ccc;
+  outline: none;
+  padding: 5px 0;
+  font-family:'Courier New', Courier, monospace;
+}
+
 button {
   font-family:'Courier New', Courier, monospace;
 }
 
-.btn-contact {
+.btn-blue {
     border: none;
     color: white;
-    background-color: rgb(58, 58, 255);
+    background-color: rgb(00, 150, 255);
     padding: 5px;
     border-radius: 5px;
     cursor: pointer;
-    font-family: 'Courier New', Courier, monospace;
     text-decoration: none;
     width: fit-content;
+}
+
+.btn-blue:hover {
+  background-color: rgb(0 ,0 , 255);
+}
+
+.btn-green {
+    border: none;
+    color: white;
+    background-color: rgb(37, 211, 102);
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    width: fit-content;
+}
+
+.btn-green:hover{
+  background-color: rgb(7,94,84);
+}
+
+.btn-red {
+    border: none;
+    color: white;
+    background-color: rgb(255, 0, 0);
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    width: fit-content;
+}
+
+.btn-red:hover{
+  background-color: rgb(139, 0, 0);
+}
+
+.btn-yellow {
+    border: none;
+    color: white;
+    background-color: #C9A14D;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    width: fit-content;
+}
+
+.btn-yellow:hover{
+    background-color: #c9a24db7;
 }
 

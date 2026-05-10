@@ -52,11 +52,37 @@
 }
 
 .trade-games {
-    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
     padding: 10px;
+    width: 20%;
+    height: fit-content;
+    gap: 10px;
+    border: 2px solid transparent;
+    text-decoration: none;
+    color: black;
+}
+
+.trade-games:hover{
+    border: 2px solid rgb(58, 58, 255);
+}
+
+.trade-games-grid {
+    display: flex;
+    flex-direction: row;
+    gap: 10px
+}
+
+.game-cover {
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
 }
 
 .goBack {

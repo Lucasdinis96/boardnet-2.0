@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../../../user.service';
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BoardgameService } from '../../../../../boardgame/boardgame.service';
 
 @Component({
@@ -36,12 +35,11 @@ export class UserTradeEditComponent {
 
   loadTrade(id: number) {
     this.userService.getTradeById(id).subscribe(trade => {
+      this.setBoardgames(trade.boardgames);
       this.editTradeForm.patchValue({
         title: trade.title,
         description: trade.description
       });
-
-      this.setBoardgames(trade.boardgames);
 
     });
   }
@@ -64,7 +62,7 @@ private setBoardgames(boardgames: any[]) {
     return this.fb.group({
       boardgame_id: [boardgame?.id || ''],
       title: [boardgame?.title || ''],
-      value: [boardgame?.value || '']
+      value: [boardgame?.value || 0]
     });
   }
 
@@ -79,7 +77,7 @@ private setBoardgames(boardgames: any[]) {
   }
 
   submit () {
-    this.updateTrade()
+    this.updateTrade();
   }
 
   goBack() {
@@ -97,7 +95,9 @@ private setBoardgames(boardgames: any[]) {
     }
 
     this.userService.updateTrade(payload, id).subscribe({
-      next: (response) => {console.log(response.message)},
+      next: (response) => {
+        console.log(response.message),
+        this.router.navigate(['/user/trades'], { replaceUrl: true });},
       error: () => {console.log('Erro ao atualizar')}
     })
   }
