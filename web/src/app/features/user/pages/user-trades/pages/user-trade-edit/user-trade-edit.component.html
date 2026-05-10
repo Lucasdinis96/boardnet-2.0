@@ -1,39 +1,41 @@
 <div class="trade-edit" >
     <form (ngSubmit)="submit()" [formGroup]="editTradeForm" class="edit-trade-form">
         <h2>Editar Anúncio</h2>
-        <input type="text" placeholder="Título" formControlName="title">
-        <textarea type="text" placeholder="Descrição" formControlName="description"></textarea>
-        <div formArrayName="boardgames">
+        <input class="title" type="text" placeholder="Título" formControlName="title">
+        <textarea class="description"  type="text" placeholder="Descrição" formControlName="description"></textarea>
+        <div class="boardgames-list" formArrayName="boardgames">
             <div
             *ngFor="let game of boardgames.controls; let i = index"
             [formGroupName]="i"
             class="boardgame-group"
             >
+            <div class="search-wrapper">
                 <input
                     type="text"
                     formControlName="title"
                     placeholder="Buscar"
                     (input)="searchBoardgames($event, i)"
                 >
-                <div class="search-results" *ngIf="searchResult[i]?.length">
-                    <div
+                <ul class="search-results" *ngIf="searchResult[i]?.length">
+                    <li
                         class="result-item"
                         *ngFor="let result of searchResult[i]"
-                        (click)="selectBoardgame(result, i)"
+                        (mousedown)="selectBoardgame(result, i)"
                     >
                         {{ result.title }}
-                    </div>
-                </div>
+                    </li>
+                </ul>
+            </div>
                 <input
                     type="number"
                     formControlName="value"
                     placeholder="Valor"
                 >
-                <button type="button" (click)="removeBoardgame(i)">Remover</button>
+                <button class="btn-red" type="button" (click)="removeBoardgame(i)">Remover</button>
             </div>
         </div>
-        <button type="button" (click)="addBoardgame()">+ Adicionar jogo</button>
-        <button class="send-btn" type="submit">Enviar</button>
+         <button class="btn-green" type="button" (click)="addBoardgame()">+ Adicionar jogo</button>
+        <button class="send-btn btn-blue" type="submit">Salvar</button>
     </form>
-    <button (click)="goBack()">Voltar</button>
+    <button class="btn-yellow" (click)="goBack()">Voltar</button>
 </div>

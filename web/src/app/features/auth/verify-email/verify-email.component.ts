@@ -1,16 +1,18 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { RegisterService } from '../register/register.service';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-verify-email',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './verify-email.component.html',
   styleUrl: './verify-email.component.scss',
 })
 export class VerifyEmailComponent {
 
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private registerService = inject(RegisterService);
 
   token!: string;
@@ -25,7 +27,11 @@ export class VerifyEmailComponent {
 
   verifyEmail(token: string){
     this.registerService.verifyEmail(token).subscribe({
-      next: () => console.log('Email verificado com sucesso'),
+      next: () => {
+        console.log('Email verificado com sucesso');
+        debounceTime(3000);
+        this.router.navigate(['/home'], { replaceUrl: true });
+      },
       error: () => console.log('Token inválido ou expirado')
     })
   }

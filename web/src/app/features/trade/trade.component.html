@@ -8,6 +8,7 @@
     <div class="trades" *ngIf = "$trades | async as trades">
         <div class="trade-card" *ngFor = "let trade of trades">
             <a class="trade-card-content" [routerLink]="['/trade', trade.id]">
+                <img class="cover" src="assets/photoicon.png" alt="cover">
                 <span>{{ trade.title }}</span>
             </a>
         </div>

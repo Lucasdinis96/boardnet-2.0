@@ -1,21 +1,28 @@
 <div class="detail-container" *ngIf="trade$ | async as trade">
 
     <div class="info">
+        <img class="cover" src="assets/photoicon.png" alt="cover">
         <h1>{{ trade.title }}</h1>
     </div>
 
     <div class="detail">
         <div class="trade-detail">
             <span>Vendedor - {{ trade.user.name }}</span>
-            <a class="btn-contact" href="https://wa.me/{{ trade.user.phone }}">Entre em contato</a>
+            <a class="btn-green" href="https://wa.me/{{ trade.user.phone }}">Entre em contato</a>
         </div>
 
         <div class="trade-description">
             <p>{{ trade.description }}</p>
         </div>
-
-        <div class="trade-games" *ngFor="let boardgames of trade.boardgames">
-            {{ boardgames.title}} - {{ boardgames.value }}
+        <div class="trade-games-grid">
+            <div class="trade-games" *ngFor="let boardgames of trade.boardgames">
+                <img class="game-cover" src="{{boardgames.cover}}" alt="cover">
+                <span>{{ boardgames.title}}</span>
+                <span>R$ {{ boardgames.value }}</span>
+                <button class="cart-btn btn-green">Comprar</button>
+                <a class="btn-blue" [routerLink]="['/boardgame', boardgames.id]">Ver Jogo</a>
+                
+            </div>
         </div>
     </div>
 

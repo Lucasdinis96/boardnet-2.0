@@ -5,6 +5,7 @@ import { UserService } from '../../../../user.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { BoardgameService } from '../../../../../boardgame/boardgame.service';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-user-trade-create',
@@ -68,7 +69,8 @@ export class UserTradeCreateComponent {
   }
 
   submit () {
-    this.createTrade()
+    this.createTrade();
+    this.router.navigate(['/user/trades'], { replaceUrl: true });
   }
 
   goBack() {
@@ -99,6 +101,7 @@ export class UserTradeCreateComponent {
     }
 
     this.boardgameService.searchGame(value).subscribe(results => {
+      debounceTime(300),
       this.searchResult[index] = results
     })
   }
