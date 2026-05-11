@@ -1,1 +1,33 @@
-<p>home works!</p>
+<div class="container">
+    <div class="welcome">
+        <p>
+            Seu portal de troca e venda de jogos de tabuleiro.
+        </p>
+        <p>
+            Encontre hoje sua nova aventura.
+        </p>
+        <a class="btn-yellow" [routerLink]="['/register']">Cadastre-se hoje!!</a>
+    </div>
+    <div>
+        <a class="btn-yellow" [routerLink]="['/trades']">Novos Anúncios</a>
+    </div>
+    <div class="trades" *ngIf = "$trades | async as trades">
+        <div class="trade-card" *ngFor = "let trade of trades">
+            <a class="trade-card-content" [routerLink]="['/trade', trade.id]">
+                <img class="cover-trade" src="assets/photoicon.png" alt="cover">
+                <span>{{ trade.title }}</span>
+            </a>
+        </div>
+    </div>
+    <div>
+        <a class="btn-yellow" [routerLink]="['/boardgames']">Ultimos Lançamentos</a>
+    </div>
+    <div class="games" *ngIf = "$boardgames | async as boardgames">
+        <div class="game-card" *ngFor = "let boardgame of boardgames">
+            <a class="game-card-content" [routerLink]="['/boardgame', boardgame.id]">
+                <img class="cover" src="{{boardgame.cover}}" alt="cover">
+                <span>{{ boardgame.title }}</span>
+            </a>
+        </div>
+    </div>
+</div>
