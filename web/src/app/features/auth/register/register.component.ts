@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { RegisterService } from './register.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CityService } from '../../../shared/services/city.service';
+import { CityService } from '../../../core/services/city.service';
 import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
 import { RegisterFormType } from './types/register-form.type';
 import { RegisterRequest } from './models/register';

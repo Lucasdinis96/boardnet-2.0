@@ -3,6 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BoardgameService } from '../../boardgame.service';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, catchError, combineLatest, map, Observable, of, switchMap, tap } from 'rxjs';
+import { FlashMessageService } from '../../../../core/services/flash-message.service';
 
 @Component({
   selector: 'app-boardgame-detail',
@@ -15,6 +16,7 @@ export class BoardgameDetailComponent {
   private route = inject(ActivatedRoute);
   private service = inject(BoardgameService);
   private refresh$ = new BehaviorSubject<void>(undefined);
+  private flashMessage = inject(FlashMessageService);
   boardgame$!: Observable<any>
   exist!: string
 
@@ -46,7 +48,10 @@ export class BoardgameDetailComponent {
       user_id: userId,
       boardgame_id: boardgameId
     }
-    this.service.addCollection(payload).subscribe(() => {this.refresh$.next();});
+    this.service.addCollection(payload).subscribe((response: any) => {
+      this.flashMessage.success(response.message);
+      this.refresh$.next();
+    });
     
   }
 
@@ -56,7 +61,10 @@ export class BoardgameDetailComponent {
       user_id: userId,
       boardgame_id: boardgameId
     }
-    this.service.removeCollection(payload).subscribe(() => {this.refresh$.next();});
+    this.service.removeCollection(payload).subscribe((response: any) => {
+      this.flashMessage.success(response.message)
+      this.refresh$.next();
+    });
     
   }
 

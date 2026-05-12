@@ -1,0 +1,7 @@
+<div
+  *ngIf="message$ | async as message"
+  class="flash-message"
+  [ngClass]="message.type"
+>
+  {{ message.text }}
+</div>
