@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { AuthService } from './core/services/auth.service';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { FlashMessageComponent } from './core/components/flash-message/flash-message.component';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,7 @@ import { FooterComponent } from './shared/footer/footer.component';
     RouterOutlet,
     HeaderComponent,
     FooterComponent,
+    FlashMessageComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

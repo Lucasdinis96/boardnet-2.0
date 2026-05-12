@@ -3,7 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
 import { RegisterService } from '../../../../../auth/register/register.service';
-import { CityService } from '../../../../../../shared/services/city.service';
+import { CityService } from '../../../../../../core/services/city.service';
 import { UserService } from '../../../../user.service';
 
 
