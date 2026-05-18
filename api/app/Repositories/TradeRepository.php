@@ -3,11 +3,15 @@
 namespace App\Repositories;
 
 use App\Models\Trade;
-use App\Models\TradeItens;
-use Illuminate\Support\Facades\Auth;
+use App\Models\TradeItem;
+use App\Repositories\Trade\TradeItemRepository;
 use Illuminate\Support\Facades\Log;
 
 class TradeRepository {
+
+    public function __construct(
+        private TradeItemRepository $tradeItemRepository
+    ) {}
     
     public function getLatestTrades(int $limit = 8)
     {
@@ -19,8 +23,6 @@ class TradeRepository {
     public function findById($id) {
         return Trade::findOrFail($id);
     }
-
-
 
     public function getAllUserTrades($userId) {
         return Trade::with(['boardgames', 'user.city'])
@@ -46,19 +48,14 @@ class TradeRepository {
         }
 
         foreach ($boardgames as $boardgame) {
-            TradeItens::create([
-                'trade_id' => $trade->id,
-                'boardgame_id' => $boardgame['boardgame_id'],
-                'value' => $boardgame['value'] ?? null,
-            ]);
+            $this->tradeItemRepository->create($boardgame, $trade->id);
         }
 
         return true;
     }
 
     public function update(array $tradeData, array $boardgamesTrade, Trade $trade) {
-        Log::info($tradeData);
-        Log::info($boardgamesTrade);
+      
         if (isset($tradeData['title']) || isset($tradeData['description'])) {
             $trade->update([
                 'title' => $tradeData['title'] ?? $trade->title,
@@ -86,7 +83,7 @@ class TradeRepository {
     }
 
     public function delete($trade) {
-        TradeItens::where('trade_id', $trade)->delete();
+        TradeItem::where('trade_id', $trade)->delete();
         Trade::where('id', $trade)->delete();
         return true;
     }
@@ -94,6 +91,6 @@ class TradeRepository {
     
 
     public function detachBoardgame($trade) {
-        return TradeItens::where('id', $trade['id'])->where('boardgame_id', $trade['boardgame_id'])->delete();
+        return TradeItem::where('id', $trade['id'])->where('boardgame_id', $trade['boardgame_id'])->delete();
     }
 }

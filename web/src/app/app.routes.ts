@@ -11,7 +11,7 @@ import { TradeDetailComponent } from './features/trade/pages/trade-detail/trade-
 
 export const routes: Routes = [
    {
-       path: 'home',
+       path: '',
        component: HomeComponent
    },
    {

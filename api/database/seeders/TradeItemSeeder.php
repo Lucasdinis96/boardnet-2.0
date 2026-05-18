@@ -13,7 +13,7 @@ class TradeItemSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('tradeItens')->insert([
+        DB::table('trade_items')->insert([
             [
                 'trade_id' => 1,
                 'boardgame_id' => 3,
