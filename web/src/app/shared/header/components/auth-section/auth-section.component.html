@@ -3,6 +3,9 @@
     <a id="me" routerLink="user">
       Olá, {{ (user$ | async)?.name }}
     </a>
+    <a href="">
+      <span class="material-symbols-outlined">shopping_cart</span>
+    </a>
     <button class="button" (click)="logout()">
       Sair
     </button>

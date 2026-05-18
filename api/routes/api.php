@@ -15,6 +15,10 @@ require __DIR__.'/api/auth.php';
 require __DIR__.'/api/user.php';
 require __DIR__.'/api/boardgames.php';
 require __DIR__.'/api/trade.php';
+require __DIR__.'/api/cart.php';
+require __DIR__.'/api/checkout.php';
+require __DIR__.'/api/negotiation.php';
+require __DIR__.'/api/payment.php';
 
 
 

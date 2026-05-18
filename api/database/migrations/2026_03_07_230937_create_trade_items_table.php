@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tradeItens', function (Blueprint $table) {
+        Schema::create('trade_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('trade_id')->references('id')->on('trades')->onDelete('cascade');
             $table->foreignId('boardgame_id')->references('id')->on('boardgames')->onDelete('cascade');
             $table->float('value', 8, 2)->nullable();
+            $table->string('status')->default('available');
+            $table->timestamp('reserved_until')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tradeItens');
+        Schema::dropIfExists('trade_items');
     }
 };
