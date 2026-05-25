@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Checkout;
 
-use App\Enums\NegotiationEventType;
 use App\Http\Controllers\Controller;
 use App\Services\Checkout\CheckoutService;
 use App\Services\Negotiation\NegotiationEventService;
@@ -33,8 +32,9 @@ class CheckoutController extends Controller {
         );
 
         return response()->json([
-            'message' => 'Checkout realizado com sucesso',
-            'data' => $negotiation
+            'data' => [
+                'message' => 'Checkout realizado com sucesso',
+            ]
         ]);
     }
 }

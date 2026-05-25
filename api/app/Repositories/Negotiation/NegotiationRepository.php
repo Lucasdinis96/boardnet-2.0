@@ -2,30 +2,17 @@
 
 namespace App\Repositories\Negotiation;
 
+use App\Enums\NegotiationStatus;
 use App\Models\Negotiation;
 use App\Models\User;
 
 class NegotiationRepository {
 
-    /*
-    |--------------------------------------------------------------------------
-    | Cria negociação
-    |--------------------------------------------------------------------------
-    */
-
     public function create(array $data): Negotiation {
-
         return Negotiation::create($data);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Busca negociação por ID
-    |--------------------------------------------------------------------------
-    */
-
     public function findById(int $id): ?Negotiation {
-
         return Negotiation::with([
             'items.boardgame',
             'buyer',
@@ -35,15 +22,7 @@ class NegotiationRepository {
         ])->find($id);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Lista negociações do usuário
-    |--------------------------------------------------------------------------
-    */
-
-    public function getUserNegotiations(
-        User $user
-    ) {
+    public function getUserNegotiations(User $user) {
 
         return Negotiation::with([
             'items.boardgame',
@@ -63,5 +42,33 @@ class NegotiationRepository {
         })
         ->latest()
         ->get();
+    }
+
+    public function updateStatus(Negotiation $negotiation, NegotiationStatus $status): bool {
+        return $negotiation->update([
+            'status' => $status
+        ]);
+    }
+
+    public function shipped(string $trackingCode, Negotiation $id) {
+        $id->update(['shipped_at' => now()]);
+
+        $this->updateStatus(
+            negotiation: $id,
+            status: NegotiationStatus::Shipped
+        );
+
+        return true;
+    }
+
+    public function delivered(Negotiation $id) {
+        $id->update(['delivered_at' => now()]);
+
+        $this->updateStatus(
+            negotiation: $id,
+            status: NegotiationStatus::Delivered
+        );
+
+        return true;
     }
 }

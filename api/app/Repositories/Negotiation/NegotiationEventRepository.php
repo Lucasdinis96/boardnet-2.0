@@ -6,10 +6,7 @@ use App\Models\NegotiationEvent;
 
 class NegotiationEventRepository {
 
-    public function create(
-        array $data
-    ): NegotiationEvent {
-
+    public function create(array $data): NegotiationEvent {
         return NegotiationEvent::create($data);
     }
 }

@@ -29,6 +29,8 @@ class User extends Authenticatable {
         'number',
         'neighborhood',
         'cep',
+        'pix_key',
+        'pix_key_type'
     ];
 
     /**

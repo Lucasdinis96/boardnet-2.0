@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('publisher')->nullable();
+            $table->string('release_date')->nullable();
             $table->integer('min_players')->nullable();
             $table->integer('max_players')->nullable();
             $table->integer('playtime')->nullable();
