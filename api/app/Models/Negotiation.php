@@ -52,9 +52,6 @@ class Negotiation extends Model {
     }
 
     public function events() {
-
-        return $this->hasMany(
-            NegotiationEvent::class
-        )->latest();
+        return $this->hasMany(NegotiationEvent::class)->latest();
     }
 }

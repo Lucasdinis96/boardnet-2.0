@@ -3,13 +3,11 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\TradeController;
-
-
 
 Route::prefix('user')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
+
         Route::get('me/{id}', [UserController::class, 'getUser']);
         Route::get('adress/{id}', [UserController::class, 'getAdress']);
         Route::put('userUpdate/{id}', [UserController::class, 'updateUser']);
@@ -25,14 +23,6 @@ Route::prefix('user')->group(function () {
         Route::post('trades/create', [UserController::class, 'createTrade']);
         Route::put('trades/update/{trade}', [UserController::class, 'updateTrade']);
         Route::delete('trades/delete/{id}', [UserController::Class, 'deleteTrade']);
+
     });
-
 });
-
-
-Route::get('/profile/my-trades/store', [TradeController::class, 'store']);
-Route::put('/profile/my-trades/{trade}/update', [TradeController::class, 'update']);
-Route::delete('/profile/my-trades/delete/{trade}', [TradeController::class, 'destroy']);
-Route::delete('/profile/my-trades/{trade}/boardgame/{boardgame}', [TradeController::class, 'detachBoardgame']);
-
-

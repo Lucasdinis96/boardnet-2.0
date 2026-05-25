@@ -12,6 +12,7 @@ class Boardgame extends Model {
     protected $fillable = [
         'title',
         'publisher',
+        'release_date',
         'min_players',
         'max_players',
         'playtime',

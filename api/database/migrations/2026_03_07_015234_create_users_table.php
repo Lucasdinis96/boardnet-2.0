@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('neighborhood')->nullable();
             $table->foreignId('city_id')->nullable()->references('id')->on('cities')->onDelete('set null');
             $table->string('cep')->nullable();
+            $table->string('pix_key')->nullable();
+            $table->string('pix_key_type')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

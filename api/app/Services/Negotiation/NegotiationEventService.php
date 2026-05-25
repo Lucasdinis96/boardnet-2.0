@@ -15,21 +15,12 @@ class NegotiationEventService {
         private NegotiationEventRepository $repository
     ) {}
 
-    public function create(
-        Negotiation $negotiation,
-        NegotiationEventType $event,
-        ?User $user = null,
-        ?array $metadata = null
-    ) {
+    public function create(Negotiation $negotiation, NegotiationEventType $event, ?User $user = null,?array $metadata = null) {
 
         return $this->repository->create([
-
             'negotiation_id' => $negotiation->id,
-
             'event' => $event,
-
             'user_id' => $user?->id,
-
             'metadata' => $metadata
         ]);
     }

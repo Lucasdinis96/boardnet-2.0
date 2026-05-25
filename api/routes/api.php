@@ -4,8 +4,6 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-
-
 Route::get('/cities/search', [CityController::class, 'search']);
 
 Route::get('home/games', [HomeController::class, 'getHomeGames']);
@@ -19,7 +17,4 @@ require __DIR__.'/api/cart.php';
 require __DIR__.'/api/checkout.php';
 require __DIR__.'/api/negotiation.php';
 require __DIR__.'/api/payment.php';
-
-
-
-
+require __DIR__.'/api/webhook.php';

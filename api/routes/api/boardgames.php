@@ -8,7 +8,6 @@ Route::prefix('boardgames')->group (function () {
     Route::get('/show/{id}', [BoardgameController::class, 'show']);
     Route::get('/search', [BoardgameController::class, 'search']);
 
-
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/addCollection', [BoardgameController::class, 'addCollection']);
         Route::post('/removeCollection', [BoardgameController::class, 'removeCollection']);

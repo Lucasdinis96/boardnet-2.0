@@ -16,6 +16,7 @@ class BoardgameSeeder extends Seeder
             [
                 'title' => 'King of Tokyo',
                 'publisher' => 'Devir Brasil',
+                'release_date' => '2011',
                 'min_players' => 2,
                 'max_players' => 6,
                 'playtime' => 30,
@@ -30,6 +31,7 @@ class BoardgameSeeder extends Seeder
             [
                 'title' => 'Carcassone',
                 'publisher' => 'Devir Brasil',
+                'release_date' => '2000',
                 'min_players' => 2,
                 'max_players' => 5,
                 'playtime' => 45,
@@ -44,6 +46,7 @@ class BoardgameSeeder extends Seeder
             [
                 'title' => 'Munchkin',
                 'publisher' => 'Devir Brasil',
+                'release_date' => '2001',
                 'min_players' => 2,
                 'max_players' => 6,
                 'playtime' => 90,
@@ -58,6 +61,7 @@ class BoardgameSeeder extends Seeder
             [
                 'title' => 'Sword & Sorcery: Espíritos Imortais',
                 'publisher' => 'Devir Brasil',
+                'release_date' => '2017',
                 'min_players' => 2,
                 'max_players' => 5,
                 'playtime' => 90,
@@ -72,6 +76,7 @@ class BoardgameSeeder extends Seeder
             [
                 'title' => 'Mysterium',
                 'publisher' => 'Galápagos',
+                'release_date' => '2015',
                 'min_players' => 2,
                 'max_players' => 7,
                 'playtime' => 42,
@@ -86,6 +91,7 @@ class BoardgameSeeder extends Seeder
             [
                 'title' => 'Eldritch Horror',
                 'publisher' => 'Galápagos',
+                'release_date' => '2013',
                 'min_players' => 1,
                 'max_players' => 8,
                 'playtime' => 240,
@@ -100,6 +106,7 @@ class BoardgameSeeder extends Seeder
             [
                 'title' => 'Dead of Winter: Um Jogo de Encruzilhadas',
                 'publisher' => 'Galápagos',
+                'release_date' => '2014',
                 'min_players' => 2,
                 'max_players' => 5,
                 'playtime' => 100,
@@ -114,6 +121,7 @@ class BoardgameSeeder extends Seeder
             [
                 'title' => 'The Resistence',
                 'publisher' => 'Grok Games',
+                'release_date' => '2009',
                 'min_players' => 5,
                 'max_players' => 10,
                 'playtime' => 30,
@@ -128,6 +136,7 @@ class BoardgameSeeder extends Seeder
             [
                 'title' => 'Deterence 2X62',
                 'publisher' => 'Mandala Jogos',
+                'release_date' => '2016',
                 'min_players' => NULL,
                 'max_players' => 2,
                 'playtime' => 30,
@@ -142,6 +151,7 @@ class BoardgameSeeder extends Seeder
             [
                 'title' => 'Yomi: Round 1',
                 'publisher' => 'Mandala Jogos',
+                'release_date' => '2011',
                 'min_players' => 1,
                 'max_players' => 4,
                 'playtime' => 30,

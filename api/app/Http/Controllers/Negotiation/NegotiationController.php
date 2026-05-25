@@ -4,20 +4,14 @@ namespace App\Http\Controllers\Negotiation;
 
 use App\Http\Controllers\Controller;
 use App\Services\Negotiation\NegotiationService;
-
 use Illuminate\Http\Request;
+use App\Models\Negotiation;
 
 class NegotiationController extends Controller {
 
     public function __construct(
         private NegotiationService $negotiationService
     ) {}
-
-    /*
-    |--------------------------------------------------------------------------
-    | Lista negociações do usuário
-    |--------------------------------------------------------------------------
-    */
 
     public function index(Request $request) {
 
@@ -26,19 +20,12 @@ class NegotiationController extends Controller {
                 $request->user()
             );
 
-        return response()->json($negotiations);
+        return response()->json([
+            'data' => $negotiations
+            ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Exibe negociação específica
-    |--------------------------------------------------------------------------
-    */
-
-    public function show(
-        Request $request,
-        int $id
-    ) {
+    public function show(Request $request, int $id) {
 
         $negotiation = $this->negotiationService
             ->getNegotiation(
@@ -46,6 +33,41 @@ class NegotiationController extends Controller {
                 negotiationId: $id
             );
 
-        return response()->json($negotiation);
+        return response()->json([
+            'data' => $negotiation
+            ]);
+    }
+
+    public function shipped(Request $request, int $id) {
+        $request->validate([
+            'tracking_code' => ['required', 'string']
+        ]);
+
+        $negotiation = Negotiation::findOrFail($id);
+
+        $confirmed = $this->negotiationService->shipped($request->tracking_code, $negotiation);
+
+        if ($confirmed) {
+            return response()->json([
+                'data' => [
+                    'message' => "Envio confirmado"
+                ]
+            ]);
+        }
+    }
+
+    public function delivered(int $id) {
+        
+        $negotiation = Negotiation::findOrFail($id);
+
+        $confirmed = $this->negotiationService->delivered($negotiation);
+
+        if ($confirmed) {
+            return response()->json([
+                'data' => [
+                    'message' => "Recebimento confirmado"
+                ]
+            ]);
+        }
     }
 }

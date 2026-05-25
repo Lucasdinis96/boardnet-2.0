@@ -18,21 +18,13 @@ use Illuminate\Support\Facades\DB;
 class CheckoutService {
 
     public function __construct(
-
         private NegotiationRepository $negotiationRepository,
-
         private NegotiationItemRepository $negotiationItemRepository,
-
         private TradeItemRepository $tradeItemRepository,
-
         private NegotiationEventService $eventService
-
     ) {}
 
-    public function checkout(
-        User $user,
-        array $shippingAddress
-    ) {
+    public function checkout(User $user, array $shippingAddress) {
 
         return DB::transaction(function () use (
             $user,
@@ -89,12 +81,6 @@ class CheckoutService {
                 $subtotal += $tradeItem->value;
             }
 
-            /*
-            |--------------------------------------------------------------------------
-            | Seller
-            |--------------------------------------------------------------------------
-            */
-
             $firstTradeItem = $cart->items
                 ->first()
                 ->tradeItem;
@@ -103,115 +89,57 @@ class CheckoutService {
                 ->trade
                 ->user_id;
 
-            /*
-            |--------------------------------------------------------------------------
-            | Criação negociação
-            |--------------------------------------------------------------------------
-            */
-
             $negotiation = $this->negotiationRepository
                 ->create([
-
                     'buyer_id' => $user->id,
-
                     'seller_id' => $sellerId,
-
                     'status' => NegotiationStatus::PendingPayment,
-
                     'subtotal' => $subtotal,
-
                     'shipping_cost' => 0,
-
                     'total' => $subtotal,
-
                     'shipping_address_snapshot' => $shippingAddress
                 ]);
 
             $this->eventService->create(
-
                 negotiation: $negotiation,
-
                 event: NegotiationEventType::Created,
-
                 user: $user,
-
                 metadata: [
                     'subtotal' => $subtotal,
                     'items_count' => $cart->items->count()
                 ]
             );
 
-            /*
-            |--------------------------------------------------------------------------
-            | Criação itens
-            |--------------------------------------------------------------------------
-            */
-
             foreach ($cart->items as $cartItem) {
-
                 $tradeItem = $cartItem->tradeItem;
-
                 $this->negotiationItemRepository
                     ->create([
-
                         'negotiation_id' => $negotiation->id,
-
                         'trade_item_id' => $tradeItem->id,
-
                         'boardgame_id' => $tradeItem->boardgame_id,
-
                         'price' => $tradeItem->value,
-
                         'status' => NegotiationItemStatus::Reserved,
-
                         'boardgame_snapshot' => [
-
-                            'title' => $tradeItem
-                                ->boardgame
-                                ->title,
-
-                            'cover' => $tradeItem
-                                ->boardgame
-                                ->cover,
-
-                            'price' => $tradeItem
-                                ->value,
+                            'title' => $tradeItem->boardgame->title,
+                            'cover' => $tradeItem->boardgame->cover,
+                            'price' => $tradeItem->value,
                         ]
                     ]);
 
-                /*
-                |--------------------------------------------------------------------------
-                | Reserva item
-                |--------------------------------------------------------------------------
-                */
-
-                $this->tradeItemRepository
-                    ->reserve($tradeItem);
+                $this->tradeItemRepository->reserve($tradeItem);
             }
 
             $this->eventService->create(
-
                 negotiation: $negotiation,
-
                 event: NegotiationEventType::Reserved,
-
                 user: $user
             );
-            
-            /*
-            |--------------------------------------------------------------------------
-            | Limpa carrinho
-            |--------------------------------------------------------------------------
-            */
-            
+                        
             $cart->items()->delete();
 
             $this->eventService->create(
-
                 negotiation: $negotiation,
-
                 event: NegotiationEventType::PaymentPending,
-
                 user: $user
             );
 

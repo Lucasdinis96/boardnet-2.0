@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payout_accounts', function (Blueprint $table) {
+        Schema::create('payouts', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('user_id')
@@ -25,7 +25,7 @@ return new class extends Migration
 
             $table->string('holder_name');
             $table->string('document');
-
+            $table->decimal('value', 10, 2);
             $table->boolean('is_default')->default(true);
 
             $table->timestamp('verified_at')->nullable();

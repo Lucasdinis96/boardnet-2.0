@@ -18,43 +18,22 @@ class PaymentController extends Controller {
         private PaymentService $paymentService
     ) {}
 
-    /*
-    |--------------------------------------------------------------------------
-    | Cria pagamento
-    |--------------------------------------------------------------------------
-    */
-
-    public function store(
-        Request $request,
-        int $negotiationId
-    ) {
+    public function store(Request $request, int $negotiationId) {
 
         $request->validate([
-
-            'payment_method' => [
-                'required',
-                'string'
-            ]
+            'payment_method' => ['required', 'string']
         ]);
 
-        $negotiation = Negotiation::findOrFail(
-            $negotiationId
-        );
-
-        /*
-        |--------------------------------------------------------------------------
-        | Segurança
-        |--------------------------------------------------------------------------
-        */
+        $negotiation = Negotiation::findOrFail($negotiationId);
 
         if (
             $negotiation->buyer_id !==
             $request->user()->id
         ) {
 
-            return response()->json([
+            return response()->json(['data' => [
                 'message' => 'Negociação inválida'
-            ], 403);
+            ]], 403);
         }
 
         $payment = $this->paymentService
@@ -67,11 +46,8 @@ class PaymentController extends Controller {
                 )
             );
 
-        return response()->json([
-
+        return response()->json(['data' => [
             'message' => 'Pagamento criado com sucesso',
-
-            'data' => $payment
-        ]);
+        ]]);
     }
 }
