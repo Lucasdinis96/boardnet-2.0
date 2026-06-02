@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { UserService } from '../../../../user.service';
+import { UserService } from '../../../../services/user.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { BoardgameService } from '../../../../../boardgame/boardgame.service';
 import { debounceTime } from 'rxjs';
+import { FlashMessageService } from '../../../../../../core/services/flash-message.service';
 
 @Component({
   selector: 'app-user-trade-create',
@@ -19,6 +20,7 @@ export class UserTradeCreateComponent {
   private router = inject(Router);
   private userService = inject(UserService);
   private boardgameService = inject(BoardgameService);
+  private flashMessage = inject(FlashMessageService)
   private fb = inject(FormBuilder)
   createTradeForm = this.fb.group({
     title: [''],
@@ -65,6 +67,9 @@ export class UserTradeCreateComponent {
   }
 
   removeBoardgame(index: number) {
+    if (this.boardgames.length === 1 && index === 0) {
+      return this.flashMessage.warning('O anúncio deve ter ao menos um jogo registrado.')
+    }
     this.boardgames.removeAt(index);
   }
 

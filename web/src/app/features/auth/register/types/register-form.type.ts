@@ -5,8 +5,8 @@ export type RegisterFormType = {
   birthdate: FormControl<string | null>;
   phone: FormControl<string | null>;
   cep: FormControl<string | null>;
-  adress_name: FormControl<string | null>;
-  adress_number: FormControl<string | null>;
+  address_name: FormControl<string | null>;
+  address_number: FormControl<string | null>;
   neighborhood: FormControl<string | null>;
   city: FormControl<string | null>;
   city_id: FormControl<number | null>;

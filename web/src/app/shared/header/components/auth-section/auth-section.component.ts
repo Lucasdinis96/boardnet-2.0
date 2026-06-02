@@ -20,6 +20,10 @@ export class AuthSectionComponent {
   isLogged$ = this.authService.isLoggedIn$;
   user$ = this.authService.user$;
 
+  user(){
+    this.authService
+  }
+
   openLogin () {
     this.showLoginModal = true;
   }
@@ -30,7 +34,7 @@ export class AuthSectionComponent {
 
   logout() {
     this.authService.logout().subscribe({
-      next: (res) => this.router.navigate(['/home']),
+      next: () => this.router.navigate(['/']),
       error: () =>{
         this.authService.removeToken()
         this.authService.logout();

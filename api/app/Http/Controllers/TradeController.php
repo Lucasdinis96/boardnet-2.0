@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Trade\CreateTradeRequest;
 use App\Http\Requests\Trade\UpdateTradeRequest;
+use App\Http\Resources\Trade\TradeGetResource;
 use App\Models\Boardgame;
 use App\Models\Trade;
 use App\Services\TradeService;
@@ -20,7 +21,7 @@ class TradeController extends Controller {
     public function index() {
         $trades = $this->tradeService->listTrades();
         return response()->json([
-            'data' => $trades
+            'data' => TradeGetResource::collection($trades)
         ]);
     }
 

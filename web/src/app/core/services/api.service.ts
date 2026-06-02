@@ -29,7 +29,7 @@ export class ApiService {
   }
 
   delete<T>(endpoint: string, id: string) {
-    return this.http.delete<T>(`${this.apiUrl}/${endpoint}/${id}`);
+    return this.http.delete<{data: T}>(`${this.apiUrl}/${endpoint}/${id}`).pipe(map(response => response.data));
   }
 
 }

@@ -10,6 +10,8 @@
             <a class="game-card-content" [routerLink]="['/boardgame', boardgame.id]">
                 <img class="cover" src="{{boardgame.cover}}" alt="cover">
                 <span>{{ boardgame.title }}</span>
+                <span>{{ getPlayersCount(boardgame) }}</span>
+                <span>A partir de {{ boardgame.age_range }} anos.</span>
             </a>
         </div>
     </div>

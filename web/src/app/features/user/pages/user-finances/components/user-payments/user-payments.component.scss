@@ -1,0 +1,87 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  border-radius: 10px;
+}
+
+.card {
+  background-color: white;
+  border: 2px solid transparent;
+  width: auto;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-items: center;
+  place-self: flex-start;
+  border-radius: 10px;
+  padding: 10px;
+  gap: 10px;
+  box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
+}
+
+.data {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  gap: 10px;
+  border-right: 1px solid black;
+  padding: 5px;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-start;
+  border-right: 1px solid black;
+  padding: 5px;
+  gap: 10px;
+}
+
+.detail a {
+  place-self: center;
+}
+
+.historic {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+
+.form button {
+  margin-top: 2px;
+  place-self: center;
+}
+
+.form span {
+  place-self: center;
+}
+
+.shipped {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.shipped span {
+  place-self: center;
+}
+
+p {
+  place-self: center;
+}

@@ -3,8 +3,8 @@ export interface RegisterRequest {
     birthdate: string;
     phone: string;
     cep: string;
-    adress_name: string;
-    adress_number: string;
+    address_name: string;
+    address_number: string;
     neighborhood: string;
     city_id: number;
     email: string;

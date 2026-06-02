@@ -1,0 +1,44 @@
+<div class="content">
+    <form
+        (ngSubmit)="submit()"
+        [formGroup]="addressForm"
+        class="address-form">
+        <h2>Endereço</h2>
+        <input 
+            type="text"
+            placeholder="CEP" 
+            formControlName="cep">
+        <input 
+            type="text"
+            placeholder="Rua" 
+            formControlName="address_name">
+        <input 
+            type="text"
+            placeholder="Número" 
+            formControlName="address_number">
+        <input 
+            type="text"
+            placeholder="Bairro" 
+            formControlName="neighborhood">
+        <div class="autocomplete" (blur)="isDropdownOpen = false" tabindex="0">
+            <input 
+            type="text"
+            placeholder="Cidade" 
+            formControlName="city"
+            autocomplete="off"
+            (focus)="isDropdownOpen = true">
+            <ul *ngIf=" isDropdownOpen && (cities$ | async) as cities">
+                <li
+                    *ngFor="let city of cities"
+                    (click)="selectCity(city)">
+                    {{ city.name }}
+                </li>
+
+                <li *ngIf="cities.length === 0">
+                    Nenhuma cidade encontrada
+                </li>
+            </ul>
+        </div>
+        <button class="send-btn" type="submit">Enviar</button>
+    </form>
+</div>

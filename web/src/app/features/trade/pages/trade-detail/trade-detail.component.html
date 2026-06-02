@@ -18,8 +18,8 @@
             <div class="trade-games" *ngFor="let boardgames of trade.boardgames">
                 <img class="game-cover" src="{{boardgames.cover}}" alt="cover">
                 <span>{{ boardgames.title}}</span>
-                <span>R$ {{ boardgames.value }}</span>
-                <button class="cart-btn btn-green">Comprar</button>
+                <span>R$ {{ boardgames.trade_item.value }}</span>
+                <button class="cart-btn btn-green" (click)="addCart(boardgames.trade_item.id)">Adicionar</button>
                 <a class="btn-blue" [routerLink]="['/boardgame', boardgames.id]">Ver Jogo</a>
                 
             </div>

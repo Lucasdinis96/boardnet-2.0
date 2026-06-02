@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Negotiation;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Negotiation\NegotiationGetResource;
+use App\Models\Negotiation;
 use App\Services\Negotiation\NegotiationService;
 use Illuminate\Http\Request;
-use App\Models\Negotiation;
 
 class NegotiationController extends Controller {
 
@@ -16,7 +17,7 @@ class NegotiationController extends Controller {
     public function index(Request $request) {
 
         $negotiations = $this->negotiationService
-            ->getUserNegotiations(
+            ->getAllUserNegotiations(
                 $request->user()
             );
 
@@ -24,6 +25,31 @@ class NegotiationController extends Controller {
             'data' => $negotiations
             ]);
     }
+
+    public function getUserNegotiationAsBuyer(Request $request) {
+
+        $negotiations = $this->negotiationService
+            ->getUserNegotiationsAsBuyer(
+                $request->user()
+            );
+
+        return response()->json([
+            'data' => NegotiationGetResource::collection($negotiations)
+            ]);
+    }
+
+    public function getUserNegotiationAsSeller(Request $request) {
+
+        $negotiations = $this->negotiationService
+            ->getUserNegotiationsAsSeller(
+                $request->user()
+            );
+
+        return response()->json([
+            'data' => NegotiationGetResource::collection($negotiations)
+            ]);
+    }
+
 
     public function show(Request $request, int $id) {
 
@@ -56,9 +82,9 @@ class NegotiationController extends Controller {
         }
     }
 
-    public function delivered(int $id) {
+    public function delivered(Request $request) {
         
-        $negotiation = Negotiation::findOrFail($id);
+        $negotiation = Negotiation::findOrFail($request->id);
 
         $confirmed = $this->negotiationService->delivered($negotiation);
 

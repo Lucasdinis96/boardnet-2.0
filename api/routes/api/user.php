@@ -9,9 +9,9 @@ Route::prefix('user')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
 
         Route::get('me/{id}', [UserController::class, 'getUser']);
-        Route::get('adress/{id}', [UserController::class, 'getAdress']);
+        Route::get('address/{id}', [UserController::class, 'getAddress']);
         Route::put('userUpdate/{id}', [UserController::class, 'updateUser']);
-        Route::put('adressUpdate/{id}', [UserController::class, 'updateAdress']);
+        Route::put('addressUpdate/{id}', [UserController::class, 'updateAddress']);
         Route::put('passwordUpdate/{id}', [UserController::class, 'updatePassword']);
         Route::put('deleteAccount/{id}', [UserController::class, 'destroy']);
 

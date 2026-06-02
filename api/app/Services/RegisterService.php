@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Http\Resources\Adress\AdressCreateResource;
+use App\Http\Resources\Address\AddressCreateResource;
 use App\Http\Resources\User\UserCreateResource;
-use App\Repositories\AdressRepository;
+use App\Repositories\AddressRepository;
 use App\Repositories\UserRepository;
 use App\Services\MailService;
 use Illuminate\Http\Request;
@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Crypt;
 
 class RegisterService {
     private $userRepository;
-    private $adressRepository;
+    private $addressRepository;
     private $mailService;
 
-    public function __construct(UserRepository $userRepository, AdressRepository $adressRepository, MailService $mailService) {
+    public function __construct(UserRepository $userRepository, AddressRepository $addressRepository, MailService $mailService) {
         $this->userRepository = $userRepository;
-        $this->adressRepository = $adressRepository;
+        $this->addressRepository = $addressRepository;
         $this->mailService = $mailService;
     }
 

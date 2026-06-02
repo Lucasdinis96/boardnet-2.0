@@ -5,6 +5,7 @@ namespace App\Services\Payment\Providers;
 use App\Models\Payment;
 use App\Services\Payment\Contracts\PaymentProviderInterface;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class AbacatePayProvider implements PaymentProviderInterface {
 
@@ -27,7 +28,7 @@ class AbacatePayProvider implements PaymentProviderInterface {
         $payload = [
             "externalId" => "prod-".$payment->id." negotiation". $payment->negotiation_id,
             "name" => "Pagamento Negociação ID ".$payment->id,
-            "price" => $payment->amount * 100,
+            "price" => (int) round($payment->amount * 100),
             "currency" => "BRL"
         ];
         $response = $this->client()->post(

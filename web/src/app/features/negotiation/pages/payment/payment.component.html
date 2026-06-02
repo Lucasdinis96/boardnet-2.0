@@ -1,0 +1,7 @@
+<p>payment works!</p>
+
+<div *ngIf="payment() as payment">
+
+    <a  class="btn-yellow" [href]="payment.payment_url" target="_blank">Realizar pagamento</a>
+
+</div>

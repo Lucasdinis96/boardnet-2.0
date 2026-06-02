@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('adresses', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('set null');
-            $table->string('adress');
+            $table->string('address');
             $table->integer('number');
             $table->string('neighborhood');
             $table->foreignId('city_id')->nullable()->references('id')->on('cities')->onDelete('set null');

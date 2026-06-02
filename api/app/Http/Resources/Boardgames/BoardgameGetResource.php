@@ -18,7 +18,14 @@ class BoardgameGetResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'cover' => $this->cover,
-            'value' => $this->pivot?->value,
+            'min_players' => $this->min_players,
+            'max_players' => $this->max_players,
+            'age_range' => $this->age_range,
+            'trade_item' => [
+                'id' => $this->pivot?->id,
+                'value' => $this->pivot?->value,
+                'status' => $this->pivot?->status
+            ],            
         ];
     }
 }

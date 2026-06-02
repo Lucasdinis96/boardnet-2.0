@@ -10,6 +10,11 @@
             <a class="trade-card-content" [routerLink]="['/trade', trade.id]">
                 <img class="cover" src="assets/photoicon.png" alt="cover">
                 <span>{{ trade.title }}</span>
+                <span>Vendedor: {{ trade.user.name }}</span>
+                <span>Jogos a venda:</span>
+                <div *ngFor="let game of trade.boardgames">
+                    <span>- {{ game.title }}</span>
+                </div>
             </a>
         </div>
     </div>

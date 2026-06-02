@@ -25,7 +25,7 @@ class User extends Authenticatable {
         'birthdate',
         'phone',
         'city_id',
-        'adress',
+        'address',
         'number',
         'neighborhood',
         'cep',

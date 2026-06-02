@@ -3,6 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, catchError, combineLatest, map, Observable, of, switchMap, tap } from 'rxjs';
 import { TradeService } from '../../trade.service';
+import { FlashMessageService } from '../../../../core/services/flash-message.service';
 
 @Component({
   selector: 'app-trade-detail',
@@ -14,7 +15,9 @@ export class TradeDetailComponent {
 
   private route = inject(ActivatedRoute);
   private service = inject(TradeService);
+  private flashMessage = inject(FlashMessageService);
   trade$!: Observable<any>
+  message: any
 
   
   ngOnInit() {
@@ -22,5 +25,15 @@ export class TradeDetailComponent {
       map(params => Number(params.get('id'))),
       switchMap(id => this.service.getTradeById(id))
     );
+  }
+
+  addCart(tradeItemId: number) {
+    const payload = {
+      trade_item_id: tradeItemId
+    }
+    this.service.addCart(payload).subscribe({
+      next: (response) => {this.flashMessage.success(response.message)},
+      error: (response) => {this.flashMessage.warning(response.error.message)}
+    })
   }
 }

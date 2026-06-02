@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model {
 
     use HasFactory;
-
+    protected $table = 'payments';
     protected $fillable = [
         'negotiation_id',
         'provider',
@@ -42,10 +42,10 @@ class Payment extends Model {
         return $this->belongsTo(Negotiation::class);
     }
 
-    // public function events() {
+    public function events() {
 
-    //     return $this->hasMany(
-    //         NegotiationEvent::class
-    //     )->latest();
-    // }
+        return $this->hasMany(
+            NegotiationEvent::class
+        )->latest();
+    }
 }
