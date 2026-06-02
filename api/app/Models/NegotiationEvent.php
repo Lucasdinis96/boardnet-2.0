@@ -10,7 +10,7 @@ use App\Enums\NegotiationEventType;
 class NegotiationEvent extends Model {
 
     use HasFactory;
-
+    protected $table = 'negotiation_events';
     protected $fillable = [
 
         'negotiation_id',

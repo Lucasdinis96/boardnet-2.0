@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="grid" *ngIf="negotiation$ | async as negotiations">
+        <div class="card" *ngFor="let negotiation of negotiations">
+            <div class="title">
+                <p>Negociação #{{ negotiation.id }}</p>
+            </div>
+            <div class="data">
+                <div class="detail">
+                    <p>Dados gerais</p>
+                    <span>Comprador: {{ negotiation.buyer }}</span>
+                    <span>Status: {{ negotiation.status.label }}</span>
+                    <form 
+                        (ngSubmit)="submit(negotiation.id)"
+                        [formGroup]="trackingCode"
+                        class="form" 
+                        *ngIf="negotiation.status.type === 'paid' && negotiation.is_seller">
+                        <span>Aguardando Envio</span>
+                        <input formControlName="trackingCode" type="text" name="tracking_code" placeholder="Código de Rastreio">
+                        <button class="btn-blue">Confirmar Envio</button>
+                    </form>
+                    <div class="shipped" *ngIf="negotiation.status.type === 'shipped'">
+                        <span>Código de rastreio: {{ negotiation.tracking_code }}</span>
+                    </div>
+                </div>
+                <div class="items">
+                    <div>
+                        <p>Jogos Enviados</p>
+                    </div>
+                    <div *ngFor="let item of negotiation.items">
+                        <span>{{ item.title }} - R${{ item.price }}</span>
+                    </div>
+                </div>
+                <div class="address">
+                    <p>Endereço de envio</p>
+                    <span>{{ negotiation.shipping_address.street }}, {{ negotiation.shipping_address.number }}</span>
+                    <span>{{ negotiation.shipping_address.neighborhood }}</span>
+                    <span>{{ negotiation.shipping_address.city_state }}</span>
+                    <span>{{ negotiation.shipping_address.zipcode }}</span>
+                </div>
+                <div class="historic">
+                    <p>Histórico da negociação</p>
+                    <span>Criada em {{ negotiation.created_at }}</span>
+                    <span *ngIf="negotiation.paid_at && !negotiation.canceled_at">Paga em {{ negotiation.paid_at }}</span>
+                    <span *ngIf="negotiation.shipped_at && !negotiation.canceled_at">Enviada em {{ negotiation.shipped_at }}</span>
+                    <span *ngIf="negotiation.delivered_at && !negotiation.canceled_at">Recebida em {{ negotiation.delivered_at }}</span>
+                    <span *ngIf="negotiation.canceled_at">Cancelada em {{ negotiation.canceled_at }}</span>
+                    <span *ngIf="negotiation.completed_at">Terminada em {{ negotiation.completed_at }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

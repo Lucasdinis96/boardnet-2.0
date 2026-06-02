@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class NegotiationItem extends Model {
 
     use HasFactory;
-
+    protected $table = 'negotiation_items';
     protected $fillable = [
         'negotiation_id',
         'trade_item_id',

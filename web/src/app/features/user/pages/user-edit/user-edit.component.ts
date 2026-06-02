@@ -7,7 +7,7 @@ import { CityService } from '../../../../core/services/city.service';
 import { RegisterFormType } from '../../../auth/register/types/register-form.type';
 import { RegisterRequest } from '../../../auth/register/models/register';
 import { AuthService } from '../../../../core/services/auth.service';
-import { UserService } from '../../user.service';
+import { UserService } from '../../services/user.service';
 import { RouterLink, RouterModule } from '@angular/router';
 
 

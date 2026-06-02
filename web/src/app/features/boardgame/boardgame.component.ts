@@ -14,4 +14,14 @@ export class BoardgameComponent {
 
   $boardgames = this.boardgameService.getAll();
 
+  getPlayersCount(boardgame: any): string {
+    const min = boardgame.min_players;
+    const max = boardgame.max_players;
+
+    if (!min || min === max) {
+      return `${max} jogadores`;
+    }
+    return `De ${min} a ${max} jogadores`;
+  }
+
 }

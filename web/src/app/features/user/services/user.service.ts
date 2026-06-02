@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { ApiService } from '../../core/services/api.service';
+import { ApiService } from '../../../core/services/api.service';
 import { tap } from 'rxjs';
 
 @Injectable({
@@ -12,8 +12,8 @@ export class UserService {
     return this.api.show<any>('user/me', id);
   }
 
-  getAdress(id: any){
-    return this.api.show<any>('user/adress', id);
+  getAddress(id: any){
+    return this.api.show<any>('user/address', id);
   }
 
   updateUser(data: any, id: any){
@@ -22,8 +22,8 @@ export class UserService {
     );
   }
 
-  updateAdress(data: any, id: any){
-    return this.api.put<any>('user/adressUpdate', id, data).pipe(
+  updateAddress(data: any, id: any){
+    return this.api.put<any>('user/addressUpdate', id, data).pipe(
       tap((response) => {})
     );
   }
@@ -62,6 +62,26 @@ export class UserService {
 
   removeTrade (id: any) {
     return this.api.delete<any>('user/trades/delete', id);
+  }
+
+  getAllNegotiation(){
+    return this.api.get<any>('negotiations');
+  }
+
+  getNegotiationAsBuyer(){
+    return this.api.get<any>('negotiations/buyer');
+  }
+
+  getNegotiationAsSeller(){
+    return this.api.get<any>('negotiations/seller');
+  }
+
+  confirmShipping(data: any, id: any) {
+    return this.api.post<any>(`negotiations/${id}/shipped`, data);
+  }
+
+  confirmReceivement(data: any) {
+    return this.api.post<any>('negotiations/delivered', data)
   }
 
 }

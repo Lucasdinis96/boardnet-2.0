@@ -22,7 +22,7 @@ class NegotiationRepository {
         ])->find($id);
     }
 
-    public function getUserNegotiations(User $user) {
+    public function getAllUserNegotiations(User $user) {
 
         return Negotiation::with([
             'items.boardgame',
@@ -51,7 +51,10 @@ class NegotiationRepository {
     }
 
     public function shipped(string $trackingCode, Negotiation $id) {
-        $id->update(['shipped_at' => now()]);
+        $id->update([
+                'tracking_code' => $trackingCode,
+                'shipped_at' => now()
+            ]);
 
         $this->updateStatus(
             negotiation: $id,
@@ -62,7 +65,10 @@ class NegotiationRepository {
     }
 
     public function delivered(Negotiation $id) {
-        $id->update(['delivered_at' => now()]);
+        $id->update([
+            'delivered_at' => now(),
+            'completed_at' => now()
+            ]);
 
         $this->updateStatus(
             negotiation: $id,
@@ -70,5 +76,43 @@ class NegotiationRepository {
         );
 
         return true;
+    }
+
+    public function getUserNegotiationsAsBuyer(User $user) {
+
+        return Negotiation::with([
+            'items.boardgame',
+            'buyer',
+            'seller',
+            'payments'
+        ])
+        ->where(function ($query) use ($user) {
+
+            $query->where(
+                'buyer_id',
+                $user->id
+            );
+        })
+        ->latest()
+        ->get();
+    }
+
+    public function getUserNegotiationsAsSeller(User $user) {
+
+        return Negotiation::with([
+            'items.boardgame',
+            'buyer',
+            'seller',
+            'payments'
+        ])
+        ->where(function ($query) use ($user) {
+
+            $query->where(
+                'seller_id',
+                $user->id
+            );
+        })
+        ->latest()
+        ->get();
     }
 }

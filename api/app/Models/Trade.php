@@ -21,7 +21,8 @@ class Trade extends Model {
 
    public function boardgames () {
         return $this->belongsToMany(Boardgame::class, 'trade_items', 'trade_id', 'boardgame_id')
-                    ->withPivot('value')
+                    ->using(TradeItem::class)
+                    ->withPivot(['id','value','status'])
                     ->withTimestamps();
     }
 }

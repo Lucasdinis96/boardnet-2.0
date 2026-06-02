@@ -1,0 +1,10 @@
+<div class="container" *ngIf="cart$ | async as cart"> 
+    <span *ngFor="let item of cart.items">
+        <p>{{ item.id }}</p>
+        <button class="btn-red" (click)="removeItemFromCart(item.trade_item_id)">Remover item</button>
+    </span>
+</div>
+
+<app-address-form
+    (submitAddress)="checkout($event)"
+></app-address-form>

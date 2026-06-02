@@ -15,9 +15,19 @@ class NegotiationService {
         private NegotiationEventService $eventService
     ) {}
 
-    public function getUserNegotiations(User $user) {
+    public function getAllUserNegotiations(User $user) {
 
-        return $this->negotiationRepository->getUserNegotiations($user);
+        return $this->negotiationRepository->getAllUserNegotiations($user);
+    }
+
+    public function getUserNegotiationsAsBuyer(User $user) {
+
+        return $this->negotiationRepository->getUserNegotiationsAsBuyer($user);
+    }
+
+    public function getUserNegotiationsAsSeller(User $user) {
+
+        return $this->negotiationRepository->getUserNegotiationsAsSeller($user);
     }
 
     public function getNegotiation(User $user, int $negotiationId) {
@@ -58,7 +68,7 @@ class NegotiationService {
             event: NegotiationEventType::Delivered,
             metadata: [
                 'date' => now(),
-                'adress' => $id->shipping_address_snapshot
+                'address' => $id->shipping_address_snapshot
             ]
         );
 

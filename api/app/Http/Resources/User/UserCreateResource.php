@@ -23,8 +23,8 @@ class UserCreateResource extends JsonResource
             'birthdate' => $request->birthdate,
             'city_id' => $request->city_id,
             'phone' => $request->phone,
-            'adress' => $request->adress_name,
-            'number' => $request->adress_number,
+            'address' => $request->address_name,
+            'number' => $request->address_number,
             'neighborhood' => $request->neighborhood,
             'cep' => $request->cep
         ];

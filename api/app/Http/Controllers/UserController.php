@@ -32,16 +32,16 @@ class UserController extends Controller {
         return response()->json(['data' => $user], 200);
     }
 
-    public function getAdress($id){
-        $adress = $this->userService->getAdress($id);
+    public function getAddress($id){
+        $address = $this->userService->getAddress($id);
         return response()->json([
-            'data' => $adress
+            'data' => $address
         ], 200);
     }
 
-    public function updateAdress (Request $request) {
-        $adress = $this->userService->updateAdress($request);
-        if ($adress){
+    public function updateAddress (Request $request) {
+        $address = $this->userService->updateAddress($request);
+        if ($address){
             return response()->json([
                 'data' => [
                     'message' => 'Endereço atualizada com sucesso',
@@ -166,7 +166,6 @@ class UserController extends Controller {
     }
 
     public function deleteTrade(int $request) {
-        Log::info('Chegou');
         $this->tradeService->deleteTrade($request);
         return response()->json([
             'status' => 'success',

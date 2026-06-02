@@ -1,0 +1,18 @@
+<div class="container">
+    <div *ngIf="negotiation() as negotiation">
+        <h1>Negociação # {{ negotiation.id }}</h1>
+    </div>
+    <label for="cidade">Escolha o metódod de pagamento:</label>
+
+    <select id="method" [(ngModel)]="selectedMethod">
+        <option [ngValue]="undefined">Selecione...</option>
+        <option *ngFor="let method of paymentMethods" [ngValue]="method">
+            {{ method.nome }}
+        </option>
+    </select>
+    <button *ngIf="selectedMethod" class="btn-blue" (click)="createPayment(selectedMethod.method)">Realizar Pagamento</button>
+    <!-- Exibe o item selecionado para teste -->
+    <p *ngIf="selectedMethod">
+    Você selecionou: {{ selectedMethod.nome }} (ID: {{ selectedMethod.id }})
+    </p>    
+</div>

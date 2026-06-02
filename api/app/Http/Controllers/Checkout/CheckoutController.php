@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Checkout\CheckoutService;
 use App\Services\Negotiation\NegotiationEventService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CheckoutController extends Controller {
 
@@ -21,8 +22,7 @@ class CheckoutController extends Controller {
             'shipping_address.street' => ['required', 'string'],
             'shipping_address.number' => ['required', 'string'],
             'shipping_address.neighborhood' => ['required', 'string'],
-            'shipping_address.city' => ['required', 'string'],
-            'shipping_address.state' => ['required', 'string'],
+            'shipping_address.city_state' => ['required', 'string'],
             'shipping_address.zipcode' => ['required', 'string'],
         ]);
 
@@ -33,6 +33,7 @@ class CheckoutController extends Controller {
 
         return response()->json([
             'data' => [
+                'negotiation' => $negotiation,
                 'message' => 'Checkout realizado com sucesso',
             ]
         ]);

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Negotiation extends Model {
 
     use HasFactory;
-
+    protected $table = 'negotiations';
     protected $fillable = [
         'buyer_id',
         'seller_id',
@@ -22,7 +22,8 @@ class Negotiation extends Model {
         'shipped_at',
         'delivered_at',
         'completed_at',
-        'canceled_at'
+        'canceled_at',
+        'tracking_code'
     ];
 
     protected $casts = [

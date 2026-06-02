@@ -1,0 +1,54 @@
+.edit-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+  justify-self: center;
+}
+
+.sub-menu{
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  padding: 10px;
+  justify-content: center;
+  place-self: center;
+  gap: 10px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
+}
+
+.section {
+  text-decoration: none;
+  color: black;
+  border: 2px solid transparent;
+  border-radius: 2px;
+  padding: 5px;
+  align-items: center;
+  justify-items: center;
+}
+
+.section:hover {
+  border: 2px solid rgb(58, 58, 255);
+  border-radius: 5px;
+}
+
+.section:active {
+  background-color: rgb(58, 58, 255);
+  color: white;
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: auto;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
+}
+
+.autocomplete {
+  position: relative;
+}

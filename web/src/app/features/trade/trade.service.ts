@@ -17,4 +17,8 @@ export class TradeService {
   getTradeById (id: number) {
     return this.api.show<any>('trades/show', id)
   }
+
+  addCart(data: any){
+    return this.api.post<any>('cart/items', data)
+  }
 }

@@ -17,9 +17,7 @@ class CartService {
     ) {}
 
     public function getCart(User $user) {
-
-        return $this->cartRepository
-            ->getUserCart($user);
+        return $this->cartRepository ->getUserCart($user);
     }
 
     public function addItem(User $user, int $tradeItemId) {
@@ -34,42 +32,28 @@ class CartService {
             throw new Exception('Item indisponível');
         }
 
-        $cart = $this->cartRepository
-            ->getOrCreate($user);
+        $cart = $this->cartRepository->getOrCreate($user);
 
-        $exists = $this->cartItemRepository
-            ->exists($cart->id, $tradeItemId);
+        $exists = $this->cartItemRepository->exists($cart->id, $tradeItemId);
 
         if (!$exists) {
-
             $this->cartItemRepository->create([
                 'cart_id' => $cart->id,
                 'trade_item_id' => $tradeItemId
             ]);
         }
 
-        return $this->cartRepository
-            ->getUserCart($user);
+        return $this->cartRepository->getUserCart($user);
     }
 
     public function removeItem(User $user, int $tradeItemId) {
-
-        $cart = $this->cartRepository
-            ->getOrCreate($user);
-
-        $this->cartItemRepository
-            ->remove($cart->id, $tradeItemId);
-
-        return $this->cartRepository
-            ->getUserCart($user);
+        $cart = $this->cartRepository->getOrCreate($user);
+        $this->cartItemRepository->remove($cart->id, $tradeItemId);
+        return $this->cartRepository->getUserCart($user);
     }
 
     public function clear(User $user): void {
-
-        $cart = $this->cartRepository
-            ->getOrCreate($user);
-
-        $this->cartItemRepository
-            ->clear($cart->id);
+        $cart = $this->cartRepository->getOrCreate($user);
+        $this->cartItemRepository->clear($cart->id);
     }
 }

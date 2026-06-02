@@ -22,7 +22,7 @@ class BoardgameDetailResource extends JsonResource
             'max_players' => $this->max_players,
             'age_range' => $this->age_range,
             'publisher' => $this->publisher,
-            'description' => $this->description
+            'description' => $this->description,
         ];
     }
 }

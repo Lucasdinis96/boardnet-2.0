@@ -5,11 +5,12 @@ namespace App\Models;
 use App\Enums\TradeItemStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class TradeItem extends Model {
+class TradeItem extends Pivot {
 
     use HasFactory;
-
+    protected $table = 'trade_items';
     protected $fillable = [
         'trade_id',
         'boardgame_id',

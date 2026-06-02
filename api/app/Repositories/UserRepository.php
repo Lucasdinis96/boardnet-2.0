@@ -41,9 +41,9 @@ class UserRepository {
         $user->save();
     }
 
-    public function updateAdress (array $data, $id){
+    public function updateAddress (array $data, $id){
         User::where('id', $id)->update([
-            'adress' => $data['adress'],
+            'address' => $data['address'],
             'number' => $data['number'],
             'neighborhood' => $data['neighborhood'],
             'cep' => $data['cep'],

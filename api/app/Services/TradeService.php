@@ -2,10 +2,9 @@
 
 namespace App\Services;
 
-use App\Http\Resources\Trade\TradeGetResource;
+use App\Http\Resources\Trade\TradeDetailResource;
 use App\Repositories\TradeRepository;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+
 
 class TradeService {
     
@@ -20,7 +19,7 @@ class TradeService {
     }
 
     public function showTrade($id) {
-        return TradeGetResource::make($this->tradeRepository->getUserTradeById($id));
+        return TradeDetailResource::make($this->tradeRepository->getUserTradeById($id));
     }
 
     public function createTrade(array $data) {
@@ -47,6 +46,6 @@ class TradeService {
     }
 
     public function getUserTrades(int $id) {
-        return TradeGetResource::collection($this->tradeRepository->getAllUserTrades($id));
+        return TradeDetailResource::collection($this->tradeRepository->getAllUserTrades($id));
     }
 }

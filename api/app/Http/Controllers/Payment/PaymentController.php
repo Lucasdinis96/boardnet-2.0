@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers\Payment;
 
-use App\Http\Controllers\Controller;
-
-use App\Models\Negotiation;
-
-use App\Services\Payment\PaymentService;
-
-use Illuminate\Http\Request;
-
 use App\Enums\PaymentMethod;
+use App\Http\Controllers\Controller;
+use App\Models\Negotiation;
+use App\Services\Payment\PaymentService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PaymentController extends Controller {
 
@@ -47,6 +44,7 @@ class PaymentController extends Controller {
             );
 
         return response()->json(['data' => [
+            'payment' => $payment,
             'message' => 'Pagamento criado com sucesso',
         ]]);
     }

@@ -8,6 +8,7 @@ import { BoardgameComponent } from './features/boardgame/boardgame.component';
 import { BoardgameDetailComponent } from './features/boardgame/pages/boardgame-detail/boardgame-detail.component';
 import { TradeComponent } from './features/trade/trade.component';
 import { TradeDetailComponent } from './features/trade/pages/trade-detail/trade-detail.component';
+import { NEGOTIATION_ROUTES } from './features/negotiation/negotiation.routes';
 
 export const routes: Routes = [
    {
@@ -41,7 +42,13 @@ export const routes: Routes = [
         component: TradeComponent
    },
    {
-        path: 'trade/:id',
-        component: TradeDetailComponent
-   }
+          path: 'trade/:id',
+          component: TradeDetailComponent
+   },
+     {
+          path: 'negotiation',
+          canActivate: [authGuard],
+          children: NEGOTIATION_ROUTES
+     }
+   
 ];

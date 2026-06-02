@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\Http\Resources\Adress\AdressCreateResource;
-use App\Http\Resources\Adress\AdressGetResource;
-use App\Http\Resources\Adress\AdressUpdateResource;
+use App\Http\Resources\Address\AddressCreateResource;
+use App\Http\Resources\Address\AddressGetResource;
+use App\Http\Resources\Address\AddressUpdateResource;
 use App\Http\Resources\User\UserGetResource;
 use App\Models\User;
-use App\Repositories\AdressRepository;
+use App\Repositories\AddressRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,19 +16,19 @@ use Illuminate\Support\Facades\Log;
 
 class UserService {
     protected UserRepository $userRepository;
-    protected AdressRepository $adressRepository;
+    protected AddressRepository $addressRepository;
 
-    public function __construct(UserRepository $userRepository, AdressRepository $adressRepository) {
+    public function __construct(UserRepository $userRepository, AddressRepository $addressRepository) {
         $this->userRepository = $userRepository;
-        $this->adressRepository = $adressRepository;
+        $this->addressRepository = $addressRepository;
     }
 
     public function getUser (string $userId) {
        return UserGetResource::make($this->userRepository->find($userId));
     }
 
-    public function getAdress (string $userId) {
-       return AdressGetResource::make($this->userRepository->find($userId));
+    public function getAddress (string $userId) {
+       return AddressGetResource::make($this->userRepository->find($userId));
     }
 
     public function updateUser(User $user, array $data): void {
@@ -45,10 +45,10 @@ class UserService {
         $this->repository->updateUser($user, $data);
     }
 
-    public function updateAdress($data){
+    public function updateAddress($data){
         $userId = $data->id;
-        $adressData = AdressUpdateResource::make($data)->resolve();
-        $this->userRepository->updateAdress($adressData, $userId);
+        $addressData = AddressUpdateResource::make($data)->resolve();
+        $this->userRepository->updateAddress($addressData, $userId);
         return true;
     }
 

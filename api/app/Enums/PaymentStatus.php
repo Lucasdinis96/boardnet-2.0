@@ -11,4 +11,18 @@ enum PaymentStatus: string {
     case Expired = 'expired';
     case Refunded = 'refunded';
     case Canceled = 'canceled';
+
+    public function label(): string {
+
+        return match($this) {
+
+            self::Pending => 'Aguardando Pagamento',
+            self::Processing => 'Processando',
+            self::Paid => 'Pago',
+            self::Failed => 'Falhado',
+            self::Expired => 'Expirado',
+            self::Refunded => 'Devolvido',
+            self::Canceled => 'Cancelada',
+        };
+    }
 }

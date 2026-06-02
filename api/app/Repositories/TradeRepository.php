@@ -63,8 +63,6 @@ class TradeRepository {
             ]);
         }
 
-        Log::info($trade->id);
-
         if (!empty($boardgamesTrade)) {
             $syncData = [];
 

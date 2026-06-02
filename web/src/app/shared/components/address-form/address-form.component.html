@@ -1,8 +1,8 @@
 <div class="content">
     <form
         (ngSubmit)="submit()"
-        [formGroup]="adressForm"
-        class="adress-form">
+        [formGroup]="addressForm"
+        class="address-form">
         <h2>Endereço</h2>
         <input 
             type="text"
@@ -11,11 +11,11 @@
         <input 
             type="text"
             placeholder="Rua" 
-            formControlName="adress_name">
+            formControlName="address_name">
         <input 
             type="text"
             placeholder="Número" 
-            formControlName="adress_number">
+            formControlName="address_number">
         <input 
             type="text"
             placeholder="Bairro" 

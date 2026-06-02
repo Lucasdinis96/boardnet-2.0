@@ -3,7 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
 import { RegisterService } from '../../../../../auth/register/register.service';
-import { UserService } from '../../../../user.service';
+import { UserService } from '../../../../services/user.service';
 
 
 @Component({
@@ -14,7 +14,6 @@ import { UserService } from '../../../../user.service';
 })
 export class UserGeneralComponent implements OnInit {
 
-  private registerService = inject(RegisterService);
   private userService = inject(UserService);
   cities$!: Observable<any[]>;
   userForm!: FormGroup;

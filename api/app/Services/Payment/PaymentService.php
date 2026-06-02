@@ -13,6 +13,7 @@ use App\Repositories\Negotiation\NegotiationRepository;
 use App\Repositories\Payment\PaymentRepository;
 use App\Services\Negotiation\NegotiationEventService;
 use App\Services\Payment\Contracts\PaymentProviderInterface;
+use Illuminate\Support\Facades\Log;
 
 class PaymentService {
 
@@ -46,7 +47,7 @@ class PaymentService {
             ->update($payment, [
                 'provider_payment_id' => $providerResponse['provider_payment_id'] ?? null,
                 'transaction_id' => $providerResponse['transaction_id'] ?? null,
-                'payment_url' => $providerResponse['payment_url'] ?? null,
+                'payment_url' => data_get($providerResponse,'provider_response.data.url'),
                 'provider_response' => $providerResponse,
                 'expires_at' => $providerResponse['expires_at'] ?? $payment->expires_at,
             ]);
@@ -73,8 +74,11 @@ class PaymentService {
                 'status' => PaymentStatus::Paid,
                 'paid_amount' => $payment->amount,
                 'paid_at' => now(),
+                'receipt_url' => data_get($providerResponse,'data.checkout.receiptUrl',null),
                 'provider_response' => $providerResponse
             ]);
+        
+         $this->negotiationRepository->updateStatus(negotiation: $payment->negotiation, status: NegotiationStatus::Paid);
 
         $this->eventService->create(
             negotiation: $payment->negotiation,
@@ -85,20 +89,7 @@ class PaymentService {
             ]
         );
 
-        $this->negotiationRepository
-            ->updateStatus(
-                negotiation: $payment->negotiation,
-                status: NegotiationStatus::WaitingShipping
-            );
-
-        $this->eventService->create(
-            negotiation: $payment->negotiation,
-            event: NegotiationEventType::WaitingShipping,
-            metadata: [
-                'payment_id' => $payment->id,
-                'amount' => $payment->amount
-            ]
-        );
+       
         
         return $updated;
     }

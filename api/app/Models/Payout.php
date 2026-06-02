@@ -7,10 +7,10 @@ use App\Enums\PixKeyType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PayoutAccount extends Model {
+class Payout extends Model {
 
     use HasFactory;
-
+    protected $table = 'payouts';
     protected $fillable = [
         'user_id',
         'type',

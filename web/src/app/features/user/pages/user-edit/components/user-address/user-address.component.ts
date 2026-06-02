@@ -4,21 +4,21 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
 import { RegisterService } from '../../../../../auth/register/register.service';
 import { CityService } from '../../../../../../core/services/city.service';
-import { UserService } from '../../../../user.service';
+import { UserService } from '../../../../services/user.service';
 
 
 @Component({
-  selector: 'app-user-adress',
+  selector: 'app-user-address',
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './user-adress.component.html',
-  styleUrl: './user-adress.component.scss',
+  templateUrl: './user-address.component.html',
+  styleUrl: './user-address.component.scss',
 })
-export class UserAdressComponent {
+export class UserAddressComponent {
   private registerService = inject(RegisterService);
   private cityService = inject(CityService);
   private userService = inject(UserService);
   cities$!: Observable<any[]>;
-  adressForm!: FormGroup;
+  addressForm!: FormGroup;
   isDropdownOpen = false;
   userInfo: any;
   user: any;
@@ -27,30 +27,30 @@ export class UserAdressComponent {
 
   ngOnInit(){
     this.initializeForm();
-    this.loadAdress();
+    this.loadAddress();
     this.getCities();
 
   }
 
-  loadAdress(){
+  loadAddress(){
     this.id = localStorage.getItem('id');
-    this.userService.getAdress(this.id).subscribe(adress => {
-      this.adressForm.patchValue({
-        cep: adress.cep,
-        adress_name: adress.adress,
-        adress_number: adress.number,
-        neighborhood: adress.neighborhood,
-        city_id: adress.city.id,
-        city: adress.city ? `${adress.city.name} - ${adress.city.state}`:null
+    this.userService.getAddress(this.id).subscribe(address => {
+      this.addressForm.patchValue({
+        cep: address.cep,
+        address_name: address.address,
+        address_number: address.number,
+        neighborhood: address.neighborhood,
+        city_id: address.city.id,
+        city: address.city ? `${address.city.name} - ${address.city.state}`:null
       });
     });
   }
   
   initializeForm(){
-    this.adressForm = new FormGroup<any>({
+    this.addressForm = new FormGroup<any>({
       cep: new FormControl(null),
-      adress_name: new FormControl(null),
-      adress_number: new FormControl(null),
+      address_name: new FormControl(null),
+      address_number: new FormControl(null),
       neighborhood: new FormControl(null),
       city: new FormControl(null),
       city_id: new FormControl(null)
@@ -62,25 +62,25 @@ export class UserAdressComponent {
   }
 
   updateUser(){
-    const formValue = this.adressForm.value;
+    const formValue = this.addressForm.value;
     const id = localStorage.getItem('id');
     const payload = {
       cep: formValue.cep!,
-      adress: formValue.adress_name!,
-      number: formValue.adress_number!,
+      address: formValue.address_name!,
+      number: formValue.address_number!,
       neighborhood: formValue.neighborhood!,
       city: formValue.city!,
       city_id: formValue.city_id!,
       id: id ? Number(id) : null,
     };
-    this.userService.updateAdress(payload, id).subscribe({
+    this.userService.updateAddress(payload, id).subscribe({
       next: (response) => {console.log(response.message)},
       error: () => {console.log('Erro ao registrar')}
     });
   }
 
   getCities(){
-    this.cities$ = this.adressForm.controls['city'].valueChanges.pipe(
+    this.cities$ = this.addressForm.controls['city'].valueChanges.pipe(
       debounceTime(300),
       distinctUntilChanged(),
       switchMap((term: string | null) => {
@@ -95,13 +95,12 @@ export class UserAdressComponent {
   }
 
   selectCity(city: any) {
-    this.adressForm.patchValue({
+    this.addressForm.patchValue({
       city: city.name,
       city_id: city.id
     },
     { emitEvent: false}
   );
-    
     this.isDropdownOpen = false;
   }
 }
