@@ -1,7 +1,4 @@
-<p>payment works!</p>
-
-<div *ngIf="payment() as payment">
-
+<div class="container" *ngIf="payment() as payment">
+    <p>Negociação Iniciada, clique no botão abaixo para realizar o pagamento!</p>
     <a  class="btn-yellow" [href]="payment.payment_url" target="_blank">Realizar pagamento</a>
-
 </div>

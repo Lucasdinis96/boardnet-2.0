@@ -1,7 +1,10 @@
 .auth-content {
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 10px;
 }
+
 .button {
     background-color: #C9A14D;
     color: black;
@@ -34,7 +37,13 @@
     background-color: #C9A14D;
 }
 
-
 .material-symbols-outlined {
+    padding: 3px;
   color: #C9A14D;
+  border: 2px transparent black;
+}
+
+.material-symbols-outlined:hover{
+    border: 2px solid #c9a14d;
+    border-radius: 3px;
 }

@@ -23,4 +23,8 @@ export class NegotiationService {
     createPayment(method: any, id: any){
       return this.api.post<any>(`negotiations/${id}/payments`, method)
     }
+
+    clearCart() {
+      return this.api.delete<any>('cart/clear')
+    }
 }

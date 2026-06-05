@@ -26,7 +26,6 @@ class TradeController extends Controller {
     }
 
     public function show(Request $request, int $id) {
-        
         $trade = $this->tradeService->showTrade($id);
         return response()->json([
             'data' => $trade
@@ -48,7 +47,6 @@ class TradeController extends Controller {
     }
 
     public function destroy(Trade $trade) {
-
         if ($trade->user_id !== auth()->id()) {
             abort(403, 'Você não tem permissão para editar esta troca.');
         }

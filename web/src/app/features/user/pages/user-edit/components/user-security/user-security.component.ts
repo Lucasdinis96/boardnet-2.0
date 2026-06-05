@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../../../services/user.service';
 import { AuthService } from '../../../../../../core/services/auth.service';
+import { FlashMessageService } from '../../../../../../core/services/flash-message.service';
 
 
 @Component({
@@ -15,6 +16,7 @@ import { AuthService } from '../../../../../../core/services/auth.service';
 export class UserSecurityComponent implements OnInit {
   private userService = inject(UserService);
   private authService = inject(AuthService);
+  private flashMessage = inject(FlashMessageService)
   private router = inject(Router);
   passwordForm!: FormGroup;
   deleteForm!: FormGroup;
@@ -61,11 +63,11 @@ export class UserSecurityComponent implements OnInit {
     }
     this.userService.deleteAccount(payload, id).subscribe({
       next: (response) => {
-        console.log(response.message)
+        this.flashMessage.success(response.message)
         this.authService.logout()
         this.router.navigateByUrl('/home')
       },
-      error: (response) => {console.log('Erro ao deletar conta')}
+      error: (response) => {this.flashMessage.warning(response.error.message)}
     })
   }
 }

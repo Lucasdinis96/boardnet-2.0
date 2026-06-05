@@ -24,11 +24,11 @@ class CartController extends Controller {
 
     public function removeItem(Request $request, int $tradeItem) {
         $cart = $this->cartService->removeItem($request->user(),$tradeItem);
-        return response()->json(['data' =>['message' => 'Item Removido do carrinho']]);
+        return response()->json(['data' =>['message' => 'Item Removido do carrinho.']]);
     }
 
     public function clear(Request $request) {
         $this->cartService->clear($request->user());
-        return response()->json(['data' => ['message' => 'Carrinho limpo com sucesso']]);
+        return response()->json(['data' => ['message' => 'Carrinho limpo com sucesso.']]);
     }
 }

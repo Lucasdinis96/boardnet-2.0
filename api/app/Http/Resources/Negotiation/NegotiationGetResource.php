@@ -21,6 +21,7 @@ class NegotiationGetResource extends JsonResource
             'seller' => $this->seller->name,
             'is_seller' => auth()->id() === $this->seller_id,
             'buyer' => $this->buyer->name,
+            'is_buyer' => auth()->id() === $this->buyer_id,
             'status' => [
                 'type' => $this->status->value,
                 'label' => $this->status->label(),

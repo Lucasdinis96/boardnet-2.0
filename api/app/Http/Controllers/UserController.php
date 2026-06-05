@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
+use Exception;
+
 
 class UserController extends Controller {
     protected UserService $userService;
@@ -82,11 +84,7 @@ class UserController extends Controller {
     public function destroy(Request $request, $id) {
         $checkPassword = $this->checkPassword($request->password, $id);
         if (!$checkPassword) {
-            return response()->json([
-                'data' => [
-                    'message' => 'Senha incorreta',
-                ]
-            ], 422);
+            throw new Exception('Senha Incorreta!!');
         }
         $this->userService->deleteAccount($id);
 

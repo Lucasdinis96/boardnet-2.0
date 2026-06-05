@@ -13,11 +13,15 @@ class TradeRepository {
         private TradeItemRepository $tradeItemRepository
     ) {}
     
-    public function getLatestTrades(int $limit = 8)
-    {
-        return Trade::with(['user', 'boardgames'])
-            ->orderBy('created_at', 'desc')
-            ->get();
+    public function getLatestTrades(?int $limit = null) {
+
+        $query = Trade::with(['user', 'boardgames'])->orderBy('created_at', 'desc');
+
+        if ($limit) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
     }
 
     public function findById($id) {

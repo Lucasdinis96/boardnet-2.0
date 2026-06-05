@@ -17,26 +17,41 @@ export class AddressFormComponent {
   addressForm!: FormGroup;
   userAddress: any;
   isDropdownOpen = false;
+  private _disabled = false;
   userInfo: any;
   user: any;
   message: any;
   id: any;
+  isDisabled = false;
   @Input() initialData: any;
   @Output() submitAddress = new EventEmitter<any>();
+  @Input() set disabled(value: boolean) {
+      this.isDisabled = value;
+      this._disabled = value;
+      if (!this.addressForm) {
+        return;
+      }
+      this.toggleFormState();
+    }
+
+  private toggleFormState() {
+    this._disabled ? this.addressForm.disable() : this.addressForm.enable();
+  }
 
   ngOnInit(){
     this.initializeForm();
+    this.toggleFormState();
     this.patchInitialData();
     this.getCities();
   }
   
   initializeForm(){
     this.addressForm = new FormGroup<any>({
-      cep: new FormControl(null),
-      address_name: new FormControl(null),
-      address_number: new FormControl(null),
+      zipcode: new FormControl(null),
+      street: new FormControl(null),
+      number: new FormControl(null),
       neighborhood: new FormControl(null),
-      city: new FormControl(null),
+      city_state: new FormControl(null),
       city_id: new FormControl(null)
     })
   }
@@ -48,62 +63,37 @@ export class AddressFormComponent {
     }
 
     this.addressForm.patchValue({
-
-      cep: this.initialData.cep,
-
-      address_name:
-        this.initialData.address,
-
-      address_number:
-        this.initialData.number,
-
-      neighborhood:
-        this.initialData.neighborhood,
-
-      city_id:
-        this.initialData.city?.id,
-
-      city:
-        this.initialData.city
-
-          ? `${this.initialData.city.name}
-            - ${this.initialData.city.state}`
-
-          : null
+      zipcode: this.initialData.zipcode,
+      street: this.initialData.street,
+      number: this.initialData.number,
+      neighborhood: this.initialData.neighborhood,
+      city_id: this.initialData.city?.id,
+      city_state: this.initialData.city ? `${this.initialData.city.name} - ${this.initialData.city.state}` : null
     });
   }
 
   submit(){
-      if(this.addressForm.invalid){
-      return;
+      if(this.addressForm.invalid){return;}
+
+      const formValue = this.addressForm.value;
+      const payload = {
+        zipcode: formValue.zipcode,
+        street: formValue.street,
+        number: formValue.number,
+        neighborhood: formValue.neighborhood,
+        city_state: formValue.city_state,
+        city_id: formValue.city_id,
+      };
+
+      this.submitAddress.emit(payload);
     }
 
-    const formValue =
-      this.addressForm.value;
-
-    const payload = {
-
-      zipcode: formValue.cep,
-
-      street: formValue.address_name,
-
-      number: formValue.address_number,
-
-      neighborhood:
-        formValue.neighborhood,
-
-      city_state: formValue.city,
-
-      city_id: formValue.city_id,
-    };
-
-    this.submitAddress.emit(
-      payload
-    );
+    emitAddress() {
+      this.submitAddress.emit(this.addressForm.getRawValue())
     }
 
   getCities(){
-    this.cities$ = this.addressForm.controls['city'].valueChanges.pipe(
+    this.cities$ = this.addressForm.controls['city_state'].valueChanges.pipe(
       debounceTime(300),
       distinctUntilChanged(),
       switchMap((term: string | null) => {
@@ -119,10 +109,10 @@ export class AddressFormComponent {
 
   selectCity(city: any) {
     this.addressForm.patchValue({
-      city: city.name,
+      city_state: city.name,
       city_id: city.id
     },
-    { emitEvent: false}
+    { emitEvent: false }
   );
     this.isDropdownOpen = false;
   }

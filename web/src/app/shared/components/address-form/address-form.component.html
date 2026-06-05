@@ -1,21 +1,20 @@
-<div class="content">
+<div class="address-container" [class.disabled]="isDisabled">
     <form
         (ngSubmit)="submit()"
         [formGroup]="addressForm"
         class="address-form">
-        <h2>Endereço</h2>
         <input 
             type="text"
             placeholder="CEP" 
-            formControlName="cep">
+            formControlName="zipcode">
         <input 
             type="text"
             placeholder="Rua" 
-            formControlName="address_name">
+            formControlName="street">
         <input 
             type="text"
             placeholder="Número" 
-            formControlName="address_number">
+            formControlName="number">
         <input 
             type="text"
             placeholder="Bairro" 
@@ -24,7 +23,7 @@
             <input 
             type="text"
             placeholder="Cidade" 
-            formControlName="city"
+            formControlName="city_state"
             autocomplete="off"
             (focus)="isDropdownOpen = true">
             <ul *ngIf=" isDropdownOpen && (cities$ | async) as cities">
@@ -39,6 +38,5 @@
                 </li>
             </ul>
         </div>
-        <button class="send-btn" type="submit">Enviar</button>
     </form>
 </div>

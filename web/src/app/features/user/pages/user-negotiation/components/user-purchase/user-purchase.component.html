@@ -9,7 +9,10 @@
                     <p>Dados gerais</p>
                     <span>Vendedor: {{ negotiation.seller }}</span>
                     <span>Status: {{ negotiation.status.label }}</span>
-                    <a class="btn-yellow" *ngIf="negotiation.status.type === 'pending_payment'" [href]="negotiation.payments.payment_url" target="_blank">
+                    <button class="btn-yellow" *ngIf="!negotiation.payments[0]">
+                        Gerar Pagamento
+                    </button>
+                    <a class="btn-yellow" *ngIf="negotiation.status.type === 'pending_payment' && negotiation.payments[0]" [href]="negotiation.payments.payment_url" target="_blank">
                         Realizar Pagamento
                     </a>
                     <span class="paid" *ngIf="negotiation.status.type === 'paid'">Aguardando Envio</span>

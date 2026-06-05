@@ -2,12 +2,13 @@
 
 namespace App\Services\Cart;
 
-use App\Models\User;
-use App\Repositories\Cart\CartRepository;
-use App\Repositories\Cart\CartItemRepository;
-use App\Models\TradeItem;
 use App\Enums\TradeItemStatus;
+use App\Models\TradeItem;
+use App\Models\User;
+use App\Repositories\Cart\CartItemRepository;
+use App\Repositories\Cart\CartRepository;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class CartService {
 
@@ -22,14 +23,20 @@ class CartService {
 
     public function addItem(User $user, int $tradeItemId) {
 
+        $cart = $this->getCart($user);
         $tradeItem = TradeItem::findOrFail($tradeItemId);
+        $exists = $this->cartItemRepository->exists($cart->id, $tradeItem->id);
 
         if ($tradeItem->trade->user_id === $user->id) {
-            throw new Exception('Você não pode comprar seu próprio item');
+            throw new Exception('Você não pode comprar seu próprio item!');
         }
 
         if ($tradeItem->status !== TradeItemStatus::Available) {
-            throw new Exception('Item indisponível');
+            throw new Exception('Item indisponível!');
+        }
+
+        if ($exists) {
+            throw new Exception('Item já adicionado ao carrinho.');
         }
 
         $cart = $this->cartRepository->getOrCreate($user);

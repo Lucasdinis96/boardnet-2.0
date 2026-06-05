@@ -14,8 +14,8 @@ class TradeService {
         $this->tradeRepository = $tradeRepository;
     }
 
-    public function listTrades() {
-        return $this->tradeRepository->getLatestTrades();
+    public function listTrades(?int $limit = null) {
+        return $this->tradeRepository->getLatestTrades($limit);
     }
 
     public function showTrade($id) {
