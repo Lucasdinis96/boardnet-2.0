@@ -1,10 +1,72 @@
-<div class="container" *ngIf="cart$ | async as cart"> 
-    <span *ngFor="let item of cart.items">
-        <p>{{ item.id }}</p>
-        <button class="btn-red" (click)="removeItemFromCart(item.trade_item_id)">Remover item</button>
-    </span>
+<div class="main-container" *ngIf="cart$ | async as cart">    
+    <div class="container" *ngIf="cart.items.length > 0; else emptyCart">
+        <div class="cart-items">
+            <div class="item" *ngFor="let item of cart.items">
+                <div class="cover">
+                    <img src="{{item.trade_item.boardgame.cover}}" alt="">
+                </div>
+                <div class="data">
+                    <span>{{ item.trade_item.boardgame.title }}</span>
+                    <span>R$ {{ item.trade_item.value }}</span>
+                    <span>Vendedor: {{ item.trade_item.trade_id }}</span>
+                </div>
+                <div class="remove">
+                    <button class="btn-red" (click)="removeItemFromCart(item.trade_item_id)">Remover jogo</button>
+                </div>
+            </div>
+            <div class="clear">
+                <button class="btn-red" (click)="clearCart()">
+                    Limpar carrinho
+                </button>
+            </div>
+        </div>
+        <div class="checkout">
+            <div class="value">
+                <h2>Sumário Geral</h2>
+                <span>Valor dos jogos: R$ </span>
+                <span>Valor dos envios: R$</span>
+                <span>Valor total: R$</span>
+            </div>
+            <div class="payment">
+                <h2>Pagamento</h2>
+                <label for="method">Escolha o metódo de pagamento:</label>
+                <select id="method" [(ngModel)]="selectedMethod">
+                    <option *ngFor="let method of paymentMethods" [ngValue]="method">
+                        {{ method.name }}
+                    </option>
+                </select>
+                <div class="installments" *ngIf="selectedMethod.method === 'CARD'">
+                    <label for="installments">Parcelas: </label>
+                    <select id="installments" [(ngModel)]="selectedInstallments">
+                        <option *ngFor="let installment of installments" [ngValue]="installment">
+                            {{ installment.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="address">
+                <h2>Endereço de Envio</h2>
+                <label>
+                    <input type="radio" name="addressType" value="registered" [(ngModel)]="addressType">Utilizar endereço cadastrado
+                </label>
+                <label>
+                    <input type="radio" name="addressType" value="custom" [(ngModel)]="addressType">Utilizar outro endereço
+                </label>
+                <app-address-form
+                    #addressForm
+                    [disabled]="addressType === 'registered'"
+                ></app-address-form>
+            </div>
+            <div class="finish" *ngIf="cart.items.length > 0">
+                <button class="btn-blue" (click)="checkout()">Iniciar Negociação</button>
+            </div>
+        </div>
+    </div>
 </div>
 
-<app-address-form
-    (submitAddress)="checkout($event)"
-></app-address-form>
+<ng-template #emptyCart>
+    <div class="none">
+        <p>Carrinho vazio</p>
+        <a routerLink="/trades" class="btn-yellow">Ver anúncios</a>
+    </div>
+</ng-template>

@@ -25,6 +25,7 @@ class AbacatePayProvider implements PaymentProviderInterface {
     }
     
     private function createProduct(Payment $payment) {
+        Log::info($payment);
         $payload = [
             "externalId" => "prod-".$payment->id." negotiation". $payment->negotiation_id,
             "name" => "Pagamento Negociação ID ".$payment->id,
@@ -42,6 +43,7 @@ class AbacatePayProvider implements PaymentProviderInterface {
     public function createPixPayment(Payment $payment): array {
         
         $product = $this->createProduct($payment);
+        Log::info($product);
         $negotiation = $payment->negotiation;
         $buyer = $negotiation->buyer;
         $payload = [

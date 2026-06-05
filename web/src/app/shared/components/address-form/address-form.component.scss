@@ -1,4 +1,4 @@
-.content {
+.address-container {
     width: auto;
     padding-bottom: 10px;
     display: flex;
@@ -8,27 +8,28 @@
     align-items: center;
 }
 
+.address-container.disabled {
+  background: rgba(0, 0, 0, 0.2);
+  opacity: 0.7;
+  border-radius: 5px;
+}
+
 .address-form {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
-  width: 80%;
+  width: 100%;
+}
+
+.address-form input {
+  width: 100%;
 }
 
 .autocomplete {
   position: relative;
-}
-
-.send-btn {
-    border: none;
-    background-color: rgb(58, 58, 255);
-    border-radius: 5px;
-    padding: 5px;
-    color: white;
-}
-
-.send-btn:hover {
-    background-color: rgb(39, 39, 255);
+  width: 100%;
 }
 
 .autocomplete ul {
@@ -54,5 +55,5 @@
 }
 
 .autocomplete input {
-  width: 97%;
+  width: 100%;
 }
