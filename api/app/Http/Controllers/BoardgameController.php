@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Boardgames\BoardgameGetResource;
+use App\Http\Resources\Boardgames\BoardgameTradeResource;
 use App\Services\BoardgameService;
 use App\Services\CollectionService;
+use App\Services\TradeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -11,10 +14,12 @@ class BoardgameController extends Controller {
     
     protected $boardgameService;
     protected $collectionService;
+    protected $tradeService;
 
-    public function __construct(BoardgameService $boardgameService, CollectionService $collectionService) {
+    public function __construct(BoardgameService $boardgameService, CollectionService $collectionService, TradeService $tradeService) {
         $this->boardgameService = $boardgameService;
         $this->collectionService = $collectionService;
+        $this->tradeService = $tradeService;
     }
 
     public function index() {
@@ -26,9 +31,13 @@ class BoardgameController extends Controller {
 
     public function show(int $id) {
         $boardgame = $this->boardgameService->getBoardgame($id);
+        $trades = $this->tradeService->getTradeByBoardgame($id);
 
         return response()->json([
-            'data' => $boardgame
+            'data' => [
+                'boardgame' => $boardgame,
+                'trades' => BoardgameTradeResource::collection($trades)
+            ]
         ]);
     }
 
@@ -65,5 +74,21 @@ class BoardgameController extends Controller {
         return response()->json([
             'data' => $games
         ], 200);
+    }
+
+    public function filter(Request $request) {
+
+        $filters = [
+            'game_name' => $request->input('game_name'),
+            'min_players' => $request->integer('min_players'),
+            'max_players' => $request->integer('max_players'),
+            'age_range' => $request->integer('age_range')
+        ];
+        $boardgames = $this->boardgameService->filterGame($filters);
+
+        return response()->json([
+            'data' => BoardgameGetResource::collection($boardgames)
+        ], 200);
+        
     }
 }

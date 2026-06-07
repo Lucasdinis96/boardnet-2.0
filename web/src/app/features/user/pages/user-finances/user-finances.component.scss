@@ -14,7 +14,7 @@
   justify-content: center;
   place-self: center;
   gap: 10px;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: white;
   box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
 }
@@ -23,7 +23,7 @@
   text-decoration: none;
   color: black;
   border: 2px solid transparent;
-  border-radius: 2px;
+  border-radius: 5px;
   padding: 5px;
   align-items: center;
   justify-items: center;
@@ -34,9 +34,10 @@
   border-radius: 5px;
 }
 
-.section:active {
+.section.active {
   background-color: rgb(58, 58, 255);
   color: white;
+  border-radius: 5px;
 }
 
 .form {
@@ -44,7 +45,7 @@
   flex-wrap: wrap;
   flex-direction: column;
   width: auto;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: white;
   box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
 }

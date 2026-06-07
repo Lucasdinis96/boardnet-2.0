@@ -9,7 +9,7 @@
     background-color: #C9A14D;
     color: black;
     font-weight: bold;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 10px;
     border: none;
 }
@@ -25,18 +25,6 @@
     border: solid 2px black;
 }
 
-#me:hover{
-    border: solid 2px #C9A14D;
-    border-radius: 10px;
-
-}
-
-#me:active{
-    color: black;
-    border: 2px solid #C9A14D;
-    background-color: #C9A14D;
-}
-
 .material-symbols-outlined {
     padding: 3px;
   color: #C9A14D;
@@ -45,5 +33,5 @@
 
 .material-symbols-outlined:hover{
     border: 2px solid #c9a14d;
-    border-radius: 3px;
+    border-radius: 5px;
 }

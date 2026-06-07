@@ -7,7 +7,8 @@
         <app-auth-section></app-auth-section>
     </div>
     <div class="nav">
-        <a class="navbar" routerLink="boardgames">Jogos</a>
-        <a class="navbar" routerLink="trades">Anúncios</a>
+        <a class="navbar" routerLink="boardgames" routerLinkActive="active">Jogos</a>
+        <a class="navbar" routerLink="trades" routerLinkActive="active">Anúncios</a>
+        <a class="navbar" routerLink="user" routerLinkActive="active" *ngIf="isLogged$ | async">Minha Conta</a>
     </div>
 </header>

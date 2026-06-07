@@ -23,7 +23,7 @@ class CartController extends Controller {
     }
 
     public function removeItem(Request $request, int $tradeItem) {
-        $cart = $this->cartService->removeItem($request->user(),$tradeItem);
+        $cart = $this->cartService->removeItem($request->user(), $tradeItem);
         return response()->json(['data' =>['message' => 'Item Removido do carrinho.']]);
     }
 

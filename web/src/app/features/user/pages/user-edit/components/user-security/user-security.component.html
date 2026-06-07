@@ -16,12 +16,10 @@
             type="text"
             placeholder="Confirmar Senha Nova" 
             formControlName="confirmNewPassword">
-        <button class="send-btn" type="submit">Enviar</button>
+        <button class="btn-blue" type="submit">Enviar</button>
     </form>
-</div>
 
-<div class="security-form">
-        <form
+    <form
             (ngSubmit)="deleteAccount()"
             [formGroup]="deleteForm"
             class="delete-form">

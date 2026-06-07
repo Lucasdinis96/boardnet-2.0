@@ -7,6 +7,7 @@ Route::prefix('boardgames')->group (function () {
     Route::get('/getAll', [BoardgameController::class, 'index']);
     Route::get('/show/{id}', [BoardgameController::class, 'show']);
     Route::get('/search', [BoardgameController::class, 'search']);
+    Route::get('/filter', [BoardgameController::class, 'filter']);
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/addCollection', [BoardgameController::class, 'addCollection']);

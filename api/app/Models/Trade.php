@@ -25,4 +25,8 @@ class Trade extends Model {
                     ->withPivot(['id','value','status'])
                     ->withTimestamps();
     }
+
+    public function tradeItem () {
+        return $this->hasMany(TradeItem::class);
+    }
 }

@@ -21,4 +21,8 @@ export class TradeService {
   addCart(data: any){
     return this.api.post<any>('cart/items', data)
   }
+
+  filterTrades(data: any) {
+    return this.api.get<any>('trades/filters', data)
+  }
 }

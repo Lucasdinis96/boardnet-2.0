@@ -3,6 +3,7 @@
 namespace App\Repositories\Cart;
 
 use App\Models\CartItem;
+use Illuminate\Support\Facades\Log;
 
 class CartItemRepository {
 

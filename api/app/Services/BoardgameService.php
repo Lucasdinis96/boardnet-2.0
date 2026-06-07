@@ -33,4 +33,8 @@ class BoardgameService {
             ];
         });
     }
+
+    public function filterGame(array $request) {
+        return $this->repository->filterGame($request);
+    }
 }

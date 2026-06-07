@@ -1,36 +1,45 @@
 <div class="detail-container" *ngIf="boardgame$ | async as boardgame">
 
     <div class="info">
-        <img class="cover" [src]="boardgame.cover" alt="cover">
-        <h1>{{ boardgame.title }}</h1>
-        <a class="learn" href="https://www.youtube.com/results?search_query=Como+jogar+{{boardgame.title}}+?" target="_blank">
+        <img class="cover" [src]="boardgame.boardgame.cover" alt="cover">
+        <h1>{{ boardgame.boardgame.title }}</h1>
+        <div class="game-detail">
+                <span>Lançamento: {{ boardgame.boardgame.release }}</span>
+                <span>Editora: {{ boardgame.boardgame.publisher }}</span>
+                <span>Jogadores: {{ getPlayersCount(boardgame.boardgame) }}</span>
+                <span>Faixa Etária: A partir de {{ boardgame.boardgame.age_range }} anos.</span>
+        </div>
+        <a class="learn" href="https://www.youtube.com/results?search_query=Como+jogar+{{boardgame.boardgame.title}}+?" target="_blank">
             Como Jogar?
         </a>
         <ng-container *ngIf="exist$ | async as exist">
             <button
                 class="collection" 
                 [ngClass]="exist == 1 ? 'remove' : 'add' " 
-                (click)="exist == 1 ? removeCollection(boardgame.id) : addCollection(boardgame.id)">
+                (click)="exist == 1 ? removeCollection(boardgame.boardgame.id) : addCollection(boardgame.boardgame.id)">
                 {{ exist == 1 ? 'Remover da coleção' : 'Adicionar à coleção' }}
             </button>
         </ng-container>
+        <div class="btn-yellow">
+            <a class="goBack-btn" routerLink="/boardgames">Voltar</a>
+        </div>
     </div>
 
     <div class="detail">
-        <div class="game-detail">
-            <span>Editora: {{ boardgame.publisher }}</span><br>
-            <span>Jogadores: de {{ boardgame.min_players }} até {{ boardgame.max_players }} jogadores. </span>
-        </div>
-
         <div class="game-description">
-            <p>{{ boardgame.description }}</p>
+            <p>{{ boardgame.boardgame.description }}</p>
+        </div>
+        <div class="trade-section">
+            <span>Anúncios</span>
+        </div>
+        <div class="trade-row" *ngFor="let trade of boardgame.trades">
+            <span>Anúncio: {{ trade.trade.title }}</span>
+            <span>Vendedor: {{ trade.trade.seller }}</span>
+            <span>Preço: R$ {{ trade.value }}</span>
+            <a class="btn-blue" [routerLink]="['/trades', trade.trade_id]">Ver Anúncio</a>
         </div>
     </div>
 
-</div>
-
-<div class="goBack">
-    <a class="goBack-btn" routerLink="/boardgames">Voltar</a>
 </div>
 
 <ng-template #loadingExist>

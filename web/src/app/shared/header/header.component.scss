@@ -26,17 +26,18 @@ header {
     text-decoration: none;
     padding: 10px;
     border: solid 2px black;
+    border-radius: 5px;
+    transition: 0.2s;
 }
 
-.navbar:hover{
+.navbar:hover {
     border: solid 2px #C9A14D;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
-.navbar:active{
-    color: black;
-    border: 2px solid #C9A14D;
+.navbar.active {
     background-color: #C9A14D;
+    color: black;
 }
 
 

@@ -34,7 +34,7 @@ export const routes: Routes = [
         component: BoardgameComponent
    },
    {
-        path: 'boardgame/:id',
+        path: 'boardgames/:id',
         component: BoardgameDetailComponent
    },
    {
@@ -42,7 +42,7 @@ export const routes: Routes = [
         component: TradeComponent
    },
    {
-          path: 'trade/:id',
+          path: 'trades/:id',
           component: TradeDetailComponent
    },
      {

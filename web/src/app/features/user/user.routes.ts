@@ -43,7 +43,7 @@ export const user_routes: Routes = [
                 children : [
                     {path: '', redirectTo: 'purchases', pathMatch: 'full'},
                     {path: 'purchases', component: UserPurchaseComponent},
-                    {path: 'sells', component: UserSaleComponent}
+                    {path: 'sales', component: UserSaleComponent}
                 ]
             },
             {path: 'finances', component: UserFinancesComponent,

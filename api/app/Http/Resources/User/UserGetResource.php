@@ -19,6 +19,7 @@ class UserGetResource extends JsonResource
             'email' => $this->email,
             'birthdate' => $this->birthdate,
             'phone' => $this->phone,
+            'city_state' => $this->city->name.' - '.$this->city->state->uf
         ];
     }
 }
