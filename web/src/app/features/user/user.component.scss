@@ -13,7 +13,7 @@
     top: 0;
     z-index: 10;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     height: fit-content;
     width: 20%;
     background-color: white;
@@ -33,7 +33,7 @@
 .page-container {
     width: fit-content;
     height: 100%;
-    border-radius: 10px;
+    border-radius: 5px;
     align-items: center;
 }
 
@@ -42,15 +42,18 @@
     color: black;
     border: 2px solid transparent;
     padding: 5px;
+    transition: 0.2s;
+    border-radius: 5px;
 }
 
 .option-btn:hover {
     border: 2px solid rgb(58, 58, 255);
-    border-radius: 8px;
+    border-radius: 5px;
 }
 
-.option-btn:active {
+.option-btn.active {
     background-color: rgb(58, 58, 255);
+    border-radius: 5px;
     color: white;
 }
 

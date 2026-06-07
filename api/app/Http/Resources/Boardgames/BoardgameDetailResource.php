@@ -18,6 +18,7 @@ class BoardgameDetailResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'cover' => $this->cover,
+            'release' => $this->release_date,
             'min_players' => $this->min_players,
             'max_players' => $this->max_players,
             'age_range' => $this->age_range,

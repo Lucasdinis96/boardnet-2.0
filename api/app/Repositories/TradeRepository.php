@@ -90,9 +90,53 @@ class TradeRepository {
         return true;
     }
 
-    
+    public function getTradeByBoardgame(int $id) {
+        return TradeItem::with('trade')->where('boardgame_id', $id)->get();
+    }
 
-    public function detachBoardgame($trade) {
-        return TradeItem::where('id', $trade['id'])->where('boardgame_id', $trade['boardgame_id'])->delete();
+    public function filterTrades(array $filters) {
+        Log::info($filters);
+        return Trade::with([
+            'user',
+            'boardgames',
+            'tradeItem'
+        ])
+        ->when(
+            !empty($filters['game_name']),
+            function ($query) use ($filters) {
+                $query->whereHas('boardgames', function ($q) use ($filters) {
+                    $q->where(
+                        'title',
+                        'like',
+                        "%{$filters['game_name']}%"
+                    );
+                });
+            }
+        )
+        ->when(
+            isset($filters['min_value']) && isset($filters['max_value']) && $filters['min_value'] !== 0 && $filters['max_value'] !== 0,
+            function ($query) use ($filters) {
+                $query->whereHas('tradeItem', function ($q) use ($filters) {
+                    $q->whereBetween('value', [
+                        $filters['min_value'],
+                        $filters['max_value']
+                    ]);
+                });
+            }
+        )
+        ->when(
+            !empty($filters['seller']),
+            function ($query) use ($filters) {
+                $query->whereHas('user', function ($q) use ($filters) {
+                    $q->where(
+                        'name',
+                        'like',
+                        "%{$filters['seller']}%"
+                    );
+                });
+            }
+        )
+        ->latest()
+        ->get();
     }
 }

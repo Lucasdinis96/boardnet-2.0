@@ -137,7 +137,7 @@ class BoardgameSeeder extends Seeder
                 'title' => 'Deterence 2X62',
                 'publisher' => 'Mandala Jogos',
                 'release_date' => '2016',
-                'min_players' => NULL,
+                'min_players' => 2,
                 'max_players' => 2,
                 'playtime' => 30,
                 'age_range' => 10,

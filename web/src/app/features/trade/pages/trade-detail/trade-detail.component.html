@@ -1,18 +1,28 @@
 <div class="detail-container" *ngIf="trade$ | async as trade">
-
     <div class="info">
         <img class="cover" src="assets/photoicon.png" alt="cover">
         <h1>{{ trade.title }}</h1>
+        <div class="trade-detail">
+            <span>Vendedor - {{ trade.user.name }}</span>
+            <span>Cidade: {{ trade.user.city_state }}</span>
+            <a class="btn-green" href="https://wa.me/{{ trade.user.phone }}" target="_blank">Entre em contato</a>
+        </div>
+        <div class="btn-yellow">
+            <a class="goBack-btn" routerLink="/trades">Voltar</a>
+        </div>
     </div>
 
     <div class="detail">
-        <div class="trade-detail">
-            <span>Vendedor - {{ trade.user.name }}</span>
-            <a class="btn-green" href="https://wa.me/{{ trade.user.phone }}" target="_blank">Entre em contato</a>
+        <div class="detail-info">
+            <div class="trade-description">
+                <p>{{ trade.description }}</p>
+            </div>
+            <div class="photos">
+                Local onde ficarão as fotos do anúncio.
+            </div>
         </div>
-
-        <div class="trade-description">
-            <p>{{ trade.description }}</p>
+        <div class="game-section">
+            Jogos a venda:
         </div>
         <div class="trade-games-grid">
             <div class="trade-games" *ngFor="let boardgames of trade.boardgames">
@@ -20,16 +30,9 @@
                 <span>{{ boardgames.title}}</span>
                 <span>R$ {{ boardgames.trade_item.value }}</span>
                 <button class="cart-btn btn-green" (click)="addCart(boardgames.trade_item.id)">Adicionar</button>
-                <a class="btn-blue" [routerLink]="['/boardgame', boardgames.id]">Ver Jogo</a>
-                
+                <a class="btn-blue" [routerLink]="['/boardgames', boardgames.id]">Ver Jogo</a>
             </div>
         </div>
     </div>
-
 </div>
-
-<div class="goBack">
-    <a class="goBack-btn" routerLink="/trades">Voltar</a>
-</div>
-
 

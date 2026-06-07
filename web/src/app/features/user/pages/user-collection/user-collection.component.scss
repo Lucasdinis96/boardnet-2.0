@@ -3,7 +3,7 @@
     height: fit-content;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .game-card {
@@ -15,7 +15,7 @@
     flex-direction: column;
     align-items: center;
     justify-items: center;
-    border-radius: 10px;
+    border-radius: 5px;
     padding-top: 10px;
     padding-bottom: 10px;
     gap: 10px;

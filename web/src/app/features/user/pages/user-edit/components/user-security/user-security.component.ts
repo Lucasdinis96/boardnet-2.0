@@ -51,7 +51,7 @@ export class UserSecurityComponent implements OnInit {
     }
     this.userService.updatePassword(payload, id).subscribe({
       next: (response) => {console.log(response.message)},
-      error: (response) => {console.log('Falha ao atualizar a senha')}
+      error: (response) => {this.flashMessage.error(response.error.message)}
     })
   }
 

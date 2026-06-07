@@ -35,6 +35,7 @@ export class BoardgameDetailComponent {
     )
     )
   );
+
   ngOnInit() {
     this.boardgame$ = this.route.paramMap.pipe(
       map(params => Number(params.get('id'))),
@@ -71,5 +72,15 @@ export class BoardgameDetailComponent {
   checkCollection (boardgameId: number){
     const userId = Number(localStorage.getItem('id'));
     return this.service.checkCollection(userId, boardgameId);
+  }
+
+  getPlayersCount(boardgame: any): string {
+    const min = boardgame.min_players;
+    const max = boardgame.max_players;
+
+    if (!max || min === max) {
+      return `${min} jogadores`;
+    }
+    return `De ${min} a ${max} jogadores`;
   }
 }

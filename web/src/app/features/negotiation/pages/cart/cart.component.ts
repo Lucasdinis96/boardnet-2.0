@@ -73,6 +73,7 @@ export class CartComponent {
   }
 
   removeItemFromCart(id: any){
+    console.log(id);
     this.negotiationService.removeItemFromCart(id).subscribe({
       next:(response) => {
         this.flashMessage.success(response.message)

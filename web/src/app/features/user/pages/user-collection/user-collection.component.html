@@ -1,6 +1,6 @@
 <div class="collection" *ngIf = "$collection | async as boardgames">
     <div class="game-card" *ngFor = "let boardgame of boardgames">
-        <a class="game-card-content" [routerLink]="['/boardgame', boardgame.boardgame.id]">
+        <a class="game-card-content" [routerLink]="['/boardgames', boardgame.boardgame.id]">
             <img class="cover" src="{{boardgame.boardgame.cover}}" alt="cover">
             <span>{{ boardgame.boardgame.title }}</span>
         </a>

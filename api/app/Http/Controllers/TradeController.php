@@ -57,13 +57,17 @@ class TradeController extends Controller {
         ]);
     }
 
-    public function myTrades() {
-        $trades = $this->tradeService->getUserTrades();
-        return response()->json($trades);
-    }
+    public function filters(Request $request) {
+        $filters = [
+            'game_name' => $request->input('game_name'),
+            'min_value' => $request->integer('min_value'),
+            'max_value' => $request->integer('max_value'),
+            'seller' => $request->input('seller')
+        ];
+        $trades = $this->tradeService->filterTrades($filters);
 
-    public function detachBoardgame(Trade $trade, Boardgame $boardgame) {
-        $this->tradeService->removeBoardgame($trade, $boardgame);
-        return back()->with('success', 'Jogo removido do anúncio.');
+        return response()->json([
+            'data' => TradeGetResource::collection($trades)
+        ], 200);
     }
 }

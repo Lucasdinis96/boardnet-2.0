@@ -19,7 +19,6 @@ class CheckoutController extends Controller {
 
     public function store(Request $request) {
 
-        Log::info($request);
         if ($request->use_registered_address) {
             $address = [ 
                 'shipping_address' => [

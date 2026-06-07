@@ -48,4 +48,12 @@ class TradeService {
     public function getUserTrades(int $id) {
         return TradeDetailResource::collection($this->tradeRepository->getAllUserTrades($id));
     }
+
+    public function getTradeByBoardgame(int $id) {
+        return $this->tradeRepository->getTradeByBoardgame($id);
+    }
+
+    public function filterTrades(array $request) {
+        return $this->tradeRepository->filterTrades($request);
+    }
 }

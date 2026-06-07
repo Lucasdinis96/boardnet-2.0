@@ -1,13 +1,24 @@
 <div class="trades-container">
     <div class="filters">
-        <input type="text">
-        <p>Filtros serão colocados aqui</p>
-        <button type="submit">Filtrar</button>
+        <p>Filtros</p>
+        <form class="options" (ngSubmit)="submit()" [formGroup]="filterForm">
+            <label for="">Jogo:</label>
+            <input type="text" formControlName="game_name" placeholder="Jogo">
+            <label for="">Vendedor:</label>
+            <input type="text" formControlName="seller" placeholder="Vendedor">
+            <div class="value">
+                Faixa de preços:
+                <input type="number" min="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '')" formControlName="min_value" placeholder="Valor mínimo">
+                <input type="number" min="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '')" formControlName="max_value" placeholder="Valor máximo">
+            </div>
+            <button class="btn-blue" type="submit">Filtrar</button>
+            <button class="btn-green" type="submit" (click)="clearFilters()">Limpar Filtros</button>
+        </form>
     </div>
 
     <div class="trades" *ngIf = "$trades | async as trades">
         <div class="trade-card" *ngFor = "let trade of trades">
-            <a class="trade-card-content" [routerLink]="['/trade', trade.id]">
+            <a class="trade-card-content" [routerLink]="['/trades', trade.id]">
                 <img class="cover" src="assets/photoicon.png" alt="cover">
                 <span>{{ trade.title }}</span>
                 <span>Vendedor: {{ trade.user.name }}</span>

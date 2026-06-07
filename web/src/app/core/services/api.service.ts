@@ -12,8 +12,8 @@ export class ApiService {
 
   private apiUrl = environment.apiUrl;
 
-  get<T>(endpoint: string){
-    return this.http.get<{data: T}>(`${this.apiUrl}/${endpoint}`).pipe(map(response => response.data));
+  get<T>(endpoint: string, params?: Record<string, any>){
+    return this.http.get<{data: T}>(`${this.apiUrl}/${endpoint}`, { params }).pipe(map(response => response.data));
   }
 
   show<T>(endpoint: string, id: number){
@@ -29,7 +29,7 @@ export class ApiService {
   }
 
   delete<T>(endpoint: string, id?: string) {
-    const url = id ? `{this.apiUrl}/${endpoint}/${id}`: `${this.apiUrl}/${endpoint}`
+    const url = id ? `${this.apiUrl}/${endpoint}/${id}`: `${this.apiUrl}/${endpoint}`
     return this.http.delete<{data: T}>(url).pipe(map(response => response.data));
   }
 

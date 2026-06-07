@@ -1,13 +1,23 @@
 <div class="boardgames-container">
     <div class="filters">
-        <input type="text">
-        <p>Filtros serão colocados aqui</p>
-        <button type="submit">Filtrar</button>
+        <p>Filtros</p>
+        <form class="options" (ngSubmit)="submit()" [formGroup]="filterForm">
+            <label for="">Título:</label>
+            <input type="text" formControlName="game_name" placeholder="Jogo">
+            <label for="">Mínimo de jogadores:</label>
+            <input type="number" min="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '')" formControlName="min_players" placeholder="Mínimo de Jogadores">
+            <label for="">Máximo de jogadores</label>
+            <input type="number" min="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '')" formControlName="max_players" placeholder="Máximo de Jogadores">
+            <label for="">Faixa Etária: A partir de</label>
+            <input type="number" min="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '')" formControlName="age_range" placeholder="Quantos anos?">
+            <button class="btn-blue" type="submit">Filtrar</button>
+            <button class="btn-green" type="submit" (click)="clearFilters()">Limpar Filtros</button>
+        </form>
     </div>
 
     <div class="games" *ngIf = "$boardgames | async as boardgames">
         <div class="game-card" *ngFor = "let boardgame of boardgames">
-            <a class="game-card-content" [routerLink]="['/boardgame', boardgame.id]">
+            <a class="game-card-content" [routerLink]="['/boardgames', boardgame.id]">
                 <img class="cover" src="{{boardgame.cover}}" alt="cover">
                 <span>{{ boardgame.title }}</span>
                 <span>{{ getPlayersCount(boardgame) }}</span>

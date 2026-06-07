@@ -39,4 +39,8 @@ export class BoardgameService {
     return this.api.get<any[]>(`boardgames/search?name=${term}`);
   }
 
+  filterGame(data?: any) {
+    return this.api.get<any>('boardgames/filter', data)
+  }
+
 }
