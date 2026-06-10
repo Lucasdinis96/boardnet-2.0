@@ -35,6 +35,17 @@
             </div>
         </div>
         <button class="btn-green" type="button" (click)="addBoardgame()">+ Adicionar jogo</button>
+        <div class="trade-images">
+            <label>Fotos</label>
+            <input class="btn-green" type="file" accept="image/*" multiple (change)="onImagesSelected($event)">
+            <span>{{ selectedImages.length }} imagem(ns) selecionada(s)</span>
+        </div>
+        <div class="image-preview-container">
+            <div class="preview-item" *ngFor="let preview of previewUrls; let i = index">
+                <img [src]="preview" alt="Preview">
+                <button class="btn-red" type="button" (click)="removeImage(i)">Remover</button>
+            </div>
+        </div>
         <button class="send-btn btn-blue" type="submit">Salvar</button>
     </form>
     <button class="btn-yellow" (click)="goBack()">Voltar</button>

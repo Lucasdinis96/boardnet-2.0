@@ -85,5 +85,49 @@
     background: #eee;
 }
 
+.trade-images {
+  display: flex;
+  flex-direction: column;
+}
+
+.image-preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.preview-item {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.preview-item img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.preview-item button {
+  place-self: center;
+}
+
+.new-item {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.new-item img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.new-item button {
+  place-self: center;
+}
+
+
 
 

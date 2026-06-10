@@ -9,11 +9,15 @@
 .filters {
     display: flex;
     flex-direction: column;
+    position: sticky;
+    top: 0;
+    z-index: 10;
     padding: 10px;
     border-radius: 5px;
-    height: 100%;
+    height: fit-content;
     width: 20%;
     background-color: white;
+    margin-bottom: 10px;
     align-items: center;
     gap: 10px;
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
@@ -39,20 +43,20 @@
 .trades {
     display: grid;
     height: fit-content;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-    width: 80%;
 }
 
 .trade-card {
     background-color: white;
     border: 2px solid transparent;
     width: 260px;
-    height: 50%px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-items: center;
+    justify-content: flex-end;
     border-radius: 5px;
     gap: 10px;
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);

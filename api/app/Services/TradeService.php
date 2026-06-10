@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Http\Requests\Trade\TradeUpdateRequest;
 use App\Http\Resources\Trade\TradeDetailResource;
+use App\Models\Trade;
 use App\Repositories\TradeRepository;
 
 
@@ -26,17 +28,19 @@ class TradeService {
         return $this->tradeRepository->create($data, $data['boardgames']);
     }
 
-    public function updateTrade($data, $trade) {
-
+    public function updateTrade(array $data, Trade $trade) {
         $tradeData = [
-            'id' => $data['id'],
+            'id' => $trade->id,
             'title' => $data['title'] ?? null,
             'description' => $data['description'] ?? null,
+            'images' => $data['images'] ?? [],
+            'remaining_images' => $data['remaining_images'] ?? [],
+            'primary_image_id' => $data['primary_image_id'] ?? null
         ];
 
         $boardgamesData = $data['boardgames'] ?? [];
 
-        $trades = $this->tradeRepository->update($tradeData, $boardgamesData, $trade);
+        $trades = $this->tradeRepository->update($tradeData, $boardgamesData, $trade,);
 
         return $trades;
     }

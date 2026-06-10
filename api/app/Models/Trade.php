@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Trade extends Model {
     use HasFactory;
@@ -28,5 +29,13 @@ class Trade extends Model {
 
     public function tradeItem () {
         return $this->hasMany(TradeItem::class);
+    }
+
+    public function images() {
+        return $this->hasMany(TradeImage::class)->orderBy('order');
+    }
+
+    public function primaryImage(): HasOne {
+        return $this->hasOne(TradeImage::class)->where('is_primary', true);
     }
 }

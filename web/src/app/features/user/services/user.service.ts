@@ -57,7 +57,7 @@ export class UserService {
   }
 
   updateTrade (data: any, id: any) {
-    return this.api.put<any>('user/trades/update', id, data,);
+    return this.api.post<any>(`user/trades/update/${id}`, data,);
   }
 
   removeTrade (id: any) {
@@ -82,6 +82,12 @@ export class UserService {
 
   confirmReceivement(data: any) {
     return this.api.post<any>('negotiations/delivered', data)
+  }
+
+  updateAvatar(file: File) {
+    const formData = new FormData()
+    formData.append('image', file)
+    return this.api.post<any>('user/avatar', formData);
   }
 
 }

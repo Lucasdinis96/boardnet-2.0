@@ -22,12 +22,16 @@ class TradeUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|int',
             'title' => 'sometimes|string|max:255',
             'description' => 'sometimes|string|max:5000',
             'boardgames' => 'sometimes|array',
             'boardgames.*.boardgame_id' => 'sometimes|int',
-            'boardgames.*.value' => 'sometimes|numeric|min:0'
+            'boardgames.*.value' => 'sometimes|numeric|min:0',
+            'images' => ['nullable', 'array'],
+            'images.*' => ['image', 'max:2048'],
+            'remaining_images' => ['nullable', 'array'],
+            'remaining_images.*' => ['integer'],
+            'primary_image_id' => ['nullable','integer']
         ];
     }
 }

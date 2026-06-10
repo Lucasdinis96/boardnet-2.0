@@ -19,7 +19,7 @@
     <div class="trades" *ngIf = "$trades | async as trades">
         <div class="trade-card" *ngFor = "let trade of trades">
             <a class="trade-card-content" [routerLink]="['/trades', trade.id]">
-                <img class="cover" src="assets/photoicon.png" alt="cover">
+                <img class="cover" [src]="trade.primaryImage | tradeImagesUrl" alt="cover">
                 <span>{{ trade.title }}</span>
                 <span>Vendedor: {{ trade.user.name }}</span>
                 <span>Jogos a venda:</span>

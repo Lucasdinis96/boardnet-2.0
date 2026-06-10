@@ -5,10 +5,13 @@
     <h2>Meus Anúncios</h2>
     <div class="trade-grid" *ngIf = "$trades | async as trades">
         <div class="trade-card" *ngFor = "let trade of trades">
-            <img class="trade-cover" src="assets/photoicon.png" alt="cover">
+            <img class="cover" [src]="trade.primaryImage | tradeImagesUrl" alt="cover">
             <span>{{ trade.title }}</span>
-            <a class="edit-btn" [routerLink]="['edit', trade.id]" >Editar Anúncio</a>
+            <div class="actions">
+                <a class="edit-btn" [routerLink]="['edit', trade.id]" >Editar Anúncio</a>
             <button class="remove-btn" type="submit" (click)="removeTrade(trade.id)">Remover Anúncio</button>
             </div>
+            
+        </div>
     </div>
 </div>

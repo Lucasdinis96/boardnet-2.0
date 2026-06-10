@@ -5,9 +5,8 @@ namespace App\Repositories;
 use App\Models\City;
 use App\Models\User;
 use App\Services\MailService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class UserRepository {
     private $mailService;
@@ -61,6 +60,16 @@ class UserRepository {
     public function deleteUser($id){
         User::where('id', $id)->delete();
         return true;
+    }
+
+    public function updateAvatar(User $user, string $path) {
+
+        if($user->avatar) {
+            Storage::disk('public')->delete($user->avatar);
+        }
+        $user->avatar = $path;
+        $user->save();
+        return $user->avatar;
     }
 
     public function getUserByEmail(string $email){

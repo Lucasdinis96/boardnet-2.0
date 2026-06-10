@@ -22,6 +22,7 @@ export class UserTradeCreateComponent {
   private boardgameService = inject(BoardgameService);
   private flashMessage = inject(FlashMessageService)
   private fb = inject(FormBuilder)
+  private readonly MAX_IMAGES = 3;
   createTradeForm = this.fb.group({
     title: [''],
     description: [''],
@@ -30,6 +31,8 @@ export class UserTradeCreateComponent {
   tradeId!: number;
   message: any;
   searchResult: any[][] = [];
+  selectedImages: File[] = [];
+  previewUrls: string[] = [];
 
   
   ngOnInit() {
@@ -75,28 +78,35 @@ export class UserTradeCreateComponent {
 
   submit () {
     this.createTrade();
-    this.router.navigate(['/user/trades'], { replaceUrl: true });
   }
 
   goBack() {
     this.router.navigate(['/user/trades'], { replaceUrl: true });
   }
 
-  createTrade () {
+  createTrade() {
     const formValue = this.createTradeForm.value;
     const id = localStorage.getItem('id');
-    const payload = {
-      user_id: id ? Number(id) : null,
-      title: formValue.title!,
-      description: formValue.description!,
-      boardgames: formValue.boardgames
-    }
-
-    this.userService.createTrade(payload).subscribe({
-      next: (response) => {console.log(response.message)},
-      error: () => {console.log('Erro ao atualizar')}
-    })
-  }
+    const formData = new FormData();
+    formData.append('user_id', id ?? '');
+    formData.append('title', formValue.title ?? '' );
+    formData.append('description',formValue.description ?? '');
+    formValue.boardgames?.forEach((game: any, index: number) => {
+      formData.append(`boardgames[${index}][boardgame_id]`, String(game.boardgame_id));
+      formData.append(`boardgames[${index}][value]`, String(game.value ?? 0));
+    });
+    this.selectedImages.forEach(image => {
+      formData.append('images[]',image);
+    });
+    this.userService.createTrade(formData).subscribe({
+      next: (response) => {
+        this.flashMessage.success(response.message)
+        this.router.navigate(['/user/trades'], { replaceUrl: true }
+        );
+      },
+      error: (error) => {this.flashMessage.error(error.message)}
+    });
+  } 
 
   searchBoardgames(event: Event, index: number) {
     const value = (event.target as HTMLInputElement).value;
@@ -120,6 +130,43 @@ export class UserTradeCreateComponent {
     });
 
     this.searchResult[index] = [];
+  }
+
+  onImagesSelected(event: Event): void {
+    
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files?.length) {
+      return;
+    }
+
+    const newFiles = Array.from(input.files);
+
+    if (this.selectedImages.length + newFiles.length > this.MAX_IMAGES) {
+      this.flashMessage.warning(`Máximo de ${this.MAX_IMAGES} imagens por anúncio.`);
+      input.value = '';
+      return;
+    }
+
+    this.selectedImages = [
+      ...this.selectedImages,
+      ...newFiles
+    ];
+
+    this.generatePreviews();
+
+    input.value = '';
+
+  }
+
+  generatePreviews(): void {
+    this.previewUrls = this.selectedImages.map(file => URL.createObjectURL(file));
+  }
+
+  removeImage(index: number): void {
+    URL.revokeObjectURL(this.previewUrls[index]);
+    this.selectedImages.splice(index, 1);
+    this.previewUrls.splice(index, 1);
   }
 
 }

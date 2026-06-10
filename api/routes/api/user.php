@@ -14,6 +14,7 @@ Route::prefix('user')->group(function () {
         Route::put('addressUpdate/{id}', [UserController::class, 'updateAddress']);
         Route::put('passwordUpdate/{id}', [UserController::class, 'updatePassword']);
         Route::put('deleteAccount/{id}', [UserController::class, 'destroy']);
+        Route::post('avatar', [UserController::class, 'updateAvatar']);
 
         Route::get('collection/{id}', [UserController::class, 'getCollection']);
         Route::delete('removeFromCollection/{id}', [UserController::class, 'removeFromCollection']);
@@ -21,7 +22,7 @@ Route::prefix('user')->group(function () {
         Route::get('trades/{id}', [UserController::class, 'getTrades']);
         Route::get('trades/show/{id}', [UserController::class, 'showTrade']);
         Route::post('trades/create', [UserController::class, 'createTrade']);
-        Route::put('trades/update/{trade}', [UserController::class, 'updateTrade']);
+        Route::post('trades/update/{trade}', [UserController::class, 'updateTrade']);
         Route::delete('trades/delete/{id}', [UserController::Class, 'deleteTrade']);
 
     });

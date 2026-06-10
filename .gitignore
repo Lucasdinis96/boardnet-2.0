@@ -1,0 +1,8 @@
+uploads/*
+!uploads/.gitkeep
+
+uploads/trades/*
+!uploads/trades/.gitkeep
+
+uploads/avatars/*
+!uploads/avatars/.gitkeep

@@ -28,11 +28,11 @@ class NegotiationGetResource extends JsonResource
             ],
             'items' => NegotiationItemResource::collection($this->whenLoaded('items')),
             'shipping_address' => [
-                'street' => $this->shipping_address_snapshot['street'],
-                'number' => $this->shipping_address_snapshot['number'],
-                'neighborhood' => $this->shipping_address_snapshot['neighborhood'],
-                'city_state' => $this->shipping_address_snapshot['city_state'],
-                'zipcode' => $this->shipping_address_snapshot['zipcode']
+                'number' => $this->shipping_address_snapshot['shipping_address']['number'],
+                'street' => $this->shipping_address_snapshot['shipping_address']['street'],
+                'neighborhood' => $this->shipping_address_snapshot['shipping_address']['neighborhood'],
+                'city_state' => $this->shipping_address_snapshot['shipping_address']['city_state'],
+                'zipcode' => $this->shipping_address_snapshot['shipping_address']['zipcode']
                 
             ],
             'tracking_code' => $this->tracking_code,
