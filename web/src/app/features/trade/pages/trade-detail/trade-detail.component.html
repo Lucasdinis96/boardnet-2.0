@@ -1,6 +1,6 @@
 <div class="detail-container" *ngIf="trade$ | async as trade">
     <div class="info">
-        <img class="cover" src="assets/photoicon.png" alt="cover">
+        <img class="cover" [src]="getPrimaryImage(trade) | tradeImagesUrl" alt="cover">
         <h1>{{ trade.title }}</h1>
         <div class="trade-detail">
             <span>Vendedor - {{ trade.user.name }}</span>
@@ -18,8 +18,12 @@
                 <p>{{ trade.description }}</p>
             </div>
             <div class="photos">
-                Local onde ficarão as fotos do anúncio.
-            </div>
+            <img
+                *ngFor="let photo of trade.images"
+                [src]="photo.path | tradeImagesUrl"
+                alt="Foto"
+                (click)="openImage(photo.path)">
+        </div>
         </div>
         <div class="game-section">
             Jogos a venda:
@@ -34,5 +38,18 @@
             </div>
         </div>
     </div>
+</div>
+
+<div
+    class="image-modal"
+    *ngIf="selectedImage"
+    (click)="closeImage()">
+
+    <img
+        class="modal-image"
+        [src]="selectedImage | tradeImagesUrl"
+        alt="Imagem ampliada"
+        (click)="$event.stopPropagation()">
+
 </div>
 

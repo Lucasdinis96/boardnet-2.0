@@ -9,24 +9,26 @@ use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\Trade;
 use App\Models\User;
 use App\Services\CollectionService;
+use App\Services\Image\ImageUploadService;
 use App\Services\TradeService;
 use App\Services\UserService;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
-use Exception;
 
 
 class UserController extends Controller {
     protected UserService $userService;
     protected CollectionService $collectionService;
     protected TradeService $tradeService;
+    protected ImageUploadService $uploadService;
 
-    public function __construct(UserService $userService, CollectionService $collectionService, TradeService $tradeService) {
+    public function __construct(UserService $userService, CollectionService $collectionService, TradeService $tradeService, ImageUploadService $uploadService) {
         $this->userService = $userService;
         $this->collectionService = $collectionService;
         $this->tradeService = $tradeService;
+        $this->uploadService = $uploadService;
     }
 
     public function getUser($id){
@@ -128,12 +130,12 @@ class UserController extends Controller {
         $trade = $this->tradeService->showTrade($request);
         return response()->json([
             'data' => $trade
-        ], 201);
+        ], 200);
     }
 
     public function createTrade(TradeCreateRequest $request) {
-        $trade = $this->tradeService->createTrade($request->validated());
-
+        $trade = $this->tradeService->createTrade($request->validated(), $request->file('images'));
+        
         if(!$trade) {
             return response()->json([
             'data' => [
@@ -150,16 +152,16 @@ class UserController extends Controller {
     }
 
     public function updateTrade(TradeUpdateRequest $request, Trade $trade) {
-        $trade = $this->tradeService->updateTrade($request->validated(), $trade);
+        $trade = $this->tradeService->updateTrade($request->validated(), $trade, $request->file('images'));
 
         if (!$trade) {
             return response()->json([
-                'data' => ['message' => 'Erro ao atualizar o anuncio']
+                'data' => ['message' => 'Erro ao atualizar o anuncio.']
             ], 422);
         }
         
         return response()->json([
-            'data' => ['message' => 'Chegou ao backend']
+            'data' => ['message' => 'Anúncio editado com sucesso.']
         ], 201);
     }
 
@@ -177,4 +179,21 @@ class UserController extends Controller {
             'status' => 'success',
             'message' => 'Jogo deletado com sucesso.'
         ]);    }
+
+    public function updateAvatar(Request $request, ImageUploadService $uploadService) {
+        $user = $request->user();
+        $request->validate([
+            'image' => 'required|image|max:10240'
+        ]);
+        
+        $path = $uploadService->upload($request->file('image'), "avatars/{$user->id}", 'avatar');
+
+        $savedPath = $this->userService->updateAvatar($request->user(), $path);
+
+        return response()->json(['data' => [
+            'message' => 'Avatar atualizado',
+            'path' => $savedPath
+        ]
+        ]);
+}
 }

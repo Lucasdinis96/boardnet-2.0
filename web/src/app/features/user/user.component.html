@@ -1,7 +1,7 @@
 <div class="user-container">
   
   <div class="menu-container" *ngIf="user$ | async as user">
-    <img class="user-avatar" src="assets/avatar.png" alt="avatar">
+    <img class="user-avatar" [src]="((user$ | async)?.avatar | avatarUrl)" alt="avatar">
     <span>Bem vindo, {{ user.name }}</span>
       <nav class="menu-options">
           <a class="option-btn" routerLink="collection" routerLinkActive="active">Coleção</a>

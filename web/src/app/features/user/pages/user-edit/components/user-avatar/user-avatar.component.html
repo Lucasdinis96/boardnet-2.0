@@ -1,0 +1,8 @@
+<div class="container">
+    <p>Avatar atual:</p>
+    <img [src]="((user$ | async)?.avatar | avatarUrl)" alt="Avatar">
+    <label for="">Atualize seu avatar:</label>
+    <input  class="btn-green" type="file" accept="image/*" (change)="onFileSelected($event)">
+    <span>Imagem até 2mb de tamanho!</span>
+    <button class="btn-blue" type="button" (click)="uploadAvatar()">Salvar Avatar</button>
+</div>

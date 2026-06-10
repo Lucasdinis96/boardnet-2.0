@@ -34,7 +34,20 @@
                 <button class="btn-red" type="button" (click)="removeBoardgame(i)">Remover</button>
             </div>
         </div>
-         <button class="btn-green" type="button" (click)="addBoardgame()">+ Adicionar jogo</button>
+        <button class="btn-green" type="button" (click)="addBoardgame()">+ Adicionar jogo</button>
+        <div class="trade-images">
+            <label>Fotos</label>
+            <input class="btn-green" type="file" accept="image/*" multiple (change)="onImagesSelected($event)">
+            <span *ngFor="let selected of selectedImages">{{ selected.name }}</span>
+        </div>
+        <div class="image-preview-container">
+            <div class="preview-item" *ngFor="let image of existingImages; let i = index">
+                <span *ngIf="image.id === primaryImageId">Capa</span>
+                <img [src]="getImageUrl(image.path)" alt="Preview">
+                <button class="btn-yellow" type="button" (click)="setPrimaryImage(image.id)"> Definir como capa</button>
+                <button class="btn-red" type="button" (click)="removeExistingImage(i)">Remover</button>
+            </div>
+        </div>
         <button class="send-btn btn-blue" type="submit">Salvar</button>
     </form>
     <button class="btn-yellow" (click)="goBack()">Voltar</button>

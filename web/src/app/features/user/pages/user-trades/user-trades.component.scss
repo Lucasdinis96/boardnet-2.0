@@ -16,16 +16,30 @@
     background-color: white;
     border: 2px solid transparent;
     width: 260px;
-    height: fit-content;
+    height: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-items: center;
+    justify-content: flex-end;
     border-radius: 5px;
     padding-top: 10px;
     padding-bottom: 10px;
     gap: 10px;
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
+}
+
+.trade-card img {
+    place-content: flex-start;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    bottom: 0;
+    padding-bottom: 5;
+    align-items: stretch;
 }
 
 .trade-card:hover{

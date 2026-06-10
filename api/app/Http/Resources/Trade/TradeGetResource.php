@@ -20,7 +20,8 @@ class TradeGetResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'user' => UserGetResource::make($this->whenLoaded('user')),
-            'boardgames' => BoardgameGetResource::collection($this->whenLoaded('boardgames'))
+            'boardgames' => BoardgameGetResource::collection($this->whenLoaded('boardgames')),
+            'images' => $this->whenLoaded('images')
         ];
     }
 }

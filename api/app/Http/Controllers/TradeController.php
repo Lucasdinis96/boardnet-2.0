@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Trade\CreateTradeRequest;
+use App\Http\Requests\Trade\TradeCreateRequest;
 use App\Http\Requests\Trade\UpdateTradeRequest;
 use App\Http\Resources\Trade\TradeGetResource;
 use App\Models\Boardgame;
@@ -29,31 +29,6 @@ class TradeController extends Controller {
         $trade = $this->tradeService->showTrade($id);
         return response()->json([
             'data' => $trade
-        ]);
-    }
-
-    public function store(CreateTradeRequest $request) {
-        $data = $this->tradeService->createTrade($request->validated());
-        return response()->json($data);
-    }
-
-    public function update(UpdateTradeRequest $request, Trade $trade) {
-        if ($trade->user_id !== auth()->id()) {
-            abort(403, 'Você não tem permissão para editar esta troca.');
-        }
-
-        $this->tradeService->updateTrade($trade, $request->validated());
-        return redirect()->route('myTrades');
-    }
-
-    public function destroy(Trade $trade) {
-        if ($trade->user_id !== auth()->id()) {
-            abort(403, 'Você não tem permissão para editar esta troca.');
-        }
-        $this->tradeService->deleteTrade($trade);
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Anúncio deletado com sucesso.'
         ]);
     }
 

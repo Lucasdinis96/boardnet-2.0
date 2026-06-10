@@ -21,7 +21,8 @@ class TradeDetailResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'user' => UserGetResource::make($this->whenLoaded('user')),
-            'boardgames' => BoardgameGetResource::collection($this->whenLoaded('boardgames'))
+            'boardgames' => BoardgameGetResource::collection($this->whenLoaded('boardgames')),
+            'images' => $this->whenLoaded('images')
         ];
     }
 }

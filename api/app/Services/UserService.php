@@ -2,17 +2,13 @@
 
 namespace App\Services;
 
-use App\Http\Resources\Address\AddressCreateResource;
 use App\Http\Resources\Address\AddressGetResource;
 use App\Http\Resources\Address\AddressUpdateResource;
 use App\Http\Resources\User\UserGetResource;
 use App\Models\User;
 use App\Repositories\AddressRepository;
 use App\Repositories\UserRepository;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
+
 
 class UserService {
     protected UserRepository $userRepository;
@@ -58,5 +54,9 @@ class UserService {
 
     public function deleteAccount($id) {
         return $this->userRepository->deleteUser($id);
+    }
+
+    public function updateAvatar(User $user, string $path) {
+        return $this->userRepository->updateAvatar($user, $path);
     }
 }

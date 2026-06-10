@@ -27,7 +27,9 @@ class TradeCreateRequest extends FormRequest
             'description' => 'nullable|string|max:5000',
             'boardgames' => 'required|array',
             'boardgames.*.boardgame_id' => 'required|exists:boardgames,id',
-            'boardgames.*.value' => 'nullable|numeric|min:0'
+            'boardgames.*.value' => 'nullable|numeric|min:0',
+            'images' => ['nullable', 'array'],
+            'images.*' => ['image', 'max:2048'],
         ];
     }
 }
