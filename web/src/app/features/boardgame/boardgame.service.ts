@@ -11,8 +11,8 @@ export class BoardgameService {
 
   private api = inject(ApiService)
 
-  getAll() {
-    return this.api.get<any>('boardgames/getAll')
+  getAll(page: number = 1, filters = {}) {
+    return this.api.getPaginated<any>('boardgames/getAll', { page,...filters })
   }
 
   getBoardgameById (id: number) {

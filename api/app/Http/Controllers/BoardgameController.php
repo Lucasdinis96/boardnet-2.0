@@ -7,10 +7,13 @@ use App\Http\Resources\Boardgames\BoardgameTradeResource;
 use App\Services\BoardgameService;
 use App\Services\CollectionService;
 use App\Services\TradeService;
+use App\Support\PaginatedResource;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class BoardgameController extends Controller {
+
+    use ApiResponse;
     
     protected $boardgameService;
     protected $collectionService;
@@ -22,11 +25,13 @@ class BoardgameController extends Controller {
         $this->tradeService = $tradeService;
     }
 
-    public function index() {
-        $boardgames = $this->boardgameService->listBoardgames();
-        return response()->json([
-            'data' => $boardgames
-        ], 200);
+    public function index(Request $request) {
+        $boardgames = $this->boardgameService->listBoardgames($request->all());
+        $response = PaginatedResource::make($boardgames, BoardgameGetResource::class);
+        return $this->successResponse(
+            $response,
+            'Jogos carregados com sucesso.'
+        );
     }
 
     public function show(int $id) {

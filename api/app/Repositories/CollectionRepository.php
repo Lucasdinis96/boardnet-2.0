@@ -3,14 +3,11 @@
 namespace App\Repositories;
 
 use App\Models\Collection;
-use App\Models\User;
-use Illuminate\Support\Facades\Log;
 
 class CollectionRepository {
 
-    public function getUserCollection($id) {
-        $coll = Collection::where('user_id', $id)->get();
-        return $coll;
+    public function getUserCollection($id, $perPage = 6) {
+        return Collection::where('user_id', $id)->paginate($perPage);
     }
 
     public function addToCollection($user, int $boardgameId) {

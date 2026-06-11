@@ -18,15 +18,42 @@ class TradeRepository {
         private ImageUploadService $imageUploadService
     ) {}
     
-    public function getLatestTrades(?int $limit = null) {
+    public function getLatestTrades(?array $filters = [], $perPage = 6) {
 
         $query = Trade::with(['user', 'boardgames', 'images'])->orderBy('created_at', 'desc');
 
-        if ($limit) {
-            $query->limit($limit);
+        if (!empty($filters['game_name'])) {
+        $query->whereHas('boardgames', function ($q) use ($filters) {
+            $q->where(
+                'title',
+                'like',
+                '%' . $filters['game_name'] . '%'
+            );
+        });
         }
 
-        return $query->get();
+        if (!empty($filters['seller'])) {
+            $query->whereHas('user', function ($q) use ($filters) {
+                $q->where(
+                    'name',
+                    'like',
+                    '%' . $filters['seller'] . '%'
+                );
+            });
+        }
+
+        if (!empty($filters['min_value'])) {
+            $query->where('value', '>=', $filters['min_value']);
+        }
+
+        if (!empty($filters['max_value'])) {
+            $query->where('value', '<=', $filters['max_value']);
+        }
+
+        return $query
+            ->latest()
+            ->paginate($perPage);
+
     }
 
     public function findById($id) {
@@ -36,7 +63,7 @@ class TradeRepository {
     public function getAllUserTrades($userId) {
         return Trade::with(['boardgames', 'user.city', 'images'])
             ->where('user_id', $userId)
-            ->get();
+            ->paginate(6);
     }
 
      public function getUserTradeById($tradeId) {
@@ -149,51 +176,5 @@ class TradeRepository {
 
     public function getTradeByBoardgame(int $id) {
         return TradeItem::with('trade')->where('boardgame_id', $id)->get();
-    }
-
-    public function filterTrades(array $filters) {
-        return Trade::with([
-            'user',
-            'boardgames',
-            'tradeItem',
-            'images'
-        ])
-        ->when(
-            !empty($filters['game_name']),
-            function ($query) use ($filters) {
-                $query->whereHas('boardgames', function ($q) use ($filters) {
-                    $q->where(
-                        'title',
-                        'like',
-                        "%{$filters['game_name']}%"
-                    );
-                });
-            }
-        )
-        ->when(
-            isset($filters['min_value']) && isset($filters['max_value']) && $filters['min_value'] !== 0 && $filters['max_value'] !== 0,
-            function ($query) use ($filters) {
-                $query->whereHas('tradeItem', function ($q) use ($filters) {
-                    $q->whereBetween('value', [
-                        $filters['min_value'],
-                        $filters['max_value']
-                    ]);
-                });
-            }
-        )
-        ->when(
-            !empty($filters['seller']),
-            function ($query) use ($filters) {
-                $query->whereHas('user', function ($q) use ($filters) {
-                    $q->where(
-                        'name',
-                        'like',
-                        "%{$filters['seller']}%"
-                    );
-                });
-            }
-        )
-        ->latest()
-        ->get();
     }
 }

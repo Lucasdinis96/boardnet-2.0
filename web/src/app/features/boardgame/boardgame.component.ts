@@ -3,21 +3,30 @@ import { BoardgameService } from './boardgame.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { map, Observable, tap } from 'rxjs';
+import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
 
 @Component({
   selector: 'app-boardgame',
-  imports: [CommonModule, RouterLink, ReactiveFormsModule],
+  imports: [CommonModule, RouterLink, ReactiveFormsModule, PaginationComponent],
   templateUrl: './boardgame.component.html',
   styleUrl: './boardgame.component.scss',
 })
 export class BoardgameComponent {
   private boardgameService = inject(BoardgameService);
   filterForm!: FormGroup
+  pagination = {
+    currentPage: 1,
+    lastPage: 1,
+    perPage: 0,
+    total: 0
+  };
 
-  $boardgames = this.boardgameService.getAll();
+  $boardgames!: Observable<any[]>;
 
   ngOnInit() {
     this.initializeForm()
+    this.loadPage()
   }
 
   initializeForm() {
@@ -30,12 +39,7 @@ export class BoardgameComponent {
   }
 
   submit(){
-    this.filterTrades()
-  }
-
-  filterTrades() {
-    const filters = Object.fromEntries(Object.entries(this.filterForm.value).filter(([_, value]) => value !== null && value !== ''))
-    this.$boardgames = this.boardgameService.filterGame(filters);
+    this.loadPage(1)
   }
 
   getPlayersCount(boardgame: any): string {
@@ -50,7 +54,34 @@ export class BoardgameComponent {
 
   clearFilters() {
     this.filterForm.reset()
-    this.$boardgames
+    this.loadPage(1)
   }
 
+  loadPage(page: number = 1) {
+      const filters = this.getFilters();
+      this.$boardgames = this.boardgameService.getAll(page, filters).pipe(
+        tap(response => {this.pagination = {
+          currentPage: response.meta.current_page,
+          lastPage: response.meta.last_page,
+          perPage: response.meta.per_page,
+          total: response.meta.total
+        };}),
+        map(response => this.prepareGames(response.data))
+      );
+    }
+  
+  private getFilters() {
+    return Object.fromEntries(
+      Object.entries(this.filterForm.value)
+        .filter(([_, value]) => value !== null && value !== '')
+    );
+  }
+
+  private prepareGames(games: any[]) {
+    return games.map(game => ({
+      ...game,
+      primaryImage:
+        game.images?.find((image: any) => image.is_primary)?.path ?? null
+    }));
+  }
 }

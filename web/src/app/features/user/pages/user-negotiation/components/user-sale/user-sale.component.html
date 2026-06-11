@@ -50,3 +50,9 @@
         </div>
     </div>
 </div>
+<app-pagination 
+    [currentPage]="pagination.currentPage"
+    [lastPage]="pagination.lastPage"
+    [total]="pagination.total"
+    (pageChange)="loadPage($event)">
+</app-pagination>

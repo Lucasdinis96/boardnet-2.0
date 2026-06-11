@@ -36,16 +36,16 @@ export class UserService {
     return this.api.put<any>('user/deleteAccount', id, data).pipe(tap((response) => {} ))
   }
 
-  getCollection (id: any) {
-    return this.api.get<any>(`user/collection/${id}`);
+  getCollection (page: number = 1, id: any) {
+    return this.api.getPaginated<any>(`user/collection/${id}`, {page});
   }
 
   removeFromCollection(id: any) {
     return this.api.delete<any>('user/removeFromCollection', id);
   }
 
-  getTrades (id: any) {
-    return this.api.get<any>(`user/trades/${id}`);
+  getTrades (page: number = 1, id: any) {
+    return this.api.getPaginated<any>(`user/trades/${id}`, {page});
   }
   
   getTradeById (id: any) {
@@ -68,12 +68,12 @@ export class UserService {
     return this.api.get<any>('negotiations');
   }
 
-  getNegotiationAsBuyer(){
-    return this.api.get<any>('negotiations/buyer');
+  getNegotiationAsBuyer(page: number = 1){
+    return this.api.getPaginated<any>('negotiations/buyer', {page});
   }
 
-  getNegotiationAsSeller(){
-    return this.api.get<any>('negotiations/seller');
+  getNegotiationAsSeller(page: number = 1){
+    return this.api.getPaginated<any>('negotiations/seller', {page});
   }
 
   confirmShipping(data: any, id: any) {

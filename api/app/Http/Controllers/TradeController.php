@@ -8,21 +8,27 @@ use App\Http\Resources\Trade\TradeGetResource;
 use App\Models\Boardgame;
 use App\Models\Trade;
 use App\Services\TradeService;
+use App\Support\PaginatedResource;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 
 class TradeController extends Controller {
     
     protected $tradeService;
 
+    use ApiResponse;
+
     public function __construct(TradeService $tradeService) {
         $this->tradeService = $tradeService;
     }
 
-    public function index() {
-        $trades = $this->tradeService->listTrades();
-        return response()->json([
-            'data' => TradeGetResource::collection($trades)
-        ]);
+    public function index(Request $request) {
+        $trades = $this->tradeService->listTrades($request->all());
+        $response = PaginatedResource::make($trades, TradeGetResource::class);
+        return $this->successResponse(
+            $response,
+            'Anúncios carregados com sucesso.'
+        );
     }
 
     public function show(Request $request, int $id) {
@@ -30,19 +36,5 @@ class TradeController extends Controller {
         return response()->json([
             'data' => $trade
         ]);
-    }
-
-    public function filters(Request $request) {
-        $filters = [
-            'game_name' => $request->input('game_name'),
-            'min_value' => $request->integer('min_value'),
-            'max_value' => $request->integer('max_value'),
-            'seller' => $request->input('seller')
-        ];
-        $trades = $this->tradeService->filterTrades($filters);
-
-        return response()->json([
-            'data' => TradeGetResource::collection($trades)
-        ], 200);
     }
 }

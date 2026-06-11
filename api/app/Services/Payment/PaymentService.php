@@ -78,7 +78,7 @@ class PaymentService {
                 'provider_response' => $providerResponse
             ]);
         
-         $this->negotiationRepository->updateStatus(negotiation: $payment->negotiation, status: NegotiationStatus::Paid);
+        $this->negotiationRepository->paid($payment->negotiation);
 
         $this->eventService->create(
             negotiation: $payment->negotiation,

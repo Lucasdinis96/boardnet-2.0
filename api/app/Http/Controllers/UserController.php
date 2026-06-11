@@ -6,12 +6,16 @@ use App\Http\Requests\Password\PasswordUpdateRequest;
 use App\Http\Requests\Trade\TradeCreateRequest;
 use App\Http\Requests\Trade\TradeUpdateRequest;
 use App\Http\Requests\User\UserUpdateRequest;
+use App\Http\Resources\Collection\CollectionGetResource;
+use App\Http\Resources\Trade\TradeGetResource;
 use App\Models\Trade;
 use App\Models\User;
 use App\Services\CollectionService;
 use App\Services\Image\ImageUploadService;
 use App\Services\TradeService;
 use App\Services\UserService;
+use App\Support\PaginatedResource;
+use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -19,6 +23,9 @@ use Illuminate\View\View;
 
 
 class UserController extends Controller {
+
+    use ApiResponse;
+
     protected UserService $userService;
     protected CollectionService $collectionService;
     protected TradeService $tradeService;
@@ -105,9 +112,11 @@ class UserController extends Controller {
     //Collection Section
     public function getCollection(int $id) {
         $collection = $this->collectionService->getUserCollection($id);
-        return response()->json([
-            'data' => $collection
-        ], 200);
+        $response = PaginatedResource::make($collection, CollectionGetResource::class); 
+        return $this->successResponse(
+            $response,
+            'Coleção carregados com sucesso.'
+        ); 
     }
 
     public function removeFromCollection(int $id){
@@ -121,9 +130,11 @@ class UserController extends Controller {
     //Trade Section
     public function getTrades(int $request) {
         $trades = $this->tradeService->getUserTrades($request);
-        return response()->json([
-            'data' => $trades
-        ]);    
+        $response = PaginatedResource::make($trades, TradeGetResource::class);
+        return $this->successResponse(
+            $response,
+            'Anúncios carregados com sucesso.'
+        );   
     }
 
     public function showTrade(int $request){

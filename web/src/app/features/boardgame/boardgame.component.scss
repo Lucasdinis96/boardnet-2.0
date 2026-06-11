@@ -32,9 +32,8 @@
 .games {
     display: grid;
     height: fit-content;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-    width: 80%;
 }
 
 .game-card {

@@ -22,9 +22,8 @@ class HomeController extends Controller
     }
 
     public function getHomeTrades(int $limit = 4) {
-        $trades = $trades = $this->tradeService->listTrades($limit);
         return response()->json([
-            'data' => TradeGetResource::collection($trades)
+            'data' => TradeGetResource::collection(Trade::with(['user', 'boardgames', 'images'])->limit($limit)->orderBy('created_at', 'desc')->get())
         ]);
     }
 }
