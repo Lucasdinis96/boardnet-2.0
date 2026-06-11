@@ -21,14 +21,6 @@
                         <button class="btn-blue" (click)="received(negotiation.id)">Confirmar Recebimento</button>
                     </div>
                 </div>
-                <div class="items">
-                    <div>
-                        <p>Jogos Comprados</p>
-                    </div>
-                    <div *ngFor="let item of negotiation.items">
-                        <span>{{ item.title }} - R${{ item.price }}</span>
-                    </div>
-                </div>
                 <div class="address">
                     <p>Endereço de entrega</p>
                     <span>{{ negotiation.shipping_address.street }}, {{ negotiation.shipping_address.number }}</span>
@@ -46,6 +38,20 @@
                     <span *ngIf="negotiation.completed_at">Terminada em {{ negotiation.completed_at }}</span>
                 </div>
             </div>
+            <div class="items">
+                <div>
+                    <p>Jogos Comprados</p>
+                </div>
+                <div *ngFor="let item of negotiation.items">
+                    <span>{{ item.title }} - R${{ item.price }}</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<app-pagination 
+    [currentPage]="pagination.currentPage"
+    [lastPage]="pagination.lastPage"
+    [total]="pagination.total"
+    (pageChange)="loadPage($event)">
+</app-pagination>

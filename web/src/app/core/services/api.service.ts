@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { map } from 'rxjs';
+import { ApiResponse } from '../models/apiResponse';
+import { PaginatedData } from '../models/paginatedData';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +33,10 @@ export class ApiService {
   delete<T>(endpoint: string, id?: string) {
     const url = id ? `${this.apiUrl}/${endpoint}/${id}`: `${this.apiUrl}/${endpoint}`
     return this.http.delete<{data: T}>(url).pipe(map(response => response.data));
+  }
+
+  getPaginated<T>(endpoint: string, params?: Record<string, any>) {
+    return this.http.get<T>(`${this.apiUrl}/${endpoint}`, { params });
   }
 
 }

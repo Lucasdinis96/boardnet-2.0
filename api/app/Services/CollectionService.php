@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Http\Resources\Collection\CollectionGetResource;
 use App\Repositories\CollectionRepository;
 
 class CollectionService {
@@ -13,7 +12,7 @@ class CollectionService {
     }
 
     public function getUserCollection(int $id) {
-        return CollectionGetResource::collection($this->repository->getUserCollection($id));
+        return $this->repository->getUserCollection($id);
     }
 
     public function addBoardgame(int $userId, int $boardgameId) {

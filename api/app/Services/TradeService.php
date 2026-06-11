@@ -16,8 +16,8 @@ class TradeService {
         $this->tradeRepository = $tradeRepository;
     }
 
-    public function listTrades(?int $limit = null) {
-        return $this->tradeRepository->getLatestTrades($limit);
+    public function listTrades(?array $filters = []) {
+        return $this->tradeRepository->getLatestTrades($filters);
     }
 
     public function showTrade($id) {
@@ -55,9 +55,5 @@ class TradeService {
 
     public function getTradeByBoardgame(int $id) {
         return $this->tradeRepository->getTradeByBoardgame($id);
-    }
-
-    public function filterTrades(array $request) {
-        return $this->tradeRepository->filterTrades($request);
     }
 }

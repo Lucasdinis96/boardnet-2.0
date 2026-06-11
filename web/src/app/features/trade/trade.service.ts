@@ -10,8 +10,8 @@ export class TradeService {
 
   private api = inject(ApiService)
 
-  getAll() {
-    return this.api.get<any>('trades/getAll')
+  getAll(page: number = 1, filters = {}) {
+    return this.api.getPaginated<any>('trades/getAll', { page,...filters })
   }
 
   getTradeById (id: number) {

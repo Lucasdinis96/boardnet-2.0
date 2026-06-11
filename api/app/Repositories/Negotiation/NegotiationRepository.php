@@ -22,7 +22,7 @@ class NegotiationRepository {
         ])->find($id);
     }
 
-    public function getAllUserNegotiations(User $user) {
+    public function getAllUserNegotiations(User $user, $perPage = 3) {
 
         return Negotiation::with([
             'items.boardgame',
@@ -41,13 +41,19 @@ class NegotiationRepository {
             );
         })
         ->latest()
-        ->get();
+        ->paginate($perPage);
     }
 
     public function updateStatus(Negotiation $negotiation, NegotiationStatus $status): bool {
         return $negotiation->update([
             'status' => $status
         ]);
+    }
+
+    public function paid (Negotiation $id) {
+        $id->update(['paid_at' => now()]);
+        $this->updateStatus(negotiation: $id, status: NegotiationStatus::Paid);
+        return true;
     }
 
     public function shipped(string $trackingCode, Negotiation $id) {
@@ -78,7 +84,7 @@ class NegotiationRepository {
         return true;
     }
 
-    public function getUserNegotiationsAsBuyer(User $user) {
+    public function getUserNegotiationsAsBuyer(User $user, $perPage = 3) {
 
         return Negotiation::with([
             'items.boardgame',
@@ -94,10 +100,10 @@ class NegotiationRepository {
             );
         })
         ->latest()
-        ->get();
+        ->paginate($perPage);
     }
 
-    public function getUserNegotiationsAsSeller(User $user) {
+    public function getUserNegotiationsAsSeller(User $user, $perPage = 3) {
 
         return Negotiation::with([
             'items.boardgame',
@@ -113,6 +119,6 @@ class NegotiationRepository {
             );
         })
         ->latest()
-        ->get();
+        ->paginate($perPage);
     }
 }

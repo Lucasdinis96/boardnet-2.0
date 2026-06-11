@@ -7,7 +7,7 @@
                 <span>Valor: R${{ payment.payments[0].amount }}</span>
             </div>
             <div class="detail">
-                <span>Método de pagamento: {{ payment.payments[0].payment_method }}</span>
+                <span>Método de pagamento: {{ payment.payments[0].method }}</span>
                 <span>Status: {{ payment.payments[0].status.label }}</span>
                 <a class="btn-yellow" [href]="payment.payments[0].payment_url" target="_blank" *ngIf="payment.payments[0].status.type === 'pending'">Realizar Pagamento</a>
                 <a class="btn-yellow" [href]="payment.payments[0].receipt_url" target="_blank" *ngIf="payment.payments[0].status.type === 'paid'">Ver recibo</a>
@@ -20,3 +20,9 @@
         </div>
     </div>
 </div>
+<app-pagination 
+    [currentPage]="pagination.currentPage"
+    [lastPage]="pagination.lastPage"
+    [total]="pagination.total"
+    (pageChange)="loadPage($event)">
+</app-pagination>

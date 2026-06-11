@@ -6,9 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Negotiation\NegotiationGetResource;
 use App\Models\Negotiation;
 use App\Services\Negotiation\NegotiationService;
+use App\Support\PaginatedResource;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class NegotiationController extends Controller {
+
+    use ApiResponse;
 
     public function __construct(
         private NegotiationService $negotiationService
@@ -28,26 +33,22 @@ class NegotiationController extends Controller {
 
     public function getUserNegotiationAsBuyer(Request $request) {
 
-        $negotiations = $this->negotiationService
-            ->getUserNegotiationsAsBuyer(
-                $request->user()
-            );
-
-        return response()->json([
-            'data' => NegotiationGetResource::collection($negotiations)
-            ]);
+        $negotiations = $this->negotiationService->getUserNegotiationsAsBuyer($request->user());
+        $response = PaginatedResource::make($negotiations, NegotiationGetResource::class);
+        return $this->successResponse(
+            $response,
+            'Compras carregados com sucesso.'
+        );  
     }
 
     public function getUserNegotiationAsSeller(Request $request) {
 
-        $negotiations = $this->negotiationService
-            ->getUserNegotiationsAsSeller(
-                $request->user()
-            );
-
-        return response()->json([
-            'data' => NegotiationGetResource::collection($negotiations)
-            ]);
+        $negotiations = $this->negotiationService->getUserNegotiationsAsSeller($request->user());
+        $response = PaginatedResource::make($negotiations, NegotiationGetResource::class);
+        return $this->successResponse(
+            $response,
+            'Vendas carregados com sucesso.'
+        ); 
     }
 
 

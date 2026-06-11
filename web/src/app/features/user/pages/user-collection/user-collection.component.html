@@ -7,3 +7,9 @@
         <button class="remove-btn" type="submit" (click)="removeFromCollection(boardgame.collection_id)">Remover da coleção</button>
     </div>
 </div>
+<app-pagination 
+    [currentPage]="pagination.currentPage"
+    [lastPage]="pagination.lastPage"
+    [total]="pagination.total"
+    (pageChange)="loadPage($event)">
+</app-pagination>

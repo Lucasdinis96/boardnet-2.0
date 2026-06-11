@@ -1,0 +1,23 @@
+<div class="pagination-container">
+
+  <button
+    class="btn-blue"
+    (click)="previousPage()"
+    [disabled]="currentPage === 1">
+
+    Anterior
+  </button>
+
+  <span>
+    Página {{ currentPage }} de {{ lastPage }}
+  </span>
+
+  <button
+    class="btn-blue"
+    (click)="nextPage()"
+    [disabled]="currentPage === lastPage">
+
+    Próxima
+  </button>
+
+</div>
