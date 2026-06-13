@@ -9,46 +9,56 @@ import { BoardgameDetailComponent } from './features/boardgame/pages/boardgame-d
 import { TradeComponent } from './features/trade/trade.component';
 import { TradeDetailComponent } from './features/trade/pages/trade-detail/trade-detail.component';
 import { NEGOTIATION_ROUTES } from './features/negotiation/negotiation.routes';
+import { ContactUsComponent } from './features/contact-us/contact-us.component';
+import { RegisterSucessComponent } from './features/auth/register-sucess/register-sucess.component';
 
 export const routes: Routes = [
-   {
-       path: '',
-       component: HomeComponent
-   },
-   {
-        path: 'user',
-        canActivate: [authGuard],
-        loadComponent: () => UserComponent,
-        loadChildren: () => import('./features/user/user.routes').then(m => m.user_routes),
-   },
-   {
-       path: 'register',
-       component: RegisterComponent
-   },
-   {
-        path: 'verifyEmail/:token',
-        component: VerifyEmailComponent
-   },
-   {
-        path: 'boardgames',
-        component: BoardgameComponent
-   },
-   {
-        path: 'boardgames/:id',
-        component: BoardgameDetailComponent
-   },
-   {
-        path: 'trades',
-        component: TradeComponent
-   },
-   {
+     {
+          path: '',
+          component: HomeComponent
+     },
+     {
+          path: 'user',
+          canActivate: [authGuard],
+          loadComponent: () => UserComponent,
+          loadChildren: () => import('./features/user/user.routes').then(m => m.user_routes),
+     },
+     {
+          path: 'register',
+          component: RegisterComponent
+     },
+     {
+          path: 'register-sucess',
+          component: RegisterSucessComponent
+     },
+     {
+          path: 'verifyEmail/:token',
+          component: VerifyEmailComponent
+     },
+     {
+          path: 'boardgames',
+          component: BoardgameComponent
+     },
+     {
+          path: 'boardgames/:id',
+          component: BoardgameDetailComponent
+     },
+     {
+          path: 'trades',
+          component: TradeComponent
+     },
+     {
           path: 'trades/:id',
           component: TradeDetailComponent
-   },
+     },
      {
           path: 'negotiation',
           canActivate: [authGuard],
           children: NEGOTIATION_ROUTES
+     },
+     {
+          path: 'contact-us',
+          component: ContactUsComponent
      }
    
 ];

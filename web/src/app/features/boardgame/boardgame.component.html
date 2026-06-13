@@ -14,17 +14,18 @@
             <button class="btn-green" type="submit" (click)="clearFilters()">Limpar Filtros</button>
         </form>
     </div>
-
-    <div class="games" *ngIf = "$boardgames | async as boardgames">
-        <div class="game-card" *ngFor = "let boardgame of boardgames">
-            <a class="game-card-content" [routerLink]="['/boardgames', boardgame.id]">
-                <img class="cover" src="{{boardgame.cover}}" alt="cover">
-                <span>{{ boardgame.title }}</span>
-                <span>{{ getPlayersCount(boardgame) }}</span>
-                <span>A partir de {{ boardgame.age_range }} anos.</span>
-            </a>
+    <ng-container *ngIf = "$boardgames | async as boardgames">
+        <div class="games" *ngIf="boardgames.length > 0; else noResults">
+            <div class="game-card" *ngFor = "let boardgame of boardgames">
+                <a class="game-card-content" [routerLink]="['/boardgames', boardgame.id]">
+                    <img class="cover" src="{{boardgame.cover}}" alt="cover">
+                    <span>{{ boardgame.title }}</span>
+                    <span>{{ getPlayersCount(boardgame) }}</span>
+                    <span>A partir de {{ boardgame.age_range }} anos.</span>
+                </a>
+            </div>
         </div>
-    </div>
+    </ng-container>
 </div>
 <app-pagination 
     [currentPage]="pagination.currentPage"
@@ -32,3 +33,15 @@
     [total]="pagination.total"
     (pageChange)="loadPage($event)">
 </app-pagination>
+
+
+<ng-template #noResults>
+    <div class="none" *ngIf="hasActiveFilters(); else emptyTrades">
+        <h3>Nenhum jogo encontrado</h3>
+        <p>Não existem jogos que correspondam aos filtros informados.</p>
+    </div>
+</ng-template>
+<ng-template #emptyTrades>
+    <h3>Nenhum anúncio disponível</h3>
+    <p>Ainda não existem anúncios cadastrados.</p>
+</ng-template>

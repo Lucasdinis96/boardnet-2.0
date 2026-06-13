@@ -2,37 +2,25 @@
 
 namespace App\Traits;
 
-trait ApiResponse
-{
-    protected function successResponse(
-    $data = null,
-    string $message = 'Operação realizada com sucesso.',
-    int $status = 200
-) {
+trait ApiResponse {
+    protected function successResponse($data = null, string $message = 'Operação realizada com sucesso.', int $status = 200) {
 
-    $response = [
-        'success' => true,
-        'message' => $message,
-    ];
+        $response = [
+            'success' => true,
+            'message' => $message,
+        ];
 
-    if (
-        is_array($data)
-        && isset($data['data'])
-        && isset($data['meta'])
-    ) {
-        $response['data'] = $data['data'];
-        $response['meta'] = $data['meta'];
-    } else {
-        $response['data'] = $data;
+        if (is_array($data) && isset($data['data']) && isset($data['meta'])) {
+            $response['data'] = $data['data'];
+            $response['meta'] = $data['meta'];
+        } else {
+            $response['data'] = $data;
+        }
+
+        return response()->json($response, $status);
     }
 
-    return response()->json($response, $status);
-}
-
-    protected function errorResponse(
-        string $message,
-        int $status = 400
-    ) {
+    protected function errorResponse(string $message, int $status = 400) {
         return response()->json([
             'success' => false,
             'message' => $message

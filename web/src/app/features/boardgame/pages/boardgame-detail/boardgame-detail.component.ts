@@ -4,10 +4,11 @@ import { BoardgameService } from '../../boardgame.service';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, catchError, combineLatest, map, Observable, of, switchMap, tap } from 'rxjs';
 import { FlashMessageService } from '../../../../core/services/flash-message.service';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination.component';
 
 @Component({
   selector: 'app-boardgame-detail',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, PaginationComponent],
   templateUrl: './boardgame-detail.component.html',
   styleUrl: './boardgame-detail.component.scss',
 })
@@ -19,6 +20,13 @@ export class BoardgameDetailComponent {
   private flashMessage = inject(FlashMessageService);
   boardgame$!: Observable<any>
   exist!: string
+  currentPage = 1;
+  pagination = {
+    currentPage: 1,
+    lastPage: 1,
+    perPage: 0,
+    total: 0
+} ;
 
   exist$ = combineLatest([
     this.route.paramMap,
@@ -37,10 +45,7 @@ export class BoardgameDetailComponent {
   );
 
   ngOnInit() {
-    this.boardgame$ = this.route.paramMap.pipe(
-      map(params => Number(params.get('id'))),
-      switchMap(id => this.service.getBoardgameById(id))
-    );
+    this.loadPage();
   }
 
   addCollection(boardgameId: number) {
@@ -83,4 +88,29 @@ export class BoardgameDetailComponent {
     }
     return `De ${min} a ${max} jogadores`;
   }
+
+  loadPage(page: number = 1) {
+  this.currentPage = page;
+
+  const boardgameId = Number(
+    this.route.snapshot.paramMap.get('id')
+  );
+
+  this.boardgame$ = this.refresh$.pipe(
+    switchMap(() =>
+      this.service.getBoardgameById(
+        boardgameId,
+        this.currentPage
+      )
+    ),
+    tap(response => {this.pagination = {
+        currentPage: response.trades.meta.current_page,
+        lastPage: response.trades.meta.last_page,
+        perPage: response.trades.meta.per_page,
+        total: response.trades.meta.total
+      };}),
+  );
+}
+
+  
 }

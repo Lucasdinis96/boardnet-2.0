@@ -7,6 +7,7 @@ use App\Models\Negotiation;
 use App\Models\User;
 use App\Repositories\Negotiation\NegotiationRepository;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class NegotiationService {
 
@@ -45,15 +46,16 @@ class NegotiationService {
         return $negotiation;
     }
 
-    public function shipped (string $trackingCode, Negotiation $id) {
-        $this->negotiationRepository->shipped($trackingCode, $id);
+    public function shipped (array $shippingInfo, Negotiation $id) {
+        $this->negotiationRepository->shipped($shippingInfo, $id);
 
         $this->eventService->create(
             negotiation: $id,
             event: NegotiationEventType::Shipped,
             metadata: [
                 'date' => now(),
-                'tracking_code' => $trackingCode,
+                'shipping_company' => $shippingInfo['shipping_company'],
+                'tracking_code' => $shippingInfo['tracking_code'],
             ]
         );
 

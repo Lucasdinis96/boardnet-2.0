@@ -1,28 +1,34 @@
-<div class="container">
-    <div class="grid" *ngIf="negotiation$ | async as negotiations">
-        <div class="card" *ngFor="let payment of negotiations">
-            <div class="data">
-                <p>Pagamento #{{ payment.payments[0].id }}</p>
-                <span>Referente a Negociação #{{ payment.payments[0].negotiation_id }}</span>
-                <span>Valor: R${{ payment.payments[0].amount }}</span>
-            </div>
-            <div class="detail">
-                <span>Método de pagamento: {{ payment.payments[0].method }}</span>
-                <span>Status: {{ payment.payments[0].status.label }}</span>
-                <a class="btn-yellow" [href]="payment.payments[0].payment_url" target="_blank" *ngIf="payment.payments[0].status.type === 'pending'">Realizar Pagamento</a>
-                <a class="btn-yellow" [href]="payment.payments[0].receipt_url" target="_blank" *ngIf="payment.payments[0].status.type === 'paid'">Ver recibo</a>
-            </div>
-            <div class="historic">
-                <p>Histórico do Pagamento</p>
-                <span *ngIf="payment.payments[0].created_at">Criado em {{ payment.payments[0].created_at }}</span>
-                <span *ngIf="payment.payments[0].paid_at">Pago em {{ payment.payments[0].created_at }}</span>
+<div class="container" *ngIf="negotiation$ | async as negotiations">
+    <ng-container *ngIf="negotiations.length > 0; else none">
+        <div class="grid">
+            <div class="card" *ngFor="let payment of negotiations">
+                <div class="data">
+                    <p>Pagamento #{{ payment.payments[0].id }}</p>
+                    <span>Referente a Negociação #{{ payment.payments[0].negotiation_id }}</span>
+                    <span>Valor: R${{ payment.payments[0].amount }}</span>
+                </div>
+                <div class="detail">
+                    <span>Método de pagamento: {{ payment.payments[0].method }}</span>
+                    <span>Status: {{ payment.payments[0].status.label }}</span>
+                    <a class="btn-yellow" [href]="payment.payments[0].payment_url" target="_blank" *ngIf="payment.payments[0].status.type === 'pending'">Realizar Pagamento</a>
+                    <a class="btn-yellow" [href]="payment.payments[0].receipt_url" target="_blank" *ngIf="payment.payments[0].status.type === 'paid'">Ver recibo</a>
+                </div>
+                <div class="historic">
+                    <p>Histórico do Pagamento</p>
+                    <span *ngIf="payment.payments[0].created_at">Criado em {{ payment.payments[0].created_at }}</span>
+                    <span *ngIf="payment.payments[0].paid_at">Pago em {{ payment.payments[0].created_at }}</span>
+                </div>
             </div>
         </div>
-    </div>
+        <app-pagination 
+            [currentPage]="pagination.currentPage"
+            [lastPage]="pagination.lastPage"
+            [total]="pagination.total"
+            (pageChange)="loadPage($event)">
+        </app-pagination>
+    </ng-container>
 </div>
-<app-pagination 
-    [currentPage]="pagination.currentPage"
-    [lastPage]="pagination.lastPage"
-    [total]="pagination.total"
-    (pageChange)="loadPage($event)">
-</app-pagination>
+
+<ng-template #none>
+    <p class="none">Nenhum pagamento encontrado.</p>
+</ng-template>

@@ -23,7 +23,8 @@ class Negotiation extends Model {
         'delivered_at',
         'completed_at',
         'canceled_at',
-        'tracking_code'
+        'tracking_code',
+        'shipping_company'
     ];
 
     protected $casts = [

@@ -32,17 +32,29 @@
         <div class="trade-section">
             <span>Anúncios</span>
         </div>
-        <div class="trade-row" *ngFor="let trade of boardgame.trades">
-            <span>Anúncio: {{ trade.trade.title }}</span>
-            <span>Vendedor: {{ trade.trade.seller }}</span>
-            <span>Preço: R$ {{ trade.value }}</span>
-            <a class="btn-blue" [routerLink]="['/trades', trade.trade_id]">Ver Anúncio</a>
-        </div>
+        <ng-container *ngIf="boardgame.trades.data.length > 0; else none">
+            <div class="trade-row" *ngFor="let trade of boardgame.trades.data">
+                <span>Anúncio: {{ trade.trade.title }}</span>
+                <span>Vendedor: {{ trade.trade.seller }}</span>
+                <span>Preço: R$ {{ trade.value }}</span>
+                <a class="btn-blue" [routerLink]="['/trades', trade.trade_id]">Ver Anúncio</a>
+            </div>
+            <app-pagination 
+                [currentPage]="pagination.currentPage"
+                [lastPage]="pagination.lastPage"
+                [total]="pagination.total"
+                (pageChange)="loadPage($event)">
+            </app-pagination>
+        </ng-container>
     </div>
-
 </div>
+
 
 <ng-template #loadingExist>
   <button disabled>Verificando...</button>
+</ng-template>
+
+<ng-template #none>
+        <p class="none">Nenhum anúncio para este jogo.</p>
 </ng-template>
 

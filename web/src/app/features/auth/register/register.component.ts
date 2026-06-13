@@ -7,6 +7,7 @@ import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'r
 import { RegisterFormType } from './types/register-form.type';
 import { RegisterRequest } from './models/register';
 import { Router } from '@angular/router';
+import { FlashMessageService } from '../../../core/services/flash-message.service';
 
 @Component({
   selector: 'app-register',
@@ -18,6 +19,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
   private registerService = inject(RegisterService);
   private cityService = inject(CityService);
+  private flashMessage = inject(FlashMessageService)
   private router = inject(Router);
   cities$!: Observable<any []>;
   registerForm!: FormGroup<RegisterFormType>;
@@ -67,11 +69,11 @@ export class RegisterComponent implements OnInit {
       password_confirm: formValue.password_confirm!,
     };
     this.registerService.registerUser(payload).subscribe({
-      next: () => {
-        console.log('Usuário registrado')
-        this.router.navigateByUrl('/home');
+      next: (response) => {
+        this.flashMessage.success(response.message),
+        this.router.navigate(['/register-sucess'], {replaceUrl: true})
       },
-      error: () => {console.log('Erro ao registrar')}
+      error: (response) => {this.flashMessage.error(response.error.message)}
     });
   }
 

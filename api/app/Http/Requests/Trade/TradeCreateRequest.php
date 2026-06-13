@@ -25,6 +25,7 @@ class TradeCreateRequest extends FormRequest
             'user_id' => 'required|int',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:5000',
+            'shipping_fee' => 'nullable|numeric',
             'boardgames' => 'required|array',
             'boardgames.*.boardgame_id' => 'required|exists:boardgames,id',
             'boardgames.*.value' => 'nullable|numeric|min:0',

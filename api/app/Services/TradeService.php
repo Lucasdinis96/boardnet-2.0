@@ -33,6 +33,7 @@ class TradeService {
             'id' => $trade->id,
             'title' => $data['title'] ?? null,
             'description' => $data['description'] ?? null,
+            'shipping_fee' => $data['shipping_fee'] ?? null,
             'images' => $data['images'] ?? [],
             'remaining_images' => $data['remaining_images'] ?? [],
             'primary_image_id' => $data['primary_image_id'] ?? null

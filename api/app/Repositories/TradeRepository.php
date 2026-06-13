@@ -76,6 +76,7 @@ class TradeRepository {
         $trade = Trade::create([
             'title' => $data['title'],
             'description' => $data['description'] ?? null,
+            'shipping_fee' => $data['shipping_fee'] ?? null,
             'user_id' => $data['user_id'],
         ]);
 
@@ -174,7 +175,7 @@ class TradeRepository {
         return true;
     }
 
-    public function getTradeByBoardgame(int $id) {
-        return TradeItem::with('trade')->where('boardgame_id', $id)->get();
+    public function getTradeByBoardgame(int $id, $perPage = 6) {
+        return TradeItem::with('trade')->where('boardgame_id', $id)->paginate($perPage);
     }
 }

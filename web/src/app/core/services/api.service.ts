@@ -18,8 +18,8 @@ export class ApiService {
     return this.http.get<{data: T}>(`${this.apiUrl}/${endpoint}`, { params }).pipe(map(response => response.data));
   }
 
-  show<T>(endpoint: string, id: number){
-    return this.http.get<{data: T}>(`${this.apiUrl}/${endpoint}/${id}`).pipe(map(response => response.data));
+  show<T>(endpoint: string, id: number, params?: Record<string, any>){
+    return this.http.get<{data: T}>(`${this.apiUrl}/${endpoint}/${id}`, { params }).pipe(map(response => response.data));
   }
 
   post<T>(endpoint: string, data: any){

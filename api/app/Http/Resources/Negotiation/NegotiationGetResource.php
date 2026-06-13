@@ -35,6 +35,7 @@ class NegotiationGetResource extends JsonResource
                 'zipcode' => $this->shipping_address_snapshot['shipping_address']['zipcode']
                 
             ],
+            'shipping_company' => $this->shipping_company,
             'tracking_code' => $this->tracking_code,
             'created_at' => $this->created_at?->format('d/m/Y'),
             'paid_at' => $this->paid_at?->format('d/m/Y'),

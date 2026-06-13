@@ -78,4 +78,9 @@ export class TradeComponent {
     );
   }
 
+  hasActiveFilters(): boolean {
+  return Object.values(this.filterForm.value)
+    .some(value => value !== null && value !== '');
+  }
+
 }

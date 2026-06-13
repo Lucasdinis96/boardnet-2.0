@@ -4,6 +4,7 @@ namespace App\Repositories\Cart;
 
 use App\Models\Cart;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class CartRepository {
 
@@ -14,12 +15,28 @@ class CartRepository {
         ]);
     }
 
-    public function getUserCart(User $user): Cart {
+    public function getUserCart(User $user) {
+        $this->getOrCreate($user);
 
-        return Cart::with([
-            'items.tradeItem.boardgame'
-        ])->firstOrCreate([
-            'user_id' => $user->id
-        ]);
+        $cart = Cart::with([
+            'items.tradeItem.boardgame',
+            'items.tradeItem.trade.user',
+            'items.tradeItem.trade'
+        ])->where('user_id', $user->id)->firstOrCreate();
+
+        $subtotal = $cart->items->sum(
+            fn($item) => $item->tradeItem->value
+        );
+        $shipping = $cart->items
+        ->pluck('tradeItem.trade')
+        ->unique('id')
+        ->sum('shipping_fee');
+        $total = $subtotal + $shipping;
+        return [
+            'cart' => $cart,
+            'subtotal' => $subtotal,
+            'shipping' => $shipping,
+            'total' => $total,
+        ];
     }
 }

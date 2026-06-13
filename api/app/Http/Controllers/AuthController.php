@@ -59,7 +59,9 @@ class AuthController extends Controller
         $this->registerService->createRegister($request);
         
         return response()->json([
+            'data' => [
             'message' => 'Usuário criado com sucesso',
+            ]
         ], 201);
     }
 

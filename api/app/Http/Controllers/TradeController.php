@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Trade\TradeCreateRequest;
-use App\Http\Requests\Trade\UpdateTradeRequest;
 use App\Http\Resources\Trade\TradeGetResource;
-use App\Models\Boardgame;
 use App\Models\Trade;
 use App\Services\TradeService;
 use App\Support\PaginatedResource;

@@ -10,11 +10,7 @@ export class RegisterService {
   private api = inject(ApiService);
 
   registerUser(data: any){
-    return this.api.post<any>('auth/register', data).pipe(
-      tap((response) => {
-        console.log('User Created', response);
-      })
-    );
+    return this.api.post<any>('auth/register', data);
   }
 
   verifyEmail(token: string) {

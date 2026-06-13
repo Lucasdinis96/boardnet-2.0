@@ -13,6 +13,7 @@ class Trade extends Model {
     protected $fillable = [
         'title',
         'description',
+        'shipping_fee',
         'user_id'
     ];
 

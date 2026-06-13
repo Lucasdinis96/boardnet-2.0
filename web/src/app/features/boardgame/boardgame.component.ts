@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { map, Observable, tap } from 'rxjs';
 import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-boardgame',
@@ -21,6 +22,8 @@ export class BoardgameComponent {
     perPage: 0,
     total: 0
   };
+
+  coverUrl = environment.storageUrl
 
   $boardgames!: Observable<any[]>;
 
@@ -66,7 +69,7 @@ export class BoardgameComponent {
           perPage: response.meta.per_page,
           total: response.meta.total
         };}),
-        map(response => this.prepareGames(response.data))
+        map(response => response.data)
       );
     }
   
@@ -77,11 +80,9 @@ export class BoardgameComponent {
     );
   }
 
-  private prepareGames(games: any[]) {
-    return games.map(game => ({
-      ...game,
-      primaryImage:
-        game.images?.find((image: any) => image.is_primary)?.path ?? null
-    }));
+  hasActiveFilters(): boolean {
+  return Object.values(this.filterForm.value)
+    .some(value => value !== null && value !== '');
   }
+
 }

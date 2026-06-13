@@ -18,15 +18,15 @@ class CartService {
     ) {}
 
     public function getCart(User $user) {
-        return $this->cartRepository ->getUserCart($user);
+        return $this->cartRepository->getUserCart($user);
     }
 
     public function addItem(User $user, int $tradeItemId) {
 
         $cart = $this->getCart($user);
         $tradeItem = TradeItem::findOrFail($tradeItemId);
-        $exists = $this->cartItemRepository->exists($cart->id, $tradeItem->id);
-
+        $exists = $this->cartItemRepository->exists($cart['cart']['id'], $tradeItemId);
+        
         if ($tradeItem->trade->user_id === $user->id) {
             throw new Exception('Você não pode comprar seu próprio item!');
         }

@@ -56,9 +56,10 @@ class NegotiationRepository {
         return true;
     }
 
-    public function shipped(string $trackingCode, Negotiation $id) {
+    public function shipped(array $shippingInfo, Negotiation $id) {
         $id->update([
-                'tracking_code' => $trackingCode,
+                'shipping_company' => $shippingInfo['shipping_company'],
+                'tracking_code' => $shippingInfo['tracking_code'],
                 'shipped_at' => now()
             ]);
 

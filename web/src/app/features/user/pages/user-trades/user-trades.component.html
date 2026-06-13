@@ -1,22 +1,28 @@
-<div class="trade-container">
+<div class="trade-container" *ngIf = "$trades | async as trades">
     <div>
-        <a class="create-btn" [routerLink]="['create']">+ Criar Anúncio</a>
+        <a class="btn-yellow" [routerLink]="['create']">+ Criar Anúncio</a>
     </div>
-    <h2>Meus Anúncios</h2>
-    <div class="trade-grid" *ngIf = "$trades | async as trades">
-        <div class="trade-card" *ngFor = "let trade of trades">
-            <img class="cover" [src]="trade.primaryImage | tradeImagesUrl" alt="cover">
-            <span>{{ trade.title }}</span>
-            <div class="actions">
-                <a class="edit-btn" [routerLink]="['edit', trade.id]">Editar Anúncio</a>
-            <button class="remove-btn" type="submit" (click)="removeTrade(trade.id)">Remover Anúncio</button>
+    <h2 class="title">Meus Anúncios</h2>
+    <ng-container *ngIf="trades.length > 0; else none">
+        <div class="trade-grid" >
+            <div class="trade-card" *ngFor = "let trade of trades">
+                <img class="cover" [src]="trade.primaryImage | tradeImagesUrl" alt="cover">
+                <span>{{ trade.title }}</span>
+                <div class="actions">
+                    <a class="edit-btn" [routerLink]="['edit', trade.id]">Editar Anúncio</a>
+                <button class="remove-btn" type="submit" (click)="removeTrade(trade.id)">Remover Anúncio</button>
+                </div>
             </div>
         </div>
-    </div>
-    <app-pagination 
-        [currentPage]="pagination.currentPage"
-        [lastPage]="pagination.lastPage"
-        [total]="pagination.total"
-        (pageChange)="loadPage($event)">
-    </app-pagination>
+        <app-pagination 
+            [currentPage]="pagination.currentPage"
+            [lastPage]="pagination.lastPage"
+            [total]="pagination.total"
+            (pageChange)="loadPage($event)">
+        </app-pagination>
+    </ng-container>
 </div>
+
+<ng-template #none>
+    <p class="none">Nenhum anúncio encontrado.</p>
+</ng-template>

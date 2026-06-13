@@ -1,19 +1,24 @@
 <div class="auth-content">
   <ng-container *ngIf="isLogged$ | async; else loginTemplate">
-    <a id="me" routerLink="user">
-      Olá, {{ (user$ | async)?.name }}
-    </a>
-    <a routerLink="negotiation/cart">
-      <span class="material-symbols-outlined">shopping_cart</span>
-    </a>
-    <button class="button" (click)="logout()">
+    <div class="links">
+      <a class="text" routerLink="user" routerLinkActive="active">
+        Olá, {{ (user$ | async)?.name }}
+      </a>
+      <a class="text" routerLink="negotiation/cart" routerLinkActive="active">
+        Meu carrinho
+      </a>
+    </div>
+    <button class="btn-yellow auth" (click)="logout()">
       Sair
     </button>
   </ng-container>
 
   
   <ng-template #loginTemplate>
-    <button class="button" (click)="openLogin()">Entrar</button>
+    <div class="links">
+      <a class="btn-yellow auth" routerLink="register">Registre-se</a>
+      <a class="btn-yellow auth" (click)="openLogin()">Entrar</a>
+    </div>
   </ng-template>
   
 </div>

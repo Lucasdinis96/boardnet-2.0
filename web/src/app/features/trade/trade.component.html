@@ -15,20 +15,21 @@
             <button class="btn-green" type="submit" (click)="clearFilters()">Limpar Filtros</button>
         </form>
     </div>
-
-    <div class="trades" *ngIf = "$trades | async as trades">
-        <div class="trade-card" *ngFor = "let trade of trades">
-            <a class="trade-card-content" [routerLink]="['/trades', trade.id]">
-                <img class="cover" [src]="trade.primaryImage | tradeImagesUrl" alt="cover">
-                <span>{{ trade.title }}</span>
-                <span>Vendedor: {{ trade.user.name }}</span>
-                <span>Jogos a venda:</span>
-                <div *ngFor="let game of trade.boardgames">
-                    <span>- {{ game.title }}</span>
-                </div>
-            </a>
+    <ng-container *ngIf = "$trades | async as trades">
+        <div class="trades" *ngIf="trades.length > 0 ; else noResults">
+            <div class="trade-card" *ngFor = "let trade of trades">
+                <a class="trade-card-content" [routerLink]="['/trades', trade.id]">
+                    <img class="cover" [src]="trade.primaryImage | tradeImagesUrl" alt="cover">
+                    <span>{{ trade.title }}</span>
+                    <span>Vendedor: {{ trade.user.name }}</span>
+                    <span>Jogos a venda:</span>
+                    <div *ngFor="let game of trade.boardgames">
+                        <span>- {{ game.title }}</span>
+                    </div>
+                </a>
+            </div>
         </div>
-    </div>
+    </ng-container>
 </div>
 <app-pagination 
         [currentPage]="pagination.currentPage"
@@ -36,3 +37,14 @@
         [total]="pagination.total"
         (pageChange)="loadPage($event)">
 </app-pagination>
+
+<ng-template #noResults>
+    <div class="none" *ngIf="hasActiveFilters(); else emptyTrades">
+        <h3>Nenhum anúncio encontrado</h3>
+        <p>Não existem anúncios que correspondam aos filtros informados.</p>
+    </div>
+</ng-template>
+<ng-template #emptyTrades>
+    <h3>Nenhum anúncio disponível</h3>
+    <p>Ainda não existem anúncios cadastrados.</p>
+</ng-template>

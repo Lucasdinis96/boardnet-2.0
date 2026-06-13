@@ -3,6 +3,7 @@
         <h2>Criar Anúncio</h2>
         <input class="title" type="text" placeholder="Título" formControlName="title">
         <textarea class="description" type="text" placeholder="Descrição" formControlName="description"></textarea>
+        <input class="shippingFee" type="number" placeholder="Frete" formControlName="shippingFee">
         <div class="boardgames-list" formArrayName="boardgames">
             <div
             *ngFor="let game of boardgames.controls; let i = index"

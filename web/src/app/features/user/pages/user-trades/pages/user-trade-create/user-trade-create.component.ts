@@ -3,7 +3,6 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UserService } from '../../../../services/user.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
 import { BoardgameService } from '../../../../../boardgame/boardgame.service';
 import { debounceTime } from 'rxjs';
 import { FlashMessageService } from '../../../../../../core/services/flash-message.service';
@@ -26,6 +25,7 @@ export class UserTradeCreateComponent {
   createTradeForm = this.fb.group({
     title: [''],
     description: [''],
+    shippingFee: [''],
     boardgames: this.fb.array<FormGroup>([])
   });
   tradeId!: number;
@@ -44,6 +44,7 @@ export class UserTradeCreateComponent {
       this.createTradeForm = this.fb.group ({
         title: [''],
         description: [''],
+        shippingFee: [''],
         boardgames: this.fb.array([
           this.createBoardgameGroup()
         ])
@@ -91,10 +92,12 @@ export class UserTradeCreateComponent {
     formData.append('user_id', id ?? '');
     formData.append('title', formValue.title ?? '' );
     formData.append('description',formValue.description ?? '');
+    formData.append('shipping_fee', formValue.shippingFee ?? '');
     formValue.boardgames?.forEach((game: any, index: number) => {
       formData.append(`boardgames[${index}][boardgame_id]`, String(game.boardgame_id));
       formData.append(`boardgames[${index}][value]`, String(game.value ?? 0));
     });
+    console.log(formData.values)
     this.selectedImages.forEach(image => {
       formData.append('images[]',image);
     });
