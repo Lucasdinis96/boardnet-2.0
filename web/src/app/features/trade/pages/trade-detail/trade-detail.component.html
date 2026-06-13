@@ -17,13 +17,15 @@
             <div class="trade-description">
                 <p>{{ trade.description }}</p>
             </div>
+            <ng-container *ngIf="trade.images.length > 0; else none">
             <div class="photos">
-            <img
-                *ngFor="let photo of trade.images"
-                [src]="photo.path | tradeImagesUrl"
-                alt="Foto"
-                (click)="openImage(photo.path)">
-        </div>
+                <img
+                    *ngFor="let photo of trade.images"
+                    [src]="photo.path | tradeImagesUrl"
+                    alt="Foto"
+                    (click)="openImage(photo.path)">
+            </div>
+        </ng-container>
         </div>
         <div class="game-section">
             Jogos a venda:
@@ -33,23 +35,18 @@
                 <img class="game-cover" src="{{boardgames.cover}}" alt="cover">
                 <span>{{ boardgames.title}}</span>
                 <span>R$ {{ boardgames.trade_item.value }}</span>
-                <button class="cart-btn btn-green" (click)="addCart(boardgames.trade_item.id)">Adicionar</button>
+                <button class="cart-btn btn-green" (click)="addCart(boardgames.trade_item.id)">Adicionar ao carrinho</button>
                 <a class="btn-blue" [routerLink]="['/boardgames', boardgames.id]">Ver Jogo</a>
             </div>
         </div>
     </div>
 </div>
 
-<div
-    class="image-modal"
-    *ngIf="selectedImage"
-    (click)="closeImage()">
-
-    <img
-        class="modal-image"
-        [src]="selectedImage | tradeImagesUrl"
-        alt="Imagem ampliada"
-        (click)="$event.stopPropagation()">
-
+<div class="image-modal" *ngIf="selectedImage" (click)="closeImage()">
+    <img class="modal-image" [src]="selectedImage | tradeImagesUrl" alt="Imagem ampliada" (click)="$event.stopPropagation()">
 </div>
+
+<ng-template #none>
+    <p class="none">Nenhuma imagem para este anúncio.</p>
+</ng-template>
 

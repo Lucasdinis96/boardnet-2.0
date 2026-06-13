@@ -43,7 +43,7 @@ export class CartComponent {
   }
   
   cart$ = this.refresh$.pipe(switchMap(() => this.negotiationService.getCart()))
-
+  
   checkout(){
     if (!this.selectedMethod.method){
       this.flashMessage.warning('Escolha um método de pagamento!')

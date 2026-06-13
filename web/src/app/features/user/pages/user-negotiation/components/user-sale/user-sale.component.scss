@@ -36,24 +36,31 @@
 .data {
   display: flex;
   flex-direction: row;
-  width: auto;
+  place-self: flex-start;
+  width: 100%;
   gap: 10px;
 }
 
 .detail {
   display: flex;
   flex-direction: column;
-  justify-items: flex-start;
   border-right: 1px solid black;
   padding: 5px;
-  gap: 10px
+  gap: 10px;
+  width: 35%;
+}
+
+.detail a, .paid, .shipped button {
+  place-self: center;
 }
 
 .items {
   display: flex;
   flex-direction: column;
-  border-right: 1px solid black;
+  border-top: 1px solid black;
   padding: 5px;
+  gap: 10px;
+  width: 100%;
 }
 
 .address {
@@ -61,27 +68,20 @@
   flex-direction: column;
   border-right: 1px solid black;
   padding: 5px;
+  width: 35%;
 }
 
 .historic {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  width: 40%;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  justify-items: center;
-}
-
-.form button {
-  margin-top: 2px;
-  place-self: center;
-}
-
-.form span {
-  place-self: center;
+  align-items: center;
+  gap: 5px;
 }
 
 .shipped {

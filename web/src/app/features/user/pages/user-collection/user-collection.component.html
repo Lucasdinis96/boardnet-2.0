@@ -1,15 +1,24 @@
-<div class="collection" *ngIf = "$collection | async as boardgames">
-    <div class="game-card" *ngFor = "let boardgame of boardgames">
-        <a class="game-card-content" [routerLink]="['/boardgames', boardgame.boardgame.id]">
-            <img class="cover" src="{{boardgame.boardgame.cover}}" alt="cover">
-            <span>{{ boardgame.boardgame.title }}</span>
-        </a>
-        <button class="remove-btn" type="submit" (click)="removeFromCollection(boardgame.collection_id)">Remover da coleção</button>
-    </div>
+<div *ngIf = "$collection | async as boardgames">
+    <h2 class="title">Minha coleção</h2>
+    <ng-container *ngIf="boardgames.length > 0; else none">
+        <div class="collection">
+            <div class="game-card" *ngFor = "let game of boardgames">
+                <a class="game-card-content" [routerLink]="['/boardgames', game.boardgame.id]">
+                    <img class="cover" src="{{game.boardgame.cover}}" alt="cover">
+                    <span>{{ game.boardgame.title }}</span>
+                </a>
+                <button class="remove-btn" type="submit" (click)="removeFromCollection(game.collection_id)">Remover da coleção</button>
+            </div>
+        </div>
+        <app-pagination 
+            [currentPage]="pagination.currentPage"
+            [lastPage]="pagination.lastPage"
+            [total]="pagination.total"
+            (pageChange)="loadPage($event)">
+        </app-pagination>
+    </ng-container>
 </div>
-<app-pagination 
-    [currentPage]="pagination.currentPage"
-    [lastPage]="pagination.lastPage"
-    [total]="pagination.total"
-    (pageChange)="loadPage($event)">
-</app-pagination>
+
+<ng-template #none>
+    <p class="none">Nenhum jogo na coleção</p>
+</ng-template>

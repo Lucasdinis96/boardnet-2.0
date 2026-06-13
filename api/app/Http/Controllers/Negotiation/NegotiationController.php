@@ -20,19 +20,13 @@ class NegotiationController extends Controller {
     ) {}
 
     public function index(Request $request) {
-
-        $negotiations = $this->negotiationService
-            ->getAllUserNegotiations(
-                $request->user()
-            );
-
+        $negotiations = $this->negotiationService->getAllUserNegotiations($request->user());
         return response()->json([
             'data' => $negotiations
             ]);
     }
 
     public function getUserNegotiationAsBuyer(Request $request) {
-
         $negotiations = $this->negotiationService->getUserNegotiationsAsBuyer($request->user());
         $response = PaginatedResource::make($negotiations, NegotiationGetResource::class);
         return $this->successResponse(
@@ -42,7 +36,6 @@ class NegotiationController extends Controller {
     }
 
     public function getUserNegotiationAsSeller(Request $request) {
-
         $negotiations = $this->negotiationService->getUserNegotiationsAsSeller($request->user());
         $response = PaginatedResource::make($negotiations, NegotiationGetResource::class);
         return $this->successResponse(
@@ -53,27 +46,19 @@ class NegotiationController extends Controller {
 
 
     public function show(Request $request, int $id) {
-
-        $negotiation = $this->negotiationService
-            ->getNegotiation(
-                user: $request->user(),
-                negotiationId: $id
-            );
-
+        $negotiation = $this->negotiationService->getNegotiation(user: $request->user(), negotiationId: $id);
         return response()->json([
             'data' => $negotiation
             ]);
     }
 
     public function shipped(Request $request, int $id) {
-        $request->validate([
+        $shippingInfo = $request->validate([
+            'shipping_company' => ['required', 'string'],
             'tracking_code' => ['required', 'string']
         ]);
-
         $negotiation = Negotiation::findOrFail($id);
-
-        $confirmed = $this->negotiationService->shipped($request->tracking_code, $negotiation);
-
+        $confirmed = $this->negotiationService->shipped($shippingInfo, $negotiation);
         if ($confirmed) {
             return response()->json([
                 'data' => [
@@ -84,11 +69,8 @@ class NegotiationController extends Controller {
     }
 
     public function delivered(Request $request) {
-        
         $negotiation = Negotiation::findOrFail($request->id);
-
         $confirmed = $this->negotiationService->delivered($negotiation);
-
         if ($confirmed) {
             return response()->json([
                 'data' => [

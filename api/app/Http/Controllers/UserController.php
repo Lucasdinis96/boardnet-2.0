@@ -122,9 +122,9 @@ class UserController extends Controller {
     public function removeFromCollection(int $id){
         $remove =  $this->collectionService->removeFromCollection($id);
 
-        return response()->json([
+        return response()->json(['data' => [
             'message' => 'Removido da coleção'
-        ], 200);
+        ]], 200);
     }
 //-----------------------------------------------------------------------
     //Trade Section
@@ -183,13 +183,6 @@ class UserController extends Controller {
             'message' => 'Anúncio deletado com sucesso.'
         ]);
     }
-
-    public function detachBoardgame(Request $trade) {
-        $this->tradeService->removeBoardgame($trade);
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Jogo deletado com sucesso.'
-        ]);    }
 
     public function updateAvatar(Request $request, ImageUploadService $uploadService) {
         $user = $request->user();

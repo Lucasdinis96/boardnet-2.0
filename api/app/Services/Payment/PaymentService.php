@@ -68,13 +68,13 @@ class PaymentService {
     }
 
     public function markAsPaid(Payment $payment, array $providerResponse = []): bool {
-
+        Log::info($providerResponse);
         $updated = $this->paymentRepository
             ->update($payment, [
                 'status' => PaymentStatus::Paid,
                 'paid_amount' => $payment->amount,
                 'paid_at' => now(),
-                'receipt_url' => data_get($providerResponse,'data.checkout.receiptUrl',null),
+                'receipt_url' => data_get($providerResponse,'data.checkout.receiptUrl'),
                 'provider_response' => $providerResponse
             ]);
         

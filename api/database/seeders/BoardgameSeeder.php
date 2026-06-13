@@ -24,7 +24,7 @@ class BoardgameSeeder extends Seeder
                 'description' => 'Em King of Tokyo, você joga com monstros mutantes, robôs gigantes e outras criaturas - os quais estão felizes em bater uns aos outros em um ambiente alegre, a fim de tornar-se o primeiro e único Rei de Tóquio.',
                 'is_expansion' => '0',
                 'base_game' => NULL,
-                'cover' => 'assets/covers/kingoftokyo.webp',
+                'cover' => 'uploads/covers/kingoftokyo.webp',
                 'created_at' => now(),
                 'updated_at' => now()
             ],

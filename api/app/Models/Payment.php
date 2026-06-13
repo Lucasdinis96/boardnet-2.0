@@ -24,6 +24,7 @@ class Payment extends Model {
         'provider_payment_id',
         'transaction_id',
         'payment_url',
+        'receipt_url',
         'provider_response',
         'expires_at',
         'paid_at'

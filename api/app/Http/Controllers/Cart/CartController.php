@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Cart;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Cart\CartGetResource;
 use App\Services\Cart\CartService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller {
 
@@ -13,7 +15,14 @@ class CartController extends Controller {
     ) {}
 
     public function show(Request $request) {
-        return response()->json(['data' => $this->cartService->getCart($request->user())]);
+        Log::info('teste', [$request->user()]);
+        $cart = $this->cartService->getCart($request->user());
+
+        if (!$cart) {
+            return response()->json(['data' =>['message' => 'Carrinho vazio!']]);
+        }
+
+        return response()->json(['data' => CartGetResource::make($cart)]);
     }
 
     public function addItem(Request $request) {

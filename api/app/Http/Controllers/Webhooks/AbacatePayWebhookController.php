@@ -37,9 +37,7 @@ class AbacatePayWebhookController extends Controller {
             ], 400);
         }
 
-        $payment = Payment::query()
-            ->where('provider_payment_id',$providerPaymentId)
-            ->first();
+        $payment = Payment::query()->where('provider_payment_id',$providerPaymentId)->first();
 
         if (!$payment) {
             return response()->json([

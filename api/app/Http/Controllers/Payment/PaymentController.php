@@ -23,25 +23,18 @@ class PaymentController extends Controller {
 
         $negotiation = Negotiation::findOrFail($negotiationId);
 
-        if (
-            $negotiation->buyer_id !==
-            $request->user()->id
-        ) {
-
+        if ($negotiation->buyer_id !== $request->user()->id) {
             return response()->json(['data' => [
                 'message' => 'Negociação inválida'
             ]], 403);
         }
 
-        $payment = $this->paymentService
-            ->createPendingPayment(
-
-                negotiation: $negotiation,
-
-                method: PaymentMethod::from(
-                    $request->payment_method
-                )
-            );
+        $payment = $this->paymentService->createPendingPayment(
+            negotiation: $negotiation,
+            method: PaymentMethod::from(
+                $request->payment_method
+            )
+        );
 
         return response()->json(['data' => [
             'payment' => $payment,

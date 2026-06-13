@@ -15,8 +15,8 @@ export class BoardgameService {
     return this.api.getPaginated<any>('boardgames/getAll', { page,...filters })
   }
 
-  getBoardgameById (id: number) {
-    return this.api.show<BoardgameDetail>('boardgames/show', id)
+  getBoardgameById (id: number, page: number = 1) {
+    return this.api.show<BoardgameDetail>('boardgames/show', id, { page })
   }
 
   addCollection(data: any){
@@ -37,10 +37,6 @@ export class BoardgameService {
 
   searchGame (term: any) {
     return this.api.get<any[]>(`boardgames/search?name=${term}`);
-  }
-
-  filterGame(data?: any) {
-    return this.api.get<any>('boardgames/filter', data)
   }
 
 }

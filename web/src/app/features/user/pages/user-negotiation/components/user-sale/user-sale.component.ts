@@ -37,6 +37,7 @@ export class UserSaleComponent {
 
   initializeForm() {
     this.trackingCode = new FormGroup<any>({
+      shippingCompany: new FormControl(null),
       trackingCode: new FormControl(null)
     })
   }
@@ -48,6 +49,7 @@ export class UserSaleComponent {
   confirmShipping(id: any) {
     const formValue = this.trackingCode.value
     const payload = {
+      shipping_company: formValue.shippingCompany!,
       tracking_code: formValue.trackingCode!
     }
     this.userService.confirmShipping(payload, id).subscribe({

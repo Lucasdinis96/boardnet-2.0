@@ -47,6 +47,8 @@ class CheckoutService {
             }
 
             $subtotal = 0;
+            $shipping = 0;
+            $total = 0;
 
             /*
             |--------------------------------------------------------------------------
@@ -79,6 +81,8 @@ class CheckoutService {
                 }
 
                 $subtotal += $tradeItem->value;
+                $shipping += $tradeItem->trade->shipping_fee;
+                $total = $subtotal+$shipping;
             }
 
             $firstTradeItem = $cart->items
@@ -95,7 +99,7 @@ class CheckoutService {
                     'seller_id' => $sellerId,
                     'status' => NegotiationStatus::PendingPayment,
                     'subtotal' => $subtotal,
-                    'shipping_cost' => 0,
+                    'shipping_cost' => $shipping,
                     'total' => $subtotal,
                     'shipping_address_snapshot' => $shippingAddress
                 ]);

@@ -36,19 +36,18 @@ class BoardgameController extends Controller {
 
     public function show(int $id) {
         $boardgame = $this->boardgameService->getBoardgame($id);
-        $trades = $this->tradeService->getTradeByBoardgame($id);
-
-        return response()->json([
-            'data' => [
-                'boardgame' => $boardgame,
-                'trades' => BoardgameTradeResource::collection($trades)
-            ]
+        $trades = PaginatedResource::make(
+            $this->tradeService->getTradeByBoardgame($id),
+            BoardgameTradeResource::class
+        );
+            return $this->successResponse([
+            'boardgame' => $boardgame,
+            'trades' => $trades
         ]);
     }
 
     public function addCollection(Request $request) {
         $response = $this->collectionService->addBoardgame($request->user_id, $request->boardgame_id);
-
         return response()->json([
             'data' => [
                 'message' => 'Jogo adicionado com sucesso.'
@@ -58,7 +57,6 @@ class BoardgameController extends Controller {
 
     public function removeCollection(Request $request) {
         $response = $this->collectionService->removeBoardgame($request->user_id, $request->boardgame_id);
-
         return response()->json([
             'data' => [
                 'message' => 'Jogo removido com sucesso.'
@@ -79,21 +77,5 @@ class BoardgameController extends Controller {
         return response()->json([
             'data' => $games
         ], 200);
-    }
-
-    public function filter(Request $request) {
-
-        $filters = [
-            'game_name' => $request->input('game_name'),
-            'min_players' => $request->integer('min_players'),
-            'max_players' => $request->integer('max_players'),
-            'age_range' => $request->integer('age_range')
-        ];
-        $boardgames = $this->boardgameService->filterGame($filters);
-
-        return response()->json([
-            'data' => BoardgameGetResource::collection($boardgames)
-        ], 200);
-        
     }
 }

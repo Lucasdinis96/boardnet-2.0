@@ -3,7 +3,8 @@ import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination.component';
-import { map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
+import { FlashMessageService } from '../../../../core/services/flash-message.service';
 
 @Component({
   selector: 'app-user-collection',
@@ -14,17 +15,35 @@ import { map, Observable, tap } from 'rxjs';
 export class UserCollectionComponent {
 
   private userService = inject(UserService);
+  private flashMessage = inject(FlashMessageService)
   id: any = localStorage.getItem('id');
+  currentPage = 1
   pagination = {
     currentPage: 1,
     lastPage: 1,
     perPage: 0,
     total: 0
   };
-  $collection!: Observable<any[]>;
+  private refresh$ = new BehaviorSubject<void>(undefined);
+  $collection = this.refresh$.pipe(
+    switchMap (() => this.userService.getCollection(this.currentPage, this.id)),
+      tap(response => {
+        this.pagination = {
+          currentPage: response.meta.current_page,
+          lastPage: response.meta.last_page,
+          perPage: response.meta.per_page,
+          total: response.meta.total
+        };
+      }),
+      map(response => response.data)
+    );
+
 
   removeFromCollection(id: any){
-    this.userService.removeFromCollection(id).subscribe()
+    this.userService.removeFromCollection(id).subscribe({
+      next: (response) => {console.log(response), this.flashMessage.success(response.message), this.refresh$.next()},
+      error: (response) => {this.flashMessage.error(response.error.message)}
+    })
   }
 
   ngOnInit() {
@@ -32,25 +51,8 @@ export class UserCollectionComponent {
   }
 
   loadPage(page: number = 1) {
-    this.$collection = this.userService.getCollection(page, this.id).pipe(
-      tap(response => {this.pagination = {
-        currentPage: response.meta.current_page,
-        lastPage: response.meta.last_page,
-        perPage: response.meta.per_page,
-        total: response.meta.total
-      };}),
-      map(response => this.prepareGames(response.data))
-    );
+    this.currentPage = page;
+    this.refresh$.next();
   }
-
-  private prepareGames(games: any[]) {
-      return games.map(game => ({
-        ...game,
-        primaryImage:
-          game.images?.find(
-            (image: any) => image.is_primary
-          )?.path ?? null
-      }));
-    }
 
 }

@@ -1,5 +1,5 @@
-<div class="main-container" *ngIf="cart$ | async as cart">    
-    <div class="container" *ngIf="cart.items.length > 0; else emptyCart">
+<div class="main-container" *ngIf="cart$ | async as cart">
+    <div class="container" *ngIf="cart.items.length > 0 || !cart; else emptyCart">
         <div class="cart-items">
             <div class="item" *ngFor="let item of cart.items">
                 <div class="cover">
@@ -8,7 +8,7 @@
                 <div class="data">
                     <span>{{ item.trade_item.boardgame.title }}</span>
                     <span>R$ {{ item.trade_item.value }}</span>
-                    <span>Vendedor: {{ item.trade_item.trade_id }}</span>
+                    <span>Vendedor: {{ item.trade_item.seller.name }}</span>
                 </div>
                 <div class="remove">
                     <button class="btn-red" (click)="removeItemFromCart(item.trade_item_id)">Remover jogo</button>
@@ -23,9 +23,9 @@
         <div class="checkout">
             <div class="value">
                 <h2>Sumário Geral</h2>
-                <span>Valor dos jogos: R$ </span>
-                <span>Valor dos envios: R$</span>
-                <span>Valor total: R$</span>
+                <span>Valor dos jogos: R$ {{ cart.subtotal }}</span>
+                <span>Valor dos envios: R$ {{ cart.shipping }}</span>
+                <span>Valor total: R$ {{ cart.total }}</span>
             </div>
             <div class="payment">
                 <h2>Pagamento</h2>
