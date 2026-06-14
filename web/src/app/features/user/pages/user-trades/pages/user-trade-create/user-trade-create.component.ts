@@ -97,7 +97,6 @@ export class UserTradeCreateComponent {
       formData.append(`boardgames[${index}][boardgame_id]`, String(game.boardgame_id));
       formData.append(`boardgames[${index}][value]`, String(game.value ?? 0));
     });
-    console.log(formData.values)
     this.selectedImages.forEach(image => {
       formData.append('images[]',image);
     });
@@ -107,7 +106,7 @@ export class UserTradeCreateComponent {
         this.router.navigate(['/user/trades'], { replaceUrl: true }
         );
       },
-      error: (error) => {this.flashMessage.error(error.message)}
+      error: (response) => {this.flashMessage.error(response.error.message)}
     });
   } 
 

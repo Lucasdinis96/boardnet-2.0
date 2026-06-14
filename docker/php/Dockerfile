@@ -26,15 +26,15 @@ RUN docker-php-ext-install \
     zip \
     exif
 
-# GD (se realmente usar)
+# GD
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install gd
 
-# Redis via PECL (forma mais simples)
+# Redis via PECL
 RUN pecl install redis \
     && docker-php-ext-enable redis
 
-# Composer oficial (mais seguro)
+# Composer oficial
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Criar usuário

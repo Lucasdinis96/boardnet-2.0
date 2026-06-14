@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
 import { RegisterService } from '../../../../../auth/register/register.service';
 import { UserService } from '../../../../services/user.service';
@@ -17,6 +17,7 @@ export class UserGeneralComponent implements OnInit {
   private userService = inject(UserService);
   cities$!: Observable<any[]>;
   userForm!: FormGroup;
+  private cdr = inject(ChangeDetectorRef); 
   isDropdownOpen = false;
   userInfo: any;
   user: any;
@@ -46,7 +47,7 @@ export class UserGeneralComponent implements OnInit {
       name: new FormControl(null),
       birthdate: new FormControl(null),
       phone: new FormControl(null),
-      email: new FormControl(null),
+      email: new FormControl(null, {validators: [Validators.required, Validators.email]}),
     })
   }
 
@@ -69,4 +70,21 @@ export class UserGeneralComponent implements OnInit {
       error: () => {console.log('Erro ao registrar')}
     });
   }
+
+  onFieldBlur(fieldName: any) {
+      const control = this.userForm.get(fieldName);
+      const value = control?.value;
+  
+      if (value === null || value === undefined || String(value).trim() === '') {
+        
+        control?.markAsUntouched({ emitEvent: false });
+        control?.markAsPristine({ emitEvent: false });
+        
+        if (fieldName !== 'email' && fieldName !== 'password' && fieldName !== 'password_confirm') {
+          control?.setErrors(null, { emitEvent: false });
+        }
+        
+        this.cdr.detectChanges();
+      }
+    }
 }

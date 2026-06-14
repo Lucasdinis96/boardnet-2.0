@@ -4,10 +4,16 @@
         (ngSubmit)="submit()"
         [formGroup]="registerForm"
         class="form">
-        <input 
-            type="text"
-            placeholder="Nome" 
-            formControlName="name">
+        <div class="formInput">
+            <input type="text" placeholder="Nome" formControlName="name" (blur)="onFieldBlur('name')">
+            @if (registerForm.get('name')?.invalid && registerForm.get('name')?.touched) {
+                <div class="error-zone">
+                    @if (registerForm.get('email')?.hasError('required')) {
+                        <span>Campo obrigatório.</span>
+                    }
+                </div>
+            }
+        </div>
         <input 
             type="date"
             placeholder="Data de Nascimento" 
@@ -15,24 +21,64 @@
         <input 
             type="text"
             placeholder="Telefone" 
-            formControlName="phone">
-        <input 
-            type="email"
-            placeholder="Email"
-            formControlName="email">
-        <input 
-            type="password"
-            placeholder="Senha"
-            formControlName="password">
-        <input 
-            type="password"
-            placeholder="Confirmar senha"
-            formControlName="password_confirm">
+            formControlName="phone"
+            mask="(00) 00000-0000">
+        <div class="formInput">
+            <input type="email" placeholder="Email" formControlName="email" (blur)="onFieldBlur('email')">            
+            @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+                <div class="error-zone">
+                    @if (registerForm.get('email')?.hasError('required')) {
+                        <span>Campo obrigatório.</span>
+                    } 
+                    @else if (registerForm.get('email')?.hasError('email')) {
+                        <span>O formato do e-mail digitado é inválido.</span>
+                    }
+                </div>
+            }
+        </div>
+        <div class="formInput">
+            <input 
+                type="password"
+                placeholder="Senha"
+                formControlName="password"
+                (blur)="onFieldBlur('password')">
+                @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+                    <div class="error-zone">
+                        @if (registerForm.get('password')?.hasError('required')) {
+                            <span>A senha é obrigatória.</span>
+                        } 
+                        @else if (registerForm.get('password')?.hasError('minlength')) {
+                            <span>A senha deve ter no mínimo 6 caracteres.</span>
+                        }
+                    </div>
+                }
+        </div>
+        <div class="formInput">
+            <input 
+                type="password"
+                placeholder="Confirmar senha"
+                formControlName="password_confirm"
+                (blur)="onFieldBlur('password_confirm')">
+             @if (registerForm.get('password_confirm')?.invalid && registerForm.get('password_confirm')?.touched) {
+                    <div class="error-zone">
+                        @if (registerForm.get('password_confirm')?.hasError('required')) {
+                            <span>A confirmação da senha é obrigatória.</span>
+                        } 
+                        @else if (registerForm.get('password_confirm')?.hasError('minlength')) {
+                            <span>A senha deve ter no mínimo 6 caracteres.</span>
+                        }
+                        @else if (registerForm.hasError('passwordMismatch')) {
+                            <span>As senhas digitadas não são iguais.</span>
+                        }
+                    </div>
+                }
+        </div>
         <span>Endereço</span>
         <input 
             type="text"
             placeholder="CEP" 
-            formControlName="cep">
+            formControlName="cep"
+            mask="00000-000">
         <input 
             type="text"
             placeholder="Rua" 

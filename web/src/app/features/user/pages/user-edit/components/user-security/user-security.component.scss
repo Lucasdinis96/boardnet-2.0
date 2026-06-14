@@ -5,6 +5,8 @@
   flex-direction: column;
   padding: 10px;
   align-items: center;
+  width: 50%;
+  place-self: center;
 }
 
 .security-form button {
@@ -27,4 +29,12 @@
 
 .autocomplete {
   position: relative;
+}
+
+.formInput {
+  width: 100%;
+}
+
+.formInput input {
+  width: 100%;
 }

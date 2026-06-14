@@ -85,3 +85,12 @@ button {
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
 }
 
+input.ng-invalid.ng-touched {
+  border-bottom: 2px solid #ff4d4d;
+  background-color: #fff2f2;
+}
+
+.error-zone{
+  color: red;
+}
+

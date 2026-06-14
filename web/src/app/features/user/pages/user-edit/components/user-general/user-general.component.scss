@@ -3,7 +3,8 @@
     flex-direction: column;
     padding: 10px;
     align-items: center;
-    width: auto;
+    width: 50%;
+    place-self: center;
 }
 
 .general-form {
@@ -23,5 +24,13 @@
 
 .send-btn:hover {
     background-color: rgb(39, 39, 255);
+}
+
+.formInput {
+  width: 100%;
+}
+
+.formInput input {
+  width: 100%;
 }
 

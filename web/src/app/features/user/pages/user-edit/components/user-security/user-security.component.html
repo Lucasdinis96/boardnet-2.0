@@ -8,14 +8,44 @@
             type="text"
             placeholder="Senha Atual" 
             formControlName="currentPassword">
-        <input 
-            type="text"
-            placeholder="Senha Nova" 
-            formControlName="newPassword">
-        <input 
-            type="text"
-            placeholder="Confirmar Senha Nova" 
-            formControlName="confirmNewPassword">
+        
+        <div class="formInput">
+            <input 
+                type="password"
+                placeholder="Senha"
+                formControlName="newPassword"
+                (blur)="onFieldBlur('newPassword')">
+                @if (passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched) {
+                    <div class="error-zone">
+                        @if (passwordForm.get('newPassword')?.hasError('required')) {
+                            <span>A senha é obrigatória.</span>
+                        } 
+                        @else if (passwordForm.get('newPassword')?.hasError('minlength')) {
+                            <span>A senha deve ter no mínimo 6 caracteres.</span>
+                        }
+                    </div>
+                }
+        </div>
+        <div class="formInput">
+            <input 
+                type="password"
+                placeholder="Confirmar senha nova"
+                formControlName="confirmNewPassword"
+                (blur)="onFieldBlur('confirmNewPassword')">
+             @if (passwordForm.get('confirmNewPassword')?.invalid && passwordForm.get('confirmNewPassword')?.touched) {
+                    <div class="error-zone">
+                        @if (passwordForm.get('confirmNewPassword')?.hasError('required')) {
+                            <span>A confirmação da senha é obrigatória.</span>
+                        } 
+                        @else if (passwordForm.get('confirmNewPassword')?.hasError('minlength')) {
+                            <span>A senha deve ter no mínimo 6 caracteres.</span>
+                        }
+                        @else if (passwordForm.hasError('passwordMismatch')) {
+                            <span>As senhas digitadas não são iguais.</span>
+                        }
+                    </div>
+                }
+        </div>
         <button class="btn-blue" type="submit">Enviar</button>
     </form>
 
