@@ -1,0 +1,32 @@
+<div class="card">
+    <div class="card-header">
+        <h2>Chave PIX</h2>
+    </div>
+    <div class="card-body">
+        <form class="form" [formGroup]="form">
+            <div>
+                <label class="form-label">
+                    Tipo da Chave
+                </label>
+                <select
+                    class="form-select"
+                    formControlName="pix_key_type">
+                    <option value="">Selecione</option>
+                    <option value="cpf">CPF</option>
+                    <option value="email">E-mail</option>
+                    <option value="phone">Telefone</option>
+                    <option value="random">Chave Aleatória</option>
+                </select>
+            </div>
+            <div>
+                <label class="form-label">
+                    Chave PIX
+                </label>
+                <input type="text" class="form-control" formControlName="pix_key">
+            </div>
+            <button type="button" class="btn-blue" [disabled]="saving" (click)="save()">
+                {{ saving ? 'Salvando...' : 'Salvar' }}
+            </button>
+        </form>
+    </div>
+</div>

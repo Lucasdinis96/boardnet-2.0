@@ -100,7 +100,7 @@ class CheckoutService {
                     'status' => NegotiationStatus::PendingPayment,
                     'subtotal' => $subtotal,
                     'shipping_cost' => $shipping,
-                    'total' => $subtotal,
+                    'total' => $total,
                     'shipping_address_snapshot' => $shippingAddress
                 ]);
 

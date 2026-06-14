@@ -17,23 +17,23 @@ export class UserService {
   }
 
   updateUser(data: any, id: any){
-    return this.api.put<any>('user/userUpdate', id, data).pipe(
+    return this.api.put<any>('user/userUpdate', data, id).pipe(
       tap((response) => {})
     );
   }
 
   updateAddress(data: any, id: any){
-    return this.api.put<any>('user/addressUpdate', id, data).pipe(
+    return this.api.put<any>('user/addressUpdate', data, id).pipe(
       tap((response) => {})
     );
   }
 
   updatePassword(data: any, id: any){
-    return this.api.put<any>('user/passwordUpdate', id, data).pipe(tap((response) => {} ))
+    return this.api.put<any>('user/passwordUpdate', data, id).pipe(tap((response) => {} ))
   }
 
   deleteAccount(data: any, id: any, ) {
-    return this.api.put<any>('user/deleteAccount', id, data).pipe(tap((response) => {} ))
+    return this.api.put<any>('user/deleteAccount', data, id).pipe(tap((response) => {} ))
   }
 
   getCollection (page: number = 1, id: any) {
@@ -89,5 +89,21 @@ export class UserService {
     formData.append('image', file)
     return this.api.post<any>('user/avatar', formData);
   }
+
+  getPixData() {
+    return this.api.get<any>('user/pix')
+}
+
+  updatePixData(data: any) {
+    return this.api.put<any>('user/pix/update', data)
+  }
+
+  getWithdrawals(page: number = 1) {
+    return this.api.getPaginated<any>('user/withdrawals', {page});
+  }
+
+  requestWithdrawal(id: number) {
+    return this.api.post(`user/withdrawals/${id}/request`,{});
+}
 
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../../../services/user.service';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -20,6 +20,7 @@ export class UserTradeEditComponent {
   private boardgameService = inject(BoardgameService);
   private flashMessage = inject(FlashMessageService)
   private fb = inject(FormBuilder)
+  private cdr = inject(ChangeDetectorRef)
   private readonly MAX_IMAGES = 3;
   editTradeForm = this.fb.group({
     title: [''],
@@ -52,6 +53,8 @@ export class UserTradeEditComponent {
         title: trade.title,
         description: trade.description
       });
+      
+      this.cdr.detectChanges();
     });
   }
 

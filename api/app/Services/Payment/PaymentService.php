@@ -25,13 +25,14 @@ class PaymentService {
 
     ) {}
 
-    public function createPendingPayment(Negotiation $negotiation, PaymentMethod $method): Payment {
-
+    public function createPendingPayment(Negotiation $negotiation, PaymentMethod $method, int $installments = null): Payment {
+      
         $payment = $this->paymentRepository
             ->create([
                 'negotiation_id' => $negotiation->id,
                 'provider' => PaymentProvider::AbacatePay,
                 'payment_method' => $method,
+                'installments' => $installments,
                 'status' => PaymentStatus::Pending,
                 'amount' => $negotiation->total,
                 'currency' => 'BRL',
@@ -68,7 +69,6 @@ class PaymentService {
     }
 
     public function markAsPaid(Payment $payment, array $providerResponse = []): bool {
-        Log::info($providerResponse);
         $updated = $this->paymentRepository
             ->update($payment, [
                 'status' => PaymentStatus::Paid,

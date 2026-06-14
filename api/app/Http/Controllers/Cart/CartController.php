@@ -15,7 +15,6 @@ class CartController extends Controller {
     ) {}
 
     public function show(Request $request) {
-        Log::info('teste', [$request->user()]);
         $cart = $this->cartService->getCart($request->user());
 
         if (!$cart) {

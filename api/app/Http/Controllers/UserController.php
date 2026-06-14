@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PixKeyType;
 use App\Http\Requests\Password\PasswordUpdateRequest;
 use App\Http\Requests\Trade\TradeCreateRequest;
 use App\Http\Requests\Trade\TradeUpdateRequest;
@@ -20,6 +21,8 @@ use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 
@@ -109,6 +112,47 @@ class UserController extends Controller {
         $user = User::find($id);
         return Hash::check($currentPassword, $user->password);
     }
+
+    public function updateAvatar(Request $request, ImageUploadService $uploadService) {
+        $user = $request->user();
+        $request->validate([
+            'image' => 'required|image|max:10240'
+        ]);
+        
+        $path = $uploadService->upload($request->file('image'), "avatars/{$user->id}", 'avatar');
+
+        $savedPath = $this->userService->updateAvatar($request->user(), $path);
+
+        return response()->json(['data' => [
+            'message' => 'Avatar atualizado',
+            'path' => $savedPath
+        ]
+        ]);
+    }
+
+    public function getPixData(Request $request) {   
+        return response()->json([
+            'data' => [
+                'pix_key' => $request->user()->pix_key,
+                'pix_key_type' => $request->user()->pix_key_type,
+            ]
+        ]);
+    }
+
+    public function updatePixData(Request $request) {
+        $user = $request->user();
+    
+        $data = $request->validate([
+            'pix_key' => ['required', 'string', 'max:255'],
+            'pix_key_type' => ['required', Rule::enum(PixKeyType::class)]
+        ]);
+
+        $user->update($data);
+
+        return response()->json([
+            'data' => ['message' => 'Dados PIX atualizados com sucesso.']
+        ]);
+    }
 //-----------------------------------------------------------------------
     //Collection Section
     public function getCollection(int $id) {
@@ -184,21 +228,4 @@ class UserController extends Controller {
             'message' => 'Anúncio deletado com sucesso.'
         ]);
     }
-
-    public function updateAvatar(Request $request, ImageUploadService $uploadService) {
-        $user = $request->user();
-        $request->validate([
-            'image' => 'required|image|max:10240'
-        ]);
-        
-        $path = $uploadService->upload($request->file('image'), "avatars/{$user->id}", 'avatar');
-
-        $savedPath = $this->userService->updateAvatar($request->user(), $path);
-
-        return response()->json(['data' => [
-            'message' => 'Avatar atualizado',
-            'path' => $savedPath
-        ]
-        ]);
-}
 }
