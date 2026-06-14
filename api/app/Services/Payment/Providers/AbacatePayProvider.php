@@ -2,6 +2,7 @@
 
 namespace App\Services\Payment\Providers;
 
+use App\Enums\PaymentMethod;
 use App\Models\Payment;
 use App\Services\Payment\Contracts\PaymentProviderInterface;
 use Illuminate\Support\Facades\Http;
@@ -76,9 +77,46 @@ class AbacatePayProvider implements PaymentProviderInterface {
     }
 
     public function createCreditCardPayment(Payment $payment): array {
-        throw new \Exception(
-            'Cartão ainda não implementado'
+       Log::info($payment);
+       
+        $product = $this->createProduct($payment);
+        $negotiation = $payment->negotiation;
+        $buyer = $negotiation->buyer;
+        $payload = [
+            'items' => [
+                ['id' => $product['data']['id'], 'quantity' => 1]
+            ],
+            'methods' => [$payment->payment_method->value],
+        ];
+
+        if ($payment->payment_method === PaymentMethod::CreditCard) {
+            $payload['card'] = [
+                'maxInstallments' => $payment->installments
+            ];
+        };
+
+        $response = $this->client()->post(
+            $this->baseUrl . 'checkouts/create',
+            $payload
         );
+
+        if ($response->failed()) {
+            throw new \Exception(
+                'Erro ao criar Pagamento com cartão de crédito no AbacatePay'
+            );
+        }
+
+        $data = $response->json();
+
+        return [
+            'provider_payment_id' => $data['data']['id'] ?? null,
+            'transaction_id' => $data['data']['txId'] ?? null,
+            'payment_url' => $data['data']['paymentLink'] ?? null,
+            'expires_at' => now()->addSeconds($data['data']['expiresIn'] ?? 900),
+            'pix_copy_paste' => $data['data']['brCode'] ?? null,
+            'pix_qrcode' => $data['data']['brCodeBase64'] ?? null,
+            'provider_response' => $data
+        ];
     }
 
     public function getPaymentStatus(string $providerPaymentId): array {

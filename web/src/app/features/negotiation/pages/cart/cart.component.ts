@@ -50,7 +50,8 @@ export class CartComponent {
       return
     }
     const paymentMethod = {
-      payment_method: this.selectedMethod.method
+      payment_method: this.selectedMethod.method,
+      card_installments: this.selectedInstallments.installments ?? 1
     }
     const address = {
       use_registered_address: this.addressType === 'registered',

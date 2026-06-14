@@ -1,0 +1,116 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.card {
+  background-color: white;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  padding: 10px;
+  gap: 10px;
+
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.data {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  width: 30%;
+
+  padding: 5px;
+  border-right: 1px solid black;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  width: 35%;
+
+  padding: 5px;
+  border-right: 1px solid black;
+}
+
+.detail button {
+  place-self: center;
+}
+
+.historic {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  width: 35%;
+}
+
+.none {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Status */
+
+.status {
+  font-weight: bold;
+}
+
+.status.available {
+  color: #2e7d32;
+}
+
+.status.requested {
+  color: #ef6c00;
+}
+
+.status.paid {
+  color: #1565c0;
+}
+
+.status.cancelled {
+  color: #c62828;
+}
+
+p {
+  place-self: center;
+  margin: 0;
+}
+
+/* Responsividade */
+
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .data,
+  .detail,
+  .historic {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .historic {
+    border-bottom: none;
+  }
+}

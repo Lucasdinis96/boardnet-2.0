@@ -33,7 +33,8 @@ class PaymentController extends Controller {
             negotiation: $negotiation,
             method: PaymentMethod::from(
                 $request->payment_method
-            )
+            ),
+            installments: $request->card_installments ?? null
         );
 
         return response()->json(['data' => [

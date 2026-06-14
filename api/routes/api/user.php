@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WithdrawalController;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('user')->group(function () {
 
@@ -25,5 +25,10 @@ Route::prefix('user')->group(function () {
         Route::post('trades/update/{trade}', [UserController::class, 'updateTrade']);
         Route::delete('trades/delete/{id}', [UserController::Class, 'deleteTrade']);
 
+        Route::get('pix', [UserController::class, 'getPixData']);
+        Route::put('pix/update', [UserController::class, 'updatePixData']);
+
+        Route::get('withdrawals', [WithdrawalController::class, 'index']);
+        Route::post('/withdrawals/{withdrawal}/request', [WithdrawalController::class, 'request']);
     });
 });

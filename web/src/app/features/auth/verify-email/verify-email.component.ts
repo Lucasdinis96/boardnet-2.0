@@ -28,9 +28,8 @@ export class VerifyEmailComponent {
   verifyEmail(token: string){
     this.registerService.verifyEmail(token).subscribe({
       next: () => {
-        console.log('Email verificado com sucesso');
         debounceTime(3000);
-        this.router.navigate(['/home'], { replaceUrl: true });
+        this.router.navigate(['/'], { replaceUrl: true });
       },
       error: () => console.log('Token inválido ou expirado')
     })

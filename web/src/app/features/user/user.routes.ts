@@ -14,8 +14,9 @@ import { UserPurchaseComponent } from "./pages/user-negotiation/components/user-
 import { UserSaleComponent } from "./pages/user-negotiation/components/user-sale/user-sale.component";
 import { UserFinancesComponent } from "./pages/user-finances/user-finances.component";
 import { UserPaymentsComponent } from "./pages/user-finances/components/user-payments/user-payments.component";
-import { UserReceivablesComponent } from "./pages/user-finances/components/user-receivables/user-receivables.component";
 import { UserAvatarComponent } from "./pages/user-edit/components/user-avatar/user-avatar.component";
+import { UserPixComponent } from "./pages/user-edit/components/user-pix/user-pix.component";
+import { UserWithdrawalsComponent } from "./pages/user-finances/components/user-withdrawals/user-withdrawals.component";
 
 
 export const user_routes: Routes = [
@@ -31,6 +32,7 @@ export const user_routes: Routes = [
                     {path: 'address', component: UserAddressComponent},
                     {path: 'security', component: UserSecurityComponent},
                     {path: 'avatar', component: UserAvatarComponent},
+                    {path: 'pix', component: UserPixComponent},
                 ]
             },
             {path: 'collection', component: UserCollectionComponent},
@@ -52,7 +54,7 @@ export const user_routes: Routes = [
                 children : [
                     {path: '', redirectTo: 'payments', pathMatch: 'full'},
                     {path: 'payments', component: UserPaymentsComponent},
-                    {path: 'receivables', component: UserReceivablesComponent},
+                    {path: 'withdrawals', component: UserWithdrawalsComponent},
                 ]
             }
 

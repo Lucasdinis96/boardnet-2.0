@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Log;
 class BoardgameRepository {
     
     public function getIndexPage(?array $filters = [], $perPage = 6) {
-        Log::info($filters);
         $query = Boardgame::orderBy('release_date', 'desc');
 
         if (!empty($filters['game_name'])) {

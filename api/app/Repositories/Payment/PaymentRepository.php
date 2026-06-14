@@ -3,11 +3,12 @@
 namespace App\Repositories\Payment;
 
 use App\Models\Payment;
+use Illuminate\Support\Facades\Log;
 
 class PaymentRepository {
 
     public function create(array $data): Payment {
-
+        Log::info($data);
         return Payment::create($data);
     }
 

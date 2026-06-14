@@ -1,0 +1,56 @@
+<div class="container" *ngIf="withdrawals$ | async as withdrawals">
+    <ng-container *ngIf="withdrawals.length > 0; else none">
+
+        <div class="grid">
+
+            <div class="card" *ngFor="let withdrawal of withdrawals">
+
+                <div class="data">
+                    <p>Saque #{{ withdrawal.id }}</p>
+                    <span>Referente à Negociação #{{ withdrawal.negotiation_id }}</span>
+                    <span>Valor: R$ {{ withdrawal.amount }}</span>
+                </div>
+
+                <div class="detail">
+                    <span>Status: {{ getStatusLabel(withdrawal.status) }}</span>
+                    <button
+                        class="btn-yellow"
+                        *ngIf="withdrawal.status === 'available'"
+                        (click)="requestWithdrawal(withdrawal.id)">
+                        Solicitar Saque
+                    </button>
+                </div>
+
+                <div class="historic">
+                    <p>Histórico do Saque</p>
+
+                    <span *ngIf="withdrawal.created_at">
+                        Disponibilizado em {{ withdrawal.created_at }}
+                    </span>
+
+                    <span *ngIf="withdrawal.requested_at">
+                        Solicitado em {{ withdrawal.requested_at }}
+                    </span>
+
+                    <span *ngIf="withdrawal.paid_at">
+                        Pago em {{ withdrawal.paid_at }}
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <app-pagination
+            [currentPage]="pagination.currentPage"
+            [lastPage]="pagination.lastPage"
+            [total]="pagination.total"
+            (pageChange)="loadPage($event)">
+        </app-pagination>
+
+    </ng-container>
+</div>
+
+<ng-template #none>
+    <p class="none">Nenhum saque encontrado.</p>
+</ng-template>

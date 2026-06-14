@@ -5,6 +5,7 @@ import { debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'r
 import { RegisterService } from '../../../../../auth/register/register.service';
 import { CityService } from '../../../../../../core/services/city.service';
 import { UserService } from '../../../../services/user.service';
+import { FlashMessageService } from '../../../../../../core/services/flash-message.service';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class UserAddressComponent {
   private registerService = inject(RegisterService);
   private cityService = inject(CityService);
   private userService = inject(UserService);
+  private flashMessage = inject(FlashMessageService)
   cities$!: Observable<any[]>;
   addressForm!: FormGroup;
   isDropdownOpen = false;
@@ -74,8 +76,8 @@ export class UserAddressComponent {
       id: id ? Number(id) : null,
     };
     this.userService.updateAddress(payload, id).subscribe({
-      next: (response) => {console.log(response.message)},
-      error: () => {console.log('Erro ao registrar')}
+      next: (response) => {this.flashMessage.success(response.message)},
+      error: (response) => {this.flashMessage.error(response.error.message)}
     });
   }
 

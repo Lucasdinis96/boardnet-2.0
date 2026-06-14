@@ -26,8 +26,9 @@ export class ApiService {
     return this.http.post<{data: T}>(`${this.apiUrl}/${endpoint}`, data).pipe(map(response => response.data));
   }
 
-  put<T>(endpoint: string, id: string, data: any) {
-    return this.http.put<{data: T}>(`${this.apiUrl}/${endpoint}/${id}`, data).pipe(map(response =>response.data));
+  put<T>(endpoint: string, data: any, id?: string) {
+    const url = id ? `${this.apiUrl}/${endpoint}/${id}` : `${this.apiUrl}/${endpoint}`;
+    return this.http.put<{data: T}>(url, data).pipe(map(response =>response.data));
   }
 
   delete<T>(endpoint: string, id?: string) {

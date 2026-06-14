@@ -79,4 +79,8 @@ class UserRepository {
     public function verifyEmail(array $data){
         User::where('id', $data['id'])->where('email', $data['email'])->first()->update(['email_verified_at' => now()]);
     }
+
+    public function updatePix(User $user, array $data) {
+        
+    }
 }

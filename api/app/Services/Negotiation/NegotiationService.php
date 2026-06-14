@@ -13,7 +13,8 @@ class NegotiationService {
 
     public function __construct(
         private NegotiationRepository $negotiationRepository,
-        private NegotiationEventService $eventService
+        private NegotiationEventService $eventService,
+        private WithdrawalService $withdrawalService
     ) {}
 
     public function getAllUserNegotiations(User $user) {
@@ -73,6 +74,8 @@ class NegotiationService {
                 'address' => $id->shipping_address_snapshot
             ]
         );
+
+        $this->withdrawalService->createFromNegotiation($id);
 
         return true;
     }
