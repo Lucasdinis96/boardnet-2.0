@@ -6,3 +6,5 @@ uploads/trades/*
 
 uploads/avatars/*
 !uploads/avatars/.gitkeep
+
+.env

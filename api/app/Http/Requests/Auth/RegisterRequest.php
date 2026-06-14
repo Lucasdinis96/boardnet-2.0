@@ -23,11 +23,11 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'birthdate' => ['required', 'string'],
-            'cep' => ['required', 'string'],
-            'address_name' => ['required', 'string'],
-            'address_number' => ['required', 'string'],
-            'neighborhood' => ['required', 'string'],
+            'birthdate' => ['nullable', 'string'],
+            'cep' => ['nullable','string'],
+            'address_name' => ['nullable','string'],
+            'address_number' => ['nullable','string'],
+            'neighborhood' => ['nullable','string'],
             'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'string'],
             'password_confirm' => ['required', 'string', 'same:password']

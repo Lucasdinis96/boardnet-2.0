@@ -2,7 +2,7 @@ services:
 
   api:
     container_name: api
-    user: "${UID}:${GID}"
+    user: "${UID:-1000}:${GID:-1000}"
     build:
       context: ./docker/php
       dockerfile: Dockerfile
@@ -19,14 +19,12 @@ services:
 
   web:
     container_name: web
-    user: "${UID}:${GID}"
     build:
-      context: ./docker/angular
-      dockerfile: Dockerfile
+      context: ./web
+      dockerfile: ../docker/angular/Dockerfile
     restart: unless-stopped
     volumes:
       - ./web:/usr/src/app
-      - node_modules:/usr/src/app/node_modules
     ports:
       - "4200:4200"
     networks:
@@ -101,4 +99,3 @@ networks:
 volumes:
   db-data:
     driver: local
-  node_modules:

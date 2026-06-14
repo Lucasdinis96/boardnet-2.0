@@ -33,4 +33,11 @@ class TradeCreateRequest extends FormRequest
             'images.*' => ['image', 'max:2048'],
         ];
     }
+
+    public function messages(): array {
+        return [
+            'title.required' => 'O anúncio precisa de um título',
+            'boardgames.*.boardgame_id.required' => 'O anúncio deve ter ao menos um jogo'
+        ];
+    }
 }

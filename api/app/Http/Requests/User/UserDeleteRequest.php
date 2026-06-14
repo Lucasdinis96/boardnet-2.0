@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Password;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PasswordUpdateRequest extends FormRequest
+class UserDeleteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,15 +22,13 @@ class PasswordUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'currentPassword' => ['required', 'string'],
-            'newPassword' => ['string'],
-            'confirmNewPassword' => ['same:newPassword', 'string'],
+            'password' => ['required', 'string']
         ];
     }
 
     public function messages(): array {
         return [
-            'currentPassword.required'  => 'Senha atual não enviada'
+            'password.required' => 'Obrigatório senha para deletar a conta!!'
         ];
     }
 }

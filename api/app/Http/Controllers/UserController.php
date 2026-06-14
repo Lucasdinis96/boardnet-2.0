@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Password\PasswordUpdateRequest;
 use App\Http\Requests\Trade\TradeCreateRequest;
 use App\Http\Requests\Trade\TradeUpdateRequest;
+use App\Http\Requests\User\UserDeleteRequest;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Http\Resources\Collection\CollectionGetResource;
 use App\Http\Resources\Trade\TradeGetResource;
@@ -90,7 +91,7 @@ class UserController extends Controller {
 
     }
 
-    public function destroy(Request $request, $id) {
+    public function destroy(UserDeleteRequest $request, $id) {
         $checkPassword = $this->checkPassword($request->password, $id);
         if (!$checkPassword) {
             throw new Exception('Senha Incorreta!!');
